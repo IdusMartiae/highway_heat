@@ -1,7 +1,6 @@
-using Entities;
 using UnityEngine;
 
-namespace Controllers
+namespace Entities
 {
     public class RoadSegment : MonoBehaviour
     {
