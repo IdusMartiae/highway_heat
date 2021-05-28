@@ -30,11 +30,11 @@ namespace Entities
                 CreatEntity();
             }
 
-            var collider = _list.Last();
+            var item = _list.Last();
             _list.Remove(_list.Last());
 
-            collider.gameObject.SetActive(true);
-            return collider;
+            item.gameObject.SetActive(true);
+            return item;
         }
 
         private void Prepopulate(int count)
