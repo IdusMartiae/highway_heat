@@ -758,7 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 779827372}
-  frontOffset: 0
+  frontOffset: -1
   sideOffset: 0
 --- !u!1 &919497561
 GameObject:
@@ -803,9 +803,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd62f6da1414b425c8502539db7ecf24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colliderPrefab: {fileID: 2510566618215127324, guid: eca9f3cc838164df9bec7af5f66eba70, type: 3}
+  colliderPrefab: {fileID: 5902756885309976053, guid: 2d5f6caa1d17b4ac08b918036b5eb07a, type: 3}
   poolSize: 5
-  colliderDestroyDistance: 5
+  colliderDestroyDistance: 20
 --- !u!1 &943431897
 GameObject:
   m_ObjectHideFlags: 0
