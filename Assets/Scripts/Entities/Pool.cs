@@ -8,12 +8,10 @@ namespace Entities
     {
         private readonly List<T> _list = new List<T>();
         private readonly T entity;
-        private readonly Transform _parent;
 
-        public Pool(int poolSize, Transform parent, T gameObject)
+        public Pool(int poolSize, T gameObject)
         {
             entity = gameObject;
-            _parent = parent;
             Prepopulate(poolSize);
         }
 
@@ -39,7 +37,7 @@ namespace Entities
 
         private void Prepopulate(int count)
         {
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 CreatEntity();
             }
