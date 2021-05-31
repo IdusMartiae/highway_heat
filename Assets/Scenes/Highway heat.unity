@@ -758,9 +758,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 779827372}
-  xOffset: -2
-  yOffset: 0
-  zOffset: 0
+  frontOffset: 0
+  sideOffset: 0
 --- !u!1 &919497561
 GameObject:
   m_ObjectHideFlags: 0
