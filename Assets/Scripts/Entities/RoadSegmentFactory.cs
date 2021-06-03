@@ -6,18 +6,18 @@ namespace Entities
 {
     public class RoadSegmentFactory : IGameObjectFactory
     {
-        private Pool<RoadSegment> pool;
-        private UnityEvent<Transform, float> _spawnerMovementEvent;
+        private readonly Pool<RoadSegment> _pool;
+        private readonly UnityEvent<Transform, float> _spawnerMovementEvent;
 
         public RoadSegmentFactory(int poolSize, RoadSegment roadSegment, UnityEvent<Transform, float> spawnerMovementEvent)
         {
-            pool = new Pool<RoadSegment>(poolSize, roadSegment);
+            _pool = new Pool<RoadSegment>(poolSize, roadSegment);
             _spawnerMovementEvent = spawnerMovementEvent;
         }
 
         public GameObject Create()
         {
-            var collider = pool.Pull();
+            var collider = _pool.Pull();
             collider.Initialize(this, _spawnerMovementEvent);
 
             return collider.gameObject;
@@ -25,7 +25,7 @@ namespace Entities
 
         public void Destroy(RoadSegment gameObject)
         {
-            pool.Push(gameObject);
+            _pool.Push(gameObject);
         }
     }
 }

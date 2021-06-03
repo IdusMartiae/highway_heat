@@ -1,6 +1,4 @@
-using Entities;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Entities
 {
@@ -9,21 +7,22 @@ namespace Entities
         [SerializeField] private RoadSegment colliderPrefab;
         [SerializeField] private int poolSize = 100;
         [SerializeField] private float colliderDestroyDistance = 10;
-
-        private RoadSegmentFactory roadSegmentFactory;
-        private UnityEvent<Transform, float> spawnerMovementEvent = new UnityEvent<Transform, float>();
+        
+        private RoadSegmentFactory _roadSegmentFactory;
+        private EventSystem _eventSystem;
 
         public void Awake()
         {
-            roadSegmentFactory = new RoadSegmentFactory(poolSize, colliderPrefab, spawnerMovementEvent);
+            _eventSystem = new EventSystem();
+            _roadSegmentFactory = new RoadSegmentFactory(poolSize, colliderPrefab, _eventSystem.spawnerMovementEvent);
         }
 
         public void Update()
         {
-            var roadSegment = roadSegmentFactory.Create();
+            var roadSegment = _roadSegmentFactory.Create();
             roadSegment.transform.position = transform.position;
             
-            spawnerMovementEvent.Invoke(transform.parent, colliderDestroyDistance);
+            _eventSystem.spawnerMovementEvent.Invoke(transform.parent, colliderDestroyDistance);
         }
     }
 }

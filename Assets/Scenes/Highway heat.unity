@@ -155,7 +155,7 @@ Transform:
   m_Children:
   - {fileID: 1827229472}
   m_Father: {fileID: 779827373}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &24667476
 MeshCollider:
@@ -467,6 +467,57 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!1 &381965697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 381965698}
+  - component: {fileID: 381965699}
+  m_Layer: 0
+  m_Name: ObstacleSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &381965698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381965697}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 100, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 779827373}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &381965699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381965697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3baf1f78afa624c6a84926409eba59f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: -2585095657763926794, guid: cad9dae4a2be045c7a5eb24973bc5b24, type: 3}
+  - {fileID: 266864355801447554, guid: 65504f9086e9b4fcda9db3c1b5be103b, type: 3}
+  - {fileID: 5689106350684164774, guid: fa00e2fafe7254970a4f1ae70e46244e, type: 3}
+  - {fileID: 5438884532977345700, guid: 674e6e29a0bfc4cabb101670cf242d8e, type: 3}
+  - {fileID: 8803941521888251163, guid: 7d6220d8dde16470d82e43d71813eac3, type: 3}
+  obstacleDestroyDistance: 200
+  spawnInterval: 5
 --- !u!1 &581520049
 GameObject:
   m_ObjectHideFlags: 0
@@ -624,6 +675,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 381965698}
   - {fileID: 919497562}
   - {fileID: 24667475}
   - {fileID: 1437194348}
@@ -644,7 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedX: 30
-  speedY: 30
+  speedY: 40
   minY: -20
   maxY: 20
 --- !u!1 &849750910
@@ -758,8 +810,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObject: {fileID: 779827372}
-  frontOffset: -1
-  sideOffset: 0
+  xOffset: -5
+  zOffset: 0
 --- !u!1 &919497561
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +841,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 779827373}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &919497563
 MonoBehaviour:
@@ -805,7 +857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliderPrefab: {fileID: 5902756885309976053, guid: 2d5f6caa1d17b4ac08b918036b5eb07a, type: 3}
   poolSize: 5
-  colliderDestroyDistance: 20
+  colliderDestroyDistance: 5
 --- !u!1 &943431897
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,7 +1044,7 @@ Transform:
   m_Children:
   - {fileID: 581520050}
   m_Father: {fileID: 779827373}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!64 &1437194349
 MeshCollider:
@@ -1193,6 +1245,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1338225831, guid: e40225560c743554a9857b07e4b535db, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8921025284500626365, guid: e40225560c743554a9857b07e4b535db, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1279,7 +1335,7 @@ Transform:
   m_Children:
   - {fileID: 349639432}
   m_Father: {fileID: 779827373}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -90}
 --- !u!64 &2102265762
 MeshCollider:
