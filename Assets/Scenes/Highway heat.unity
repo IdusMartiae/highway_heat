@@ -517,7 +517,7 @@ MonoBehaviour:
   - {fileID: 5689106350684164774, guid: fa00e2fafe7254970a4f1ae70e46244e, type: 3}
   - {fileID: 5438884532977345700, guid: 674e6e29a0bfc4cabb101670cf242d8e, type: 3}
   - {fileID: 8803941521888251163, guid: 7d6220d8dde16470d82e43d71813eac3, type: 3}
-  destroyDistance: 100
+  destroyDistance: 200
   spawnInterval: 2
 --- !u!1 &581520049
 GameObject:

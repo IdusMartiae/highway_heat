@@ -19,7 +19,6 @@ namespace Entities
         
         private float CalculateDistance()
         {
-            Debug.Log($"This is {name} calling.\n My position is {transform.position.ToString()} \n Parent position {_factory.SpawnerTransform.position.ToString()}");
             return Vector3.Distance(transform.position, _factory.SpawnerTransform.position);
         }
         

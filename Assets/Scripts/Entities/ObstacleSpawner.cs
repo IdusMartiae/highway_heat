@@ -25,6 +25,7 @@ namespace Entities
             {
                 _currentInterval = 0;
                 var obstacle = _obstacleFactory.Create().gameObject;
+                
                 obstacle.transform.position = transform.position;
             }
         }
