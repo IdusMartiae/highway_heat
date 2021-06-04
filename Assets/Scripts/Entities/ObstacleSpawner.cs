@@ -5,19 +5,17 @@ namespace Entities
 {
     public class ObstacleSpawner : MonoBehaviour
     {
-        [SerializeField] private List<Obstacle> obstacles;
-        [SerializeField] private float obstacleDestroyDistance = 200;
+        [SerializeField] private List<GameEntity> obstacles;
+        [SerializeField] private float destroyDistance = 200;
         [SerializeField] private float spawnInterval = 100f;
 
         private ObstacleFactory _obstacleFactory;
-        private EventSystem _eventSystem;
         private float _currentInterval;
 
         void Awake()
         {
             _currentInterval = 0f;
-            _eventSystem = new EventSystem();
-            _obstacleFactory = new ObstacleFactory(obstacles, _eventSystem.spawnerMovementEvent);
+            _obstacleFactory = new ObstacleFactory(obstacles, transform, destroyDistance);
         }
 
         void Update()
@@ -26,11 +24,9 @@ namespace Entities
             if (_currentInterval > spawnInterval)
             {
                 _currentInterval = 0;
-                var obstacle = _obstacleFactory.Create();
+                var obstacle = _obstacleFactory.Create().gameObject;
                 obstacle.transform.position = transform.position;
             }
-
-            _eventSystem.spawnerMovementEvent.Invoke(transform, obstacleDestroyDistance);
         }
     }
 }

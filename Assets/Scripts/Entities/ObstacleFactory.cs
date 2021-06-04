@@ -1,44 +1,39 @@
 using System.Collections.Generic;
-using Interfaces;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Entities
 {
-    public class ObstacleFactory: IGameObjectFactory
+    public class ObstacleFactory: BaseFactory
     {
-        private readonly Pool<Obstacle> _pool;
         private readonly System.Random _random;
-        private readonly List<Obstacle> _obstacles;
-        private readonly UnityEvent<Transform, float> _spawnerMovementEvent;
-
-        public ObstacleFactory(List<Obstacle> obstacles, UnityEvent<Transform, float> spawnerMovementEvent)
+        private readonly List<GameEntity> _obstacles;
+        
+        public ObstacleFactory(
+            List<GameEntity> obstacles,
+            Transform spawnerTransform, 
+            float destroyDistance) : base(spawnerTransform, destroyDistance)
         {
-            _pool = new Pool<Obstacle>(obstacles);
+            Pool = new Pool<GameEntity>(obstacles);
+            
             _random = new System.Random();
             _obstacles = obstacles;
-            _spawnerMovementEvent = spawnerMovementEvent;
         }
         
-        public GameObject Create()
+        public override GameEntity Create()
         {
-            var randomObstacleIndex = GetRandomItemIndex();
+            var randomObstacleIndex = GetRandomIndex();
             var randomObstacle = _obstacles[randomObstacleIndex];
 
-            var obstacle = _pool.Pull(randomObstacle);
-            obstacle.Initialize(this, _spawnerMovementEvent);
+            var obstacle = Pool.Pull(randomObstacle);
+            obstacle.Initialize(this);
             
-            return obstacle.gameObject;
+            return obstacle;
         }
-
-        public void Destroy(Obstacle gameObject)
-        {
-            _pool.Push(gameObject);
-        }
-
-        private int GetRandomItemIndex()
+        
+        private int GetRandomIndex()
         {
             var index = _random.Next(0, _obstacles.Count);
+            
             return index;
         }
     }

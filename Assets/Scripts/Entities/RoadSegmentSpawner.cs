@@ -4,25 +4,21 @@ namespace Entities
 {
     public class RoadSegmentSpawner : MonoBehaviour
     {
-        [SerializeField] private RoadSegment colliderPrefab;
+        [SerializeField] private GameEntity colliderPrefab;
         [SerializeField] private int poolSize = 100;
-        [SerializeField] private float colliderDestroyDistance = 10;
+        [SerializeField] private float destroyDistance = 10;
         
         private RoadSegmentFactory _roadSegmentFactory;
-        private EventSystem _eventSystem;
-
+        
         public void Awake()
         {
-            _eventSystem = new EventSystem();
-            _roadSegmentFactory = new RoadSegmentFactory(poolSize, colliderPrefab, _eventSystem.spawnerMovementEvent);
+            _roadSegmentFactory = new RoadSegmentFactory(poolSize, colliderPrefab, transform, destroyDistance);
         }
 
         public void Update()
         {
-            var roadSegment = _roadSegmentFactory.Create();
+            var roadSegment = _roadSegmentFactory.Create().gameObject;
             roadSegment.transform.position = transform.position;
-            
-            _eventSystem.spawnerMovementEvent.Invoke(transform.parent, colliderDestroyDistance);
         }
     }
 }

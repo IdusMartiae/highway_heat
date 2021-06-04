@@ -155,7 +155,7 @@ Transform:
   m_Children:
   - {fileID: 1827229472}
   m_Father: {fileID: 779827373}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &24667476
 MeshCollider:
@@ -300,7 +300,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 56.51525, y: 0, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 381965698}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -492,10 +493,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381965697}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: 0}
+  m_LocalPosition: {x: 100, y: 0, z: 80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 779827373}
+  m_Father: {fileID: 213818049}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &381965699
@@ -516,8 +517,8 @@ MonoBehaviour:
   - {fileID: 5689106350684164774, guid: fa00e2fafe7254970a4f1ae70e46244e, type: 3}
   - {fileID: 5438884532977345700, guid: 674e6e29a0bfc4cabb101670cf242d8e, type: 3}
   - {fileID: 8803941521888251163, guid: 7d6220d8dde16470d82e43d71813eac3, type: 3}
-  obstacleDestroyDistance: 200
-  spawnInterval: 5
+  destroyDistance: 100
+  spawnInterval: 2
 --- !u!1 &581520049
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +676,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 381965698}
   - {fileID: 919497562}
   - {fileID: 24667475}
   - {fileID: 1437194348}
@@ -841,7 +841,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 779827373}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &919497563
 MonoBehaviour:
@@ -857,7 +857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colliderPrefab: {fileID: 5902756885309976053, guid: 2d5f6caa1d17b4ac08b918036b5eb07a, type: 3}
   poolSize: 5
-  colliderDestroyDistance: 5
+  destroyDistance: 10
 --- !u!1 &943431897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1044,7 @@ Transform:
   m_Children:
   - {fileID: 581520050}
   m_Father: {fileID: 779827373}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!64 &1437194349
 MeshCollider:
@@ -1335,7 +1335,7 @@ Transform:
   m_Children:
   - {fileID: 349639432}
   m_Father: {fileID: 779827373}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -90}
 --- !u!64 &2102265762
 MeshCollider:
