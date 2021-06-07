@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject gameObject;
+    [SerializeField] private GameObject gameObject; // TODO: rename
     [SerializeField] private float xOffset;
     [SerializeField] private float zOffset;
     

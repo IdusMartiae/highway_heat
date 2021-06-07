@@ -5,7 +5,6 @@ namespace Entities
 {
     public class ObstacleFactory: BaseFactory
     {
-        
         public ObstacleFactory(
             List<GameEntity> obstacles,
             Transform spawnerTransform, 

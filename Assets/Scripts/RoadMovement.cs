@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RoadMovement : MonoBehaviour
 {
-    [SerializeField] private float speedX = 20f; // TODO: use [SerializeField] with public Properties
+    [SerializeField] private float speedX = 20f;
     [SerializeField] private float speedY = 10f;
     [SerializeField] private float minY = -20f;
     [SerializeField] private float maxY = 20f;

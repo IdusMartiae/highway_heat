@@ -20,11 +20,12 @@ namespace Entities
 
         void Update()
         {
+            // TODO: move to method
             _currentInterval += Time.deltaTime;
             if (_currentInterval > spawnInterval)
             {
                 _currentInterval = 0;
-                var obstacle = _obstacleFactory.Create().gameObject;
+                var obstacle = _obstacleFactory.Create();
                 
                 obstacle.transform.position = transform.position;
             }

@@ -10,12 +10,12 @@ namespace Entities
         
         private RoadSegmentFactory _roadSegmentFactory;
         
-        public void Awake()
+        private void Awake()
         {
             _roadSegmentFactory = new RoadSegmentFactory(poolSize, colliderPrefab, transform, destroyDistance);
         }
 
-        public void Update()
+        private void Update()
         {
             var roadSegment = _roadSegmentFactory.Create().gameObject;
             roadSegment.transform.position = transform.position;
