@@ -809,7 +809,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c206a4e16e20f40fca74f232e6a55b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObject: {fileID: 779827372}
+  roadSpawnerObject: {fileID: 779827372}
   xOffset: -5
   zOffset: 0
 --- !u!1 &919497561

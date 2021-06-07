@@ -20,10 +20,10 @@ namespace Entities
         {
             var gameEntity = Pool.Pull();
             gameEntity.Initialize(this);
-            
+
             return gameEntity;
         }
-        
+
         public void Destroy(GameEntity gameEntity)
         {
             Pool.Push(gameEntity);

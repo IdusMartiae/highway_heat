@@ -1,6 +1,8 @@
+using Entities;
+using Factories;
 using UnityEngine;
 
-namespace Entities
+namespace Spawners
 {
     public class RoadSegmentSpawner : MonoBehaviour
     {

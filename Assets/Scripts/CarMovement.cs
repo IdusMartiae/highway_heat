@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject gameObject; // TODO: rename
+    [SerializeField] private GameObject roadSpawnerObject;
     [SerializeField] private float xOffset;
     [SerializeField] private float zOffset;
     
-    void Update()
+     private void Update()
     {
         var newPosition = new Vector3(
-            gameObject.transform.position.x + xOffset,
+            roadSpawnerObject.transform.position.x + xOffset,
             transform.position.y,
-            gameObject.transform.position.z + zOffset
+            roadSpawnerObject.transform.position.z + zOffset
         );
         transform.position = newPosition;
     }

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using Entities;
+using Factories;
 using UnityEngine;
 
-namespace Entities
+namespace Spawners
 {
     public class ObstacleSpawner : MonoBehaviour
     {
@@ -12,23 +14,37 @@ namespace Entities
         private ObstacleFactory _obstacleFactory;
         private float _currentInterval;
 
-        void Awake()
+        private void Awake()
         {
             _currentInterval = 0f;
             _obstacleFactory = new ObstacleFactory(obstacles, transform, destroyDistance);
         }
 
-        void Update()
+        private void Update()
         {
-            // TODO: move to method
-            _currentInterval += Time.deltaTime;
+            CreateOnTimeInterval();
+        }
+        private void CreateOnTimeInterval()
+        {
+            UpdateCurrentTimeInterval();
+            
             if (_currentInterval > spawnInterval)
             {
-                _currentInterval = 0;
-                var obstacle = _obstacleFactory.Create();
-                
-                obstacle.transform.position = transform.position;
+                CreateObstacle();
             }
+        }
+
+        private void UpdateCurrentTimeInterval()
+        {
+            _currentInterval += Time.deltaTime;
+        }
+
+        private void CreateObstacle()
+        {
+            _currentInterval = 0;
+            var obstacle = _obstacleFactory.Create();
+
+            obstacle.transform.position = transform.position;
         }
     }
 }

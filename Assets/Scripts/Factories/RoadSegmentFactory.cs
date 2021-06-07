@@ -1,6 +1,7 @@
+using Entities;
 using UnityEngine;
 
-namespace Entities
+namespace Factories
 {
     public class RoadSegmentFactory : BaseFactory
     {
