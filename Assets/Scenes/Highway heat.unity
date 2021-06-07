@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedX: 30
-  speedY: 10
+  speedY: 20
   minY: -20
   maxY: 20
 --- !u!1 &849750910
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadSegmentSpawner: {fileID: 919497563}
-  xOffset: 0
+  xOffset: -2
   yOffset: 1
   zOffset: 0
 --- !u!1 &919497561
@@ -852,9 +852,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colliderPrefab: {fileID: 5902756885309976053, guid: 2d5f6caa1d17b4ac08b918036b5eb07a, type: 3}
-  poolSize: 5
+  poolSize: 10
   destroyDistance: 10
-  colliderFrontQueueSize: 3
+  colliderFrontQueueSize: 5
 --- !u!1 &943431897
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,7 +21,7 @@ namespace Spawners
             InitializeSpawner();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             CreateColliderAndAddToQueue();
         }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Entities;
 using Spawners;
 using UnityEngine;
@@ -15,21 +16,17 @@ public class CarMovement : MonoBehaviour
     private float _carZ;
     private float _carRotationX;
     
-     private void Update()
+     private void FixedUpdate()
      {
-         if (roadSegmentSpawner.ColliderFrontQueue.Count != 0)
-         {
-             CalculateCarTransform(); 
-             ChangeCarTransform();
-         }
-         
+         CalculateCarTransform(); 
+         ChangeCarTransform();
     }
 
      private void ChangeCarTransform()
      {
          var newX = roadSegmentSpawner.transform.position.x + xOffset;
          transform.position = new Vector3(newX, _carY, _carZ);
-         transform.eulerAngles = new Vector3(_carRotationX, 90f, 0f);
+        
      }
 
      private void CalculateCarTransform()
@@ -37,7 +34,7 @@ public class CarMovement : MonoBehaviour
          var colliders = roadSegmentSpawner.ColliderFrontQueue;
          
          CalculateAverageCoordinates(out _carX, out _carY, out _carZ, colliders);
-         CalculateCarRotation(_carX, _carY, colliders);
+         CalculateCarRotation(colliders);
          
          _carX += xOffset;
          _carY += yOffset;
@@ -54,7 +51,7 @@ public class CarMovement : MonoBehaviour
          {
              var itemPosition = item.transform.position;
              
-             x += itemPosition.x;
+             x += itemPosition.x; 
              y += itemPosition.y;
              z += itemPosition.z;
              
@@ -66,21 +63,21 @@ public class CarMovement : MonoBehaviour
          
      }
 
-     private void CalculateCarRotation(float x, float y, List<GameEntity> list)
+     private void CalculateCarRotation(List<GameEntity> list)
      {
-         _carRotationX = 0f;
+         var firstItem = list[0];
+         var lastItem = list.Last();
 
-         foreach (var item in list)
-         {
-             var itemPosition = item.transform.position;
-             
-             _carRotationX -= (itemPosition.y - y) / (itemPosition.x - x);
-    
-             
-         }
-
-         _carRotationX /= list.Count;
-
-         _carRotationX = Mathf.Atan(_carRotationX) * 180 / Mathf.PI;
+         var deltaX = lastItem.transform.position.x - firstItem.transform.position.x;
+         var deltaY = lastItem.transform.position.y - firstItem.transform.position.y;
+         
+         _carRotationX = - Mathf.Atan2(deltaY, deltaX) * 180 / Mathf.PI;
+         
+         /*var firstItem = list[0];
+         var lastItem = list.Last();
+         
+         var deltaY = lastItem.transform.position.y - firstItem.transform.position.y;
+         
+         transform.eulerAngles = new Vector3(-deltaY*20, 90, 0);*/
      }
 }

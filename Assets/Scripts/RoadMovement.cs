@@ -7,7 +7,7 @@ public class RoadMovement : MonoBehaviour
     [SerializeField] private float minY = -20f;
     [SerializeField] private float maxY = 20f;
 
-    private void Update()
+    private void FixedUpdate()
     {
         var playerDelta = new Vector3(Time.deltaTime * speedX, Input.GetAxis("Vertical") * speedY * Time.deltaTime, 0);
         transform.Translate(playerDelta);
