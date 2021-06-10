@@ -10,11 +10,11 @@ namespace Spawners
         [SerializeField] private GameEntity colliderPrefab;
         [SerializeField] private int poolSize = 100;
         [SerializeField] private float destroyDistance = 10;
-        [SerializeField] private int colliderFrontQueueSize;
-            
+        [SerializeField] private int colliderCaptureNumber;
+
         private RoadSegmentFactory _roadSegmentFactory;
-        
-        public List<GameEntity> ColliderFrontQueue { get; private set; }
+
+        public List<GameEntity> CapturedColliderQueue { get; set; }
 
         private void Awake()
         {
@@ -26,32 +26,27 @@ namespace Spawners
             CreateColliderAndAddToQueue();
         }
 
-        private void OnDestroy()
-        {
-            ColliderFrontQueue.Clear();
-        }
-
         private void InitializeSpawner()
         {
             _roadSegmentFactory = new RoadSegmentFactory(poolSize, colliderPrefab, transform, destroyDistance);
-            ColliderFrontQueue = new List<GameEntity>();
+            CapturedColliderQueue = new List<GameEntity>();
         }
 
         private void AddColliderToQueue(GameEntity colliderGameEntity)
         {
-            if (ColliderFrontQueue.Count == colliderFrontQueueSize)
+            if (CapturedColliderQueue.Count == colliderCaptureNumber)
             {
                 RemoveColliderFromQueue();
             }
-            
-            ColliderFrontQueue.Add(colliderGameEntity);
+
+            CapturedColliderQueue.Add(colliderGameEntity);
         }
 
         private void RemoveColliderFromQueue()
         {
-            if (ColliderFrontQueue.Count != 0)
+            if (CapturedColliderQueue.Count != 0)
             {
-                ColliderFrontQueue.RemoveAt(0);
+                CapturedColliderQueue.RemoveAt(0);
             }
         }
 
@@ -59,7 +54,7 @@ namespace Spawners
         {
             var roadSegment = _roadSegmentFactory.Create();
             roadSegment.transform.position = transform.position;
-            
+
             AddColliderToQueue(roadSegment);
         }
     }

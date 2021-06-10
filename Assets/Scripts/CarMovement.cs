@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using Entities;
 using Spawners;
 using UnityEngine;
 
@@ -11,73 +9,40 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float yOffset;
     [SerializeField] private float zOffset;
 
-    private float _carX;
-    private float _carY;
-    private float _carZ;
-    private float _carRotationX;
-    
-     private void FixedUpdate()
-     {
-         CalculateCarTransform(); 
-         ChangeCarTransform();
+    private void FixedUpdate()
+    {
+        if (roadSegmentSpawner.CapturedColliderQueue.Count < 2) return;
+        ChangeCarTransform();
     }
 
-     private void ChangeCarTransform()
-     {
-         var newX = roadSegmentSpawner.transform.position.x + xOffset;
-         transform.position = new Vector3(newX, _carY, _carZ);
-        
-     }
+    private void ChangeCarTransform()
+    {
+        transform.position = GetNewPositionVector();
+        transform.eulerAngles = new Vector3(GetXAxisAngle(), 90, 0);
+    }
 
-     private void CalculateCarTransform()
-     {
-         var colliders = roadSegmentSpawner.ColliderFrontQueue;
-         
-         CalculateAverageCoordinates(out _carX, out _carY, out _carZ, colliders);
-         CalculateCarRotation(colliders);
-         
-         _carX += xOffset;
-         _carY += yOffset;
-         _carZ += zOffset;
-     }
+    private Vector3 GetNewPositionVector()
+    {
+        var frontPoint = roadSegmentSpawner.CapturedColliderQueue.Last().transform.position;
+        var backPoint = roadSegmentSpawner.CapturedColliderQueue[0].transform.position;
 
-     private void CalculateAverageCoordinates(out float x, out float y, out float z, List<GameEntity> list)
-     {
-         x = 0f;
-         y = 0f;
-         z = 0f;
-         
-         foreach (var item in list)
-         {
-             var itemPosition = item.transform.position;
-             
-             x += itemPosition.x; 
-             y += itemPosition.y;
-             z += itemPosition.z;
-             
-         }
+        var newX = (frontPoint.x + backPoint.x) / 2 + xOffset;
+        // Fix car clipping through the road if xOffset != 0
+        var newY = (frontPoint.y + backPoint.y) / 2 + yOffset - xOffset * Mathf.Tan(GetXAxisAngle() / 180 * Mathf.PI);
+        var newZ = zOffset;
 
-         x /= list.Count;
-         y /= list.Count;
-         z /= list.Count;
-         
-     }
+        return new Vector3(newX, newY, newZ);
+    }
 
-     private void CalculateCarRotation(List<GameEntity> list)
-     {
-         var firstItem = list[0];
-         var lastItem = list.Last();
+    private float GetXAxisAngle()
+    {
+        var frontPoint = roadSegmentSpawner.CapturedColliderQueue.Last().transform.position;
+        var backPoint = roadSegmentSpawner.CapturedColliderQueue[0].transform.position;
 
-         var deltaX = lastItem.transform.position.x - firstItem.transform.position.x;
-         var deltaY = lastItem.transform.position.y - firstItem.transform.position.y;
-         
-         _carRotationX = - Mathf.Atan2(deltaY, deltaX) * 180 / Mathf.PI;
-         
-         /*var firstItem = list[0];
-         var lastItem = list.Last();
-         
-         var deltaY = lastItem.transform.position.y - firstItem.transform.position.y;
-         
-         transform.eulerAngles = new Vector3(-deltaY*20, 90, 0);*/
-     }
+        var deltaX = frontPoint.x - backPoint.x;
+        var deltaY = frontPoint.y - backPoint.y;
+
+        var xAxisAngle = -Mathf.Atan2(deltaY, deltaX) * 180 / Mathf.PI;
+        return xAxisAngle;
+    }
 }
