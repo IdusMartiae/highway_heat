@@ -1,12 +1,12 @@
-using Interfaces;
+using Entities.Factories.Interfaces;
 using UnityEngine;
 
-namespace Entities
+namespace Entities.Factories
 {
     public class BaseFactory : IGameEntityFactory
     {
-        public Transform SpawnerTransform { get; set; }
-        public float DestroyDistance { get; set; }
+        public Transform SpawnerTransform { get; }
+        public float DestroyDistance { get; }
 
         protected Pool<GameEntity> Pool;
 

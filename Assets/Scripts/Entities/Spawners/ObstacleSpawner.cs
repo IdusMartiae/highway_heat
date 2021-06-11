@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using Entities;
-using Factories;
+using Entities.Factories;
 using UnityEngine;
 
-namespace Spawners
+namespace Entities.Spawners
 {
     public class ObstacleSpawner : MonoBehaviour
     {

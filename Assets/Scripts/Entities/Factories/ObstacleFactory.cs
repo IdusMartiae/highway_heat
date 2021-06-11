@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Entities;
 using UnityEngine;
 
-namespace Factories
+namespace Entities.Factories
 {
     public class ObstacleFactory: BaseFactory
     {
