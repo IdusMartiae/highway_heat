@@ -5,7 +5,7 @@ namespace Entities.StateMachines
 {
     public abstract class State
     {
-        protected List<Transition> transitions;
+        private List<Transition> transitions;
 
         protected State()
         {
@@ -28,9 +28,9 @@ namespace Entities.StateMachines
             return this;
         }
 
-        public void AddTransition(Transition transition)
+        public void AddTransition(State state, Transition.TransitionCheckDelegate transition)
         {
-            transitions.Add(transition);
+            transitions.Add(new Transition(state, transition));
         }
     }
 }

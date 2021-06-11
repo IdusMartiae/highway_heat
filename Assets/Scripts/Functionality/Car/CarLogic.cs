@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Entities;
 using Entities.StateMachines;
 using Entities.StateMachines.Car.States;
-using Entities.StateMachines.Car.Transitions;
 
 namespace Functionality.Car
 {
@@ -12,15 +11,13 @@ namespace Functionality.Car
         private StateMachine _stateMachine;
         private CarPhysicsSimulation _carPhysics;
 
-        private List<State> _states;
-        
+
         public CarLogic(CarPhysicsSimulation carPhysics, List<GameEntity> entities)
         {
             _carPhysics = carPhysics;
             _entities = entities;
-
-            _states = InitializeStates();
-            _stateMachine = new StateMachine(_states[0]);
+            
+            InitializeStateMachine();
         }
 
         public void FixedUpdate()
@@ -33,17 +30,25 @@ namespace Functionality.Car
             _stateMachine.Tick();
         }
 
-        private List<State> InitializeStates()
+        private void InitializeStateMachine()
         {
-            var list = new List<State>();
-            
-            list.Add(new AirborneCarState(_carPhysics));
-            list.Add(new GroundedCarState(_carPhysics));
-            
-            list[0].AddTransition(new GroundedTransition(list[1], _carPhysics));
-            list[1].AddTransition(new AirborneTransition(list[0], _carPhysics));
-            
-            return list;
+            var airborne = new AirborneCarState(_carPhysics);
+            var grounded = new GroundedCarState(_carPhysics);
+
+            airborne.AddTransition(grounded, CheckIfAirborne);
+            grounded.AddTransition(airborne, CheckIfGrounded);
+
+            _stateMachine = new StateMachine(grounded);
+        }
+
+        private bool CheckIfAirborne(CarPhysicsSimulation carPhysicsSimulation)
+        {
+            return true;
+        }
+
+        private bool CheckIfGrounded(CarPhysicsSimulation carPhysicsSimulation)
+        {
+            return true;
         }
     }
 }
