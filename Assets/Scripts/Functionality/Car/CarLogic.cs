@@ -21,6 +21,8 @@ namespace Functionality.Car
 
             InitializeStateMachine();
         }
+        // TODO: Update(){ Tick() }
+        // TODO: FixedUpdate(){ FixedTick() }
 
         public void FixedUpdate()
         {

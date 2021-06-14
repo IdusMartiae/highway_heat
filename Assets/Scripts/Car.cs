@@ -7,7 +7,6 @@ public class Car : MonoBehaviour
     [SerializeField] private RoadSegmentSpawner roadSegmentSpawner;
     [SerializeField] private Vector3 carOffset;
     [SerializeField] private float airborneAngle = 45f;
-
     [SerializeField] private float gravity = 5f;
     
     private CarLogic _carLogic;

@@ -12,17 +12,28 @@ namespace Entities.StateMachines
             _transitions = new List<Transition>();
         }
 
-        public abstract void OnStateEnter();
+        public virtual void OnStateEnter()
+        {
+        }
 
-        public abstract void Tick();
+        public virtual void Tick()
+        {
+        }
 
-        public abstract void OnStateExit();
+        public virtual void FixedTick()
+        {
+            
+        }
+
+        public virtual void OnStateExit()
+        {
+        }
 
         public State CheckTransitions()
         {
-            foreach (var transition in _transitions.Where(transition => transition.decision.DoDecide()))
+            foreach (var transition in _transitions.Where(transition => transition.Decision.DoDecide()))
             {
-                return transition.state;
+                return transition.State;
             }
 
             return this;

@@ -25,9 +25,5 @@ namespace Entities.StateMachines.Car.States
             _airborneTime += Time.deltaTime;
             _carPhysics.ChangeAirborneTransform(_startingPosition, _airborneTime);
         }
-
-        public override void OnStateExit()
-        {
-        }
     }
 }

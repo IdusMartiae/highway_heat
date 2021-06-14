@@ -1,20 +1,18 @@
-using UnityEngine;
-
 namespace Entities.StateMachines
 {
     public class StateMachine
     {
         private State _currentState;
 
-        public StateMachine(State states)
+        public StateMachine(State state)
         {
-            _currentState = states;
+            _currentState = state;
         }
         
         public void Tick()
         {
-            _currentState.Tick();
             ChangeStateIfNeeded();
+            _currentState.Tick();
         }
         
         private void ChangeStateIfNeeded()
