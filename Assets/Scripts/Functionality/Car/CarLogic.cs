@@ -1,22 +1,24 @@
 using System.Collections.Generic;
 using Entities;
 using Entities.StateMachines;
+using Entities.StateMachines.Car.Decisions;
 using Entities.StateMachines.Car.States;
 
 namespace Functionality.Car
 {
     public class CarLogic
     {
-        private List<GameEntity> _entities;
+        private readonly CarPhysicsSimulation _carPhysics;
+        private readonly float _airborneAngle;
+        private readonly List<GameEntity> _entities;
         private StateMachine _stateMachine;
-        private CarPhysicsSimulation _carPhysics;
 
-
-        public CarLogic(CarPhysicsSimulation carPhysics, List<GameEntity> entities)
+        public CarLogic(CarPhysicsSimulation carPhysics, float airborneAngle, List<GameEntity> entities)
         {
             _carPhysics = carPhysics;
+            _airborneAngle = airborneAngle;
             _entities = entities;
-            
+
             InitializeStateMachine();
         }
 
@@ -32,23 +34,16 @@ namespace Functionality.Car
 
         private void InitializeStateMachine()
         {
-            var airborne = new AirborneCarState(_carPhysics);
-            var grounded = new GroundedCarState(_carPhysics);
+            var airborneState = new AirborneCarState(_carPhysics);
+            var groundedState = new GroundedCarState(_carPhysics);
 
-            airborne.AddTransition(grounded, CheckIfAirborne);
-            grounded.AddTransition(airborne, CheckIfGrounded);
+            var airborneDecision = new AirborneStateChangeDecision(_carPhysics.CarTransform, _airborneAngle);
+            var groundedDecision = new GroundedStateChangeDecision(_carPhysics.CarTransform, _entities);
 
-            _stateMachine = new StateMachine(grounded);
-        }
+            airborneState.AddTransition(groundedState, groundedDecision);
+            groundedState.AddTransition(airborneState, airborneDecision);
 
-        private bool CheckIfAirborne(CarPhysicsSimulation carPhysicsSimulation)
-        {
-            return true;
-        }
-
-        private bool CheckIfGrounded(CarPhysicsSimulation carPhysicsSimulation)
-        {
-            return true;
+            _stateMachine = new StateMachine(groundedState);
         }
     }
 }

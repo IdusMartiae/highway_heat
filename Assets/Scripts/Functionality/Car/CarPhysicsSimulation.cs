@@ -7,15 +7,19 @@ namespace Functionality.Car
 {
     public class CarPhysicsSimulation
     {
-        private readonly Transform _carTransform;
+        public Transform CarTransform { get; }
+        private readonly float _gravity;
         private readonly Vector3 _carOffset;
         private readonly List<GameEntity> _colliderQueue;
 
-        public CarPhysicsSimulation(Transform carTransform, Vector3 carOffset, List<GameEntity> colliderQueue)
+
+        public CarPhysicsSimulation(Transform carTransform, Vector3 carOffset, List<GameEntity> colliderQueue, float gravity)
         {
-            _carTransform = carTransform;
+            CarTransform = carTransform;
             _carOffset = carOffset;
             _colliderQueue = colliderQueue;
+
+            _gravity = gravity;
         }
 
         public void ChangeGroundedTransform()
@@ -25,13 +29,13 @@ namespace Functionality.Car
 
             var carRotation = GetGroundedRotation(frontPoint, backPoint);
 
-            _carTransform.position = GetGroundedPosition(frontPoint, backPoint, carRotation);
-            _carTransform.eulerAngles = carRotation;
+            CarTransform.position = GetGroundedPosition(frontPoint, backPoint, carRotation);
+            CarTransform.eulerAngles = carRotation;
         }
 
         private Vector3 GetGroundedRotation(Vector3 frontPoint, Vector3 backPoint)
         {
-            var prevRotation = _carTransform.rotation;
+            var prevRotation = CarTransform.eulerAngles;
 
             var deltaX = frontPoint.x - backPoint.x;
             var deltaY = frontPoint.y - backPoint.y;
@@ -45,27 +49,39 @@ namespace Functionality.Car
         {
             var x = (frontPoint.x + backPoint.x) / 2 + _carOffset.x;
             var y = (frontPoint.y + backPoint.y) / 2 + _carOffset.y -
-                    _carOffset.z * Mathf.Tan(rotation.x / 180 * Mathf.PI);
-            var z = (frontPoint.y + backPoint.y) / 2 + _carOffset.z;
+                    _carOffset.x * Mathf.Tan(rotation.x / 180 * Mathf.PI);
+            var z = (frontPoint.z + backPoint.z) / 2 + _carOffset.z;
 
             return new Vector3(x, y, z);
         }
 
-        public void ChangeAirborneTransform()
+        public void ChangeAirborneTransform(Vector3 startingPosition, float airborneTime)
         {
+            var prevPosition = CarTransform.position;
             
+            CarTransform.position = GetAirbornePosition(startingPosition, airborneTime);
+            CarTransform.eulerAngles = GetAirborneRotation(prevPosition);
         }
 
-        private Vector3 GetAirbornePosition()
+        private Vector3 GetAirbornePosition(Vector3 startingTransform, float airborneTime)
         {
+            var x = startingTransform.x + 30 * airborneTime;
+            var y = startingTransform.y + 40 * airborneTime - _gravity * airborneTime * airborneTime / 2;
+            var z = startingTransform.z;
 
-
-            return new Vector3();
+            return new Vector3(x, y, z);
         }
 
-        private Vector3 GetAirborneRotation()
+        private Vector3 GetAirborneRotation(Vector3 prevPosition)
         {
-            return new Vector3();
+            var currentPosition = CarTransform.position;
+
+            var deltaY = currentPosition.y - prevPosition.y;
+            var deltaX = currentPosition.x - prevPosition.x;
+            
+            var xRotation = -Mathf.Atan2(deltaY, deltaX) * 180 / Mathf.PI;
+
+            return new Vector3(xRotation, CarTransform.eulerAngles.y, CarTransform.eulerAngles.z);
         }
     }
 }

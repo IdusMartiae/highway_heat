@@ -1,19 +1,14 @@
-using System;
-using Functionality.Car;
-
 namespace Entities.StateMachines
 {
     public class Transition
     {
-        
-        public State transitionState;
-        public Func<CarPhysicsSimulation, bool> TransitionCheck;
+        public readonly State state;
+        public readonly Decision decision;
 
-        public Transition(State state, Func<CarPhysicsSimulation, bool> transitionCheck)
+        public Transition(State transitionState, Decision transitionDecision)
         {
-            transitionState = state;
-            TransitionCheck = transitionCheck;
+            decision = transitionDecision;
+            state = transitionState;
         }
-       
     }
 }

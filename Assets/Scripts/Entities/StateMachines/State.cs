@@ -5,11 +5,11 @@ namespace Entities.StateMachines
 {
     public abstract class State
     {
-        private List<Transition> transitions;
+        private readonly List<Transition> _transitions;
 
         protected State()
         {
-            transitions = new List<Transition>();
+            _transitions = new List<Transition>();
         }
 
         public abstract void OnStateEnter();
@@ -20,17 +20,17 @@ namespace Entities.StateMachines
 
         public State CheckTransitions()
         {
-            foreach (var transition in transitions.Where(transition => transition.TransitionCheck()))
+            foreach (var transition in _transitions.Where(transition => transition.decision.DoDecide()))
             {
-                return transition.transitionState;
+                return transition.state;
             }
 
             return this;
         }
 
-        public void AddTransition(State state, Transition.TransitionCheckDelegate transition)
+        public void AddTransition(State state, Decision decision)
         {
-            transitions.Add(new Transition(state, transition));
+            _transitions.Add(new Transition(state, decision));
         }
     }
 }
