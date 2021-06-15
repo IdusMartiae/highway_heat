@@ -2,17 +2,41 @@ using UnityEngine;
 
 public class RoadMovement : MonoBehaviour
 {
-    [SerializeField] private float speedX = 20f;
-    [SerializeField] private float speedY = 10f;
-    [SerializeField] private float minY = -20f;
-    [SerializeField] private float maxY = 20f;
+    [SerializeField] private float horizontalSpeed = 30f;
+    [SerializeField] private float verticalSpeed = 100f;
+    [SerializeField] private float verticalMax = 20f;
+    [SerializeField] private float verticalMin = -20f;
+    [SerializeField] private InputHandler _inputHandler;
+
+    private Vector3 _velocity;
+
+    private void Awake()
+    {
+        _velocity = Vector3.zero;
+    }
 
     private void FixedUpdate()
     {
-        var playerDelta = new Vector3(Time.deltaTime * speedX, Input.GetAxis("Vertical") * speedY * Time.deltaTime, 0);
-        transform.Translate(playerDelta);
+        MoveRoadBox();
+        if (!Input.anyKey) return;
+        MoveToMousePosition();
+    }
 
-        var roadPosition = transform.position;
-        transform.position = new Vector3(roadPosition.x, Mathf.Clamp(roadPosition.y, minY, maxY), roadPosition.z);
+    private void MoveRoadBox()
+    {
+        transform.Translate(Vector3.right * (Time.deltaTime * horizontalSpeed));
+    }
+
+    private void MoveToMousePosition()
+    {
+        var worldPoint = new Vector3(transform.position.x,
+            ((verticalMax - verticalMin) * _inputHandler.MouseNormalizedY) + verticalMin, 0);
+
+        transform.position = Vector3.SmoothDamp(
+            transform.position,
+            worldPoint,
+            ref _velocity,
+            _inputHandler.Sensitivity,
+            verticalSpeed);
     }
 }
