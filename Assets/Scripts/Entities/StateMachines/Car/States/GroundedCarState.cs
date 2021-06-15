@@ -11,7 +11,7 @@ namespace Entities.StateMachines.Car.States
             _carPhysics = carPhysics;
         }
 
-        public override void Tick()
+        public override void FixedTick()
         {
             _carPhysics.ChangeGroundedTransform();
         }

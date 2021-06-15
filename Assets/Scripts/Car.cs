@@ -1,3 +1,4 @@
+using System;
 using Entities.Spawners;
 using Functionality.Car;
 using UnityEngine;
@@ -28,4 +29,5 @@ public class Car : MonoBehaviour
     {
         _carLogic.FixedUpdate();
     }
+
 }

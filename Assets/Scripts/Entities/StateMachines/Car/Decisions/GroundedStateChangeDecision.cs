@@ -16,7 +16,8 @@ namespace Entities.StateMachines.Car.Decisions
 
         public override bool DoDecide()
         {
-            var isGrounded = _carTransform.position.y - _roadColliders[0].transform.position.y < 2;
+            // need new grounded criteria, this doesn't work properly 
+            var isGrounded = _carTransform.position.y + 1 < _roadColliders[0].transform.position.y ;
             return isGrounded;
         }
     }

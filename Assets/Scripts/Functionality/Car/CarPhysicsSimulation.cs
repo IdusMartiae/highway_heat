@@ -12,13 +12,12 @@ namespace Functionality.Car
         private readonly Vector3 _carOffset;
         private readonly List<GameEntity> _colliderQueue;
 
-
-        public CarPhysicsSimulation(Transform carTransform, Vector3 carOffset, List<GameEntity> colliderQueue, float gravity)
+        public CarPhysicsSimulation(Transform carTransform, Vector3 carOffset, List<GameEntity> colliderQueue,
+            float gravity)
         {
             CarTransform = carTransform;
             _carOffset = carOffset;
             _colliderQueue = colliderQueue;
-
             _gravity = gravity;
         }
 
@@ -55,19 +54,19 @@ namespace Functionality.Car
             return new Vector3(x, y, z);
         }
 
-        public void ChangeAirborneTransform(Vector3 startingPosition, float airborneTime)
+        public void ChangeAirborneTransform(Vector3 startingPosition, Vector2 velocity,float airborneTime)
         {
             var prevPosition = CarTransform.position;
-            
-            CarTransform.position = GetAirbornePosition(startingPosition, airborneTime);
+
+            CarTransform.position = GetAirbornePosition(startingPosition, velocity, airborneTime);
             CarTransform.eulerAngles = GetAirborneRotation(prevPosition);
         }
 
-        private Vector3 GetAirbornePosition(Vector3 startingTransform, float airborneTime)
+        private Vector3 GetAirbornePosition(Vector3 startingPosition, Vector2 velocity, float airborneTime)
         {
-            var x = startingTransform.x + 30 * airborneTime;
-            var y = startingTransform.y + 40 * airborneTime - _gravity * airborneTime * airborneTime / 2;
-            var z = startingTransform.z;
+            var x = startingPosition.x + velocity.x * airborneTime;
+            var y = startingPosition.y + velocity.y * airborneTime - _gravity * airborneTime * airborneTime / 2;
+            var z = startingPosition.z;
 
             return new Vector3(x, y, z);
         }
@@ -78,7 +77,7 @@ namespace Functionality.Car
 
             var deltaY = currentPosition.y - prevPosition.y;
             var deltaX = currentPosition.x - prevPosition.x;
-            
+
             var xRotation = -Mathf.Atan2(deltaY, deltaX) * 180 / Mathf.PI;
 
             return new Vector3(xRotation, CarTransform.eulerAngles.y, CarTransform.eulerAngles.z);

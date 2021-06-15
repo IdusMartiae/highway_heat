@@ -23,7 +23,12 @@ namespace Functionality.Car
         }
         // TODO: Update(){ Tick() }
         // TODO: FixedUpdate(){ FixedTick() }
-
+        
+        public void Update()
+        {
+            
+        }
+        
         public void FixedUpdate()
         {
             if (_entities.Count < 2)
@@ -31,7 +36,7 @@ namespace Functionality.Car
                 return;
             }
 
-            _stateMachine.Tick();
+            _stateMachine.FixedTick();
         }
 
         private void InitializeStateMachine()

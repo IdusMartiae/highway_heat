@@ -11,8 +11,12 @@ namespace Entities.StateMachines
         
         public void Tick()
         {
+        }
+
+        public void FixedTick()
+        {
             ChangeStateIfNeeded();
-            _currentState.Tick();
+            _currentState.FixedTick();
         }
         
         private void ChangeStateIfNeeded()

@@ -15,6 +15,7 @@ namespace Entities.StateMachines.Car.Decisions
 
         public override bool DoDecide()
         {
+            // need new airborne criteria
             var currentAngle = _carTransform.eulerAngles.x > 180
                 ? _carTransform.eulerAngles.x - 360
                 : _carTransform.eulerAngles.x;

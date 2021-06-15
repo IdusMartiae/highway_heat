@@ -22,7 +22,6 @@ namespace Entities.StateMachines
 
         public virtual void FixedTick()
         {
-            
         }
 
         public virtual void OnStateExit()

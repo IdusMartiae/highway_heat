@@ -7,13 +7,13 @@ namespace Entities.Spawners
     public class RoadSegmentSpawner : MonoBehaviour
     {
         [SerializeField] private GameEntity colliderPrefab;
-        [SerializeField] private int poolSize = 100;
+        [SerializeField] private int poolSize = 10;
         [SerializeField] private float destroyDistance = 10;
-        [SerializeField] private int colliderCaptureNumber;
+        [SerializeField] private int colliderCaptureNumber = 5;
 
         private RoadSegmentFactory _roadSegmentFactory;
 
-        public List<GameEntity> CapturedColliderQueue { get; set; }
+        public List<GameEntity> CapturedColliderQueue { get; private set; }
 
         private void Awake()
         {
