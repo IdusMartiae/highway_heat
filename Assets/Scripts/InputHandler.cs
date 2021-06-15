@@ -2,38 +2,24 @@ using UnityEngine;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] private float horizontalSpeed = 20f;
-    [SerializeField] private float verticalSpeed = 10f;
-    [SerializeField] private float verticalMax = 20f;
-    [SerializeField] private float verticalMin = -20f;
+    [SerializeField] private float verticalInputMargin = 50f;
+    [SerializeField] private float sensitivity = 0.5f;
+
+    public float MouseNormalizedY { get; private set; }
+
+    public float Sensitivity => sensitivity;
 
     private void Update()
     {
-        transform.Translate(Vector3.right * Time.deltaTime * horizontalSpeed);
+        if (!Input.anyKey) return;
+        MouseNormalizedY = GetMouseNormalizedY();
+    }
 
-        /*var topPoint = new Vector3(transform.position.x, verticalMax, transform.position.z);
-        var bottomPoint = new Vector3(transform.position.x, verticalMin, transform.position.z);*/
+    private float GetMouseNormalizedY()
+    {
+        var mouseY = Mathf.Clamp(Input.mousePosition.y, verticalInputMargin, Screen.height - verticalInputMargin);
+        var normalizedMouseY = (mouseY - verticalInputMargin) / (Screen.height - 2 * verticalInputMargin);
 
-        if (Input.anyKey)
-        {
-            var yNormalized = Input.mousePosition.y / Screen.height;
-            var yPoint = new Vector3(transform.position.x, (verticalMax - verticalMin) * yNormalized, 0);
-            transform.position = Vector3.MoveTowards(transform.position, yPoint, Time.deltaTime * verticalSpeed);
-            /*
-            if (transform.position.y < verticalMax)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, , Time.deltaTime * verticalSpeed);
-            }
-        }
-
-        {
-            if (transform.position.y > verticalMin)
-            {
-                transform.position =
-                    Vector3.MoveTowards(transform.position, , Time.deltaTime * verticalSpeed);
-            }*/
-
-
-        }
+        return normalizedMouseY;
     }
 }
