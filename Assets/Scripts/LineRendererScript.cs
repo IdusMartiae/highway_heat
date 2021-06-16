@@ -8,6 +8,7 @@ public class LineRendererScript : MonoBehaviour
     [SerializeField] private int pointsPerLine = 10;
     [SerializeField] private InputHandler inputHandler;
 
+    [SerializeField] private GameConfiguration gameConfiguration;
     [SerializeField] private float verticalMax = 20f;
     [SerializeField] private float verticalMin = -20f;
     [SerializeField] private float verticalSpeed = 100f;
