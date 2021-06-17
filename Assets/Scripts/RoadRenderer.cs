@@ -1,34 +1,52 @@
+using System;
 using System.Collections.Generic;
+using Entities;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class RoadRenderer : MonoBehaviour
 {
     [SerializeField] private GameConfiguration gameConfiguration;
     [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private Transform frontPanel;
+
     [SerializeField] private float lineLength = 30f;
-    [SerializeField] private int pointsPerLine = 25;
+    [SerializeField] public int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
+
+    [SerializeField] private int numberOfColliders;
+    [SerializeField] private GameObject colliderPrefab;
 
     private Vector3[] _positionPoints;
     private Vector3 _velocity;
+    private GameObject[] _colliders;
+
+    private void OnValidate()
+    {
+        lineLength = Mathf.Clamp(lineLength, 0f, Single.PositiveInfinity);
+        pointsPerLine = Mathf.Clamp(pointsPerLine, 0, 999);
+        numberOfColliders = Mathf.Clamp(numberOfColliders, 0, pointsPerLine);
+    }
 
     private void Awake()
     {
-        InitializeFields();
-        SetPositionToAllRenderers();
+        InitializeAll();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-       UpdatePositionPoints();
-       SetPositionToAllRenderers();
+        UpdateAll();
     }
 
-    private void InitializeFields()
+    private void InitializeAll()
     {
         _velocity = Vector3.zero;
+
         InitializeLineRenderers();
         InitializePositionPoints();
+        InitializeColliders();
+
+        SetPositionToAllRenderers();
     }
 
     private void InitializeLineRenderers()
@@ -42,6 +60,7 @@ public class RoadRenderer : MonoBehaviour
     private void InitializeLineRenderer(LineRendererWrapper wrapper)
     {
         wrapper.lineRenderer.positionCount = pointsPerLine;
+        wrapper.lineRenderer.transform.position = wrapper.linePosition;
         wrapper.lineRenderer.startWidth = wrapper.lineThickness;
         wrapper.lineRenderer.endWidth = wrapper.lineThickness;
     }
@@ -59,34 +78,69 @@ public class RoadRenderer : MonoBehaviour
         }
     }
 
-    private void SetPositionToAllRenderers()
+    private void InitializeColliders()
     {
-        foreach (var lineRendererWrapper in lineRendererWrappers)
+        var colliderWidth = lineLength / (pointsPerLine - 1);
+        _colliders = new GameObject[numberOfColliders];
+
+        for (var i = 0; i < numberOfColliders; i++)
         {
-            var offset = lineRendererWrapper.lineOffset;
-            lineRendererWrapper.lineRenderer.SetPositions(GetPositionPointsWithOffset(offset));
+            InitializeCollider(i, colliderWidth);
         }
     }
 
-    private Vector3[] GetPositionPointsWithOffset(Vector3 offset)
+    private void InitializeCollider(int index, float width)
     {
-        var offsetPositionPoints = new Vector3[_positionPoints.Length];
+        _colliders[index] = Instantiate(colliderPrefab);
 
-        for (var i = 0; i < _positionPoints.Length; i++)
+        var localScale = _colliders[index].transform.localScale;
+        localScale = new Vector3(width, localScale.y, localScale.z);
+        _colliders[index].transform.localScale = localScale;
+
+        SetColliderPosition(index);
+    }
+
+    private void SetColliderPosition(int index)
+    {
+        _colliders[index].transform.position = _positionPoints[index];
+    }
+
+    private void SetPositionToAllRenderers()
+    {
+        foreach (var lineRenderer in lineRendererWrappers)
         {
-            offsetPositionPoints[i] = new Vector3(_positionPoints[i].x + offset.x,
-                _positionPoints[i].y + offset.y,
-                _positionPoints[i].z + offset.z);
+            lineRenderer.lineRenderer.SetPositions(GetPositionPointsWithOffset(lineRenderer));
+        }
+    }
+
+    private Vector3[] GetPositionPointsWithOffset(LineRendererWrapper wrapper)
+    {
+        var offsetPoints = new Vector3[pointsPerLine];
+
+        for (var i = 0; i < pointsPerLine; i++)
+        {
+            offsetPoints[i].Set(_positionPoints[i].x + wrapper.linePosition.x, 
+                _positionPoints[i].y + wrapper.linePosition.y, 
+                _positionPoints[i].z + wrapper.linePosition.z);
         }
 
-        return offsetPositionPoints;
+        return offsetPoints;
+    }
+    
+    private void UpdateAll()
+    {
+        UpdatePositionPoints();
+        UpdateCollidersPosition();
+        UpdateFrontPanelTransform();
+
+        SetPositionToAllRenderers();
     }
 
     private void UpdatePositionPoints()
     {
         for (var i = pointsPerLine - 1; i > 0; i--)
         {
-            _positionPoints[i] = new Vector3(_positionPoints[i].x, _positionPoints[i - 1].y, _positionPoints[i].z);
+            _positionPoints[i].Set(_positionPoints[i].x, _positionPoints[i - 1].y, _positionPoints[i].z);
         }
 
         var point = Input.anyKey
@@ -106,5 +160,18 @@ public class RoadRenderer : MonoBehaviour
             (gameConfiguration.VerticalMax - gameConfiguration.VerticalMin) * inputHandler.MouseNormalizedY +
             gameConfiguration.VerticalMin,
             anchorPoint.z);
+    }
+
+    private void UpdateCollidersPosition()
+    {
+        for (var i = 0; i < numberOfColliders; i++)
+        {
+            SetColliderPosition(i);
+        }
+    }
+
+    private void UpdateFrontPanelTransform()
+    {
+        frontPanel.position = _positionPoints[0];
     }
 }

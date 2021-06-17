@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3580640660868478644}
   - component: {fileID: 5902756885309976052}
-  - component: {fileID: 5902756885309976053}
   m_Layer: 0
   m_Name: RoadCollider
   m_TagString: Untagged
@@ -43,17 +42,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 5}
+  m_Size: {x: 1, y: 0.5, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5902756885309976053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5902756885309976050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f940e6c1cfd6402e8ad5e7e7e4c9bbf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
