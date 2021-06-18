@@ -30,7 +30,7 @@ namespace Entities.StateMachines
 
         public State CheckTransitions()
         {
-            foreach (var transition in _transitions.Where(transition => transition.Decision.DoDecide()))
+            foreach (var transition in _transitions.Where(transition => transition.Decision.DecisionResult()))
             {
                 return transition.State;
             }

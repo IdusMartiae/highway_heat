@@ -2,16 +2,13 @@ namespace Entities.StateMachines
 {
     public class Transition
     {
-        private readonly State state;
-        private readonly Decision decision;
+        public Decision Decision { get; }
+        public State State { get; }
 
-        public State State => state;
-        public Decision Decision => decision;
-
-        public Transition(State transitionState, Decision transitionDecision)
+        public Transition(State transitionState, Decision decision)
         {
-            decision = transitionDecision;
-            state = transitionState;
+            State = transitionState;
+            Decision = decision;
         }
     }
 }

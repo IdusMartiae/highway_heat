@@ -1,33 +1,56 @@
 using System;
-using Entities.Spawners;
-using Functionality.Car;
+using Entities.StateMachines;
+using Entities.StateMachines.Car;
+using Entities.StateMachines.Car.States;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Car : MonoBehaviour
 {
-    [SerializeField] private RoadSegmentSpawner roadSegmentSpawner;
-    [SerializeField] private Vector3 carOffset;
-    [SerializeField] private float airborneAngle = 45f;
-    [SerializeField] private float gravity = 5f;
+    private StateMachine _stateMachine;
+    private UnityEvent _airborne;
+    private UnityEvent _grounded;
     
-    private CarLogic _carLogic;
-    private CarPhysicsSimulation _carPhysicsSimulation;
-
     private void Start()
     {
-        _carPhysicsSimulation = new CarPhysicsSimulation(
-            transform,
-            carOffset,
-            roadSegmentSpawner.CapturedColliderQueue,
-            gravity
-        );
-        
-        _carLogic = new CarLogic(_carPhysicsSimulation, airborneAngle, roadSegmentSpawner.CapturedColliderQueue);
+        InitializeEvents();
+        InitializeStateMachine();
+    }
+
+    private void Update()
+    {
+        _stateMachine.Tick();
     }
 
     private void FixedUpdate()
     {
-        _carLogic.FixedUpdate();
+        _stateMachine.FixedTick();
     }
 
+    private void OnCollisionEnter()
+    {
+        _grounded.Invoke();
+    }
+
+    private void OnCollisionExit()
+    {
+        _airborne.Invoke();
+    }
+    
+    private void InitializeEvents()
+    {
+        _grounded = new UnityEvent();
+        _airborne = new UnityEvent();
+    }
+    
+    private void InitializeStateMachine()
+    {
+        var airborneState = new AirborneCarState();
+        var groundedState = new GroundedCarState();
+        
+        airborneState.AddTransition(groundedState, new CarDecision(_grounded));
+        groundedState.AddTransition(airborneState, new CarDecision(_airborne));
+
+        _stateMachine = new StateMachine(groundedState);
+    }
 }

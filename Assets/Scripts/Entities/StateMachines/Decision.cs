@@ -2,6 +2,6 @@ namespace Entities.StateMachines
 {
     public abstract class Decision
     {
-        public abstract bool DoDecide();
+        public abstract bool DecisionResult();
     }
 }
