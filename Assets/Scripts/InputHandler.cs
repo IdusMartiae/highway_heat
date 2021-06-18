@@ -4,7 +4,7 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private float verticalInputMargin = 50f;
     [SerializeField] private float sensitivity = 0.5f;
-
+    
     public float MouseNormalizedY { get; private set; }
 
     public float Sensitivity => sensitivity;
