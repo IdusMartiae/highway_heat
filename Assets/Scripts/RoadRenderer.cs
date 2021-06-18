@@ -15,11 +15,11 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
 
     [SerializeField] private int numberOfColliders;
-    [SerializeField] private GameObject colliderPrefab;
+    [SerializeField] private Rigidbody roadSegment;
 
     private Vector3[] _positionPoints;
     private Vector3 _velocity;
-    private GameObject[] _colliders;
+    private Rigidbody[] _roadSegments;
 
     private void OnValidate()
     {
@@ -81,7 +81,7 @@ public class RoadRenderer : MonoBehaviour
     private void InitializeColliders()
     {
         var colliderWidth = lineLength / (pointsPerLine - 1);
-        _colliders = new GameObject[numberOfColliders];
+        _roadSegments = new Rigidbody[numberOfColliders];
 
         for (var i = 0; i < numberOfColliders; i++)
         {
@@ -91,18 +91,18 @@ public class RoadRenderer : MonoBehaviour
 
     private void InitializeCollider(int index, float width)
     {
-        _colliders[index] = Instantiate(colliderPrefab);
+        _roadSegments[index] = Instantiate(roadSegment);
 
-        var localScale = _colliders[index].transform.localScale;
+        var localScale = _roadSegments[index].transform.localScale;
         localScale = new Vector3(width, localScale.y, localScale.z);
-        _colliders[index].transform.localScale = localScale;
+        _roadSegments[index].transform.localScale = localScale;
 
         SetColliderPosition(index);
     }
 
     private void SetColliderPosition(int index)
     {
-        _colliders[index].transform.position = _positionPoints[index];
+        _roadSegments[index].transform.position = _positionPoints[index];
     }
 
     private void SetPositionToAllRenderers()
@@ -166,7 +166,7 @@ public class RoadRenderer : MonoBehaviour
     {
         for (var i = 0; i < numberOfColliders; i++)
         {
-            SetColliderPosition(i);
+            _roadSegments[i].MovePosition(_positionPoints[i]);
         }
     }
 
