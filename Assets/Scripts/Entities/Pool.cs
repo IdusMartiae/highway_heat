@@ -73,6 +73,7 @@ namespace Entities
 
         private void CreatEntity(T newEntity)
         {
+            // TODO: spawn new objects under parent
             var spawnedEntity = GameObject.Instantiate(newEntity);
             Push(spawnedEntity);
         }

@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour
 
     private void Update()
     {
+        // TODO: you can just check for Input.GetMouseButtonDown(0)
         if (!Input.anyKey) return;
         MouseNormalizedY = GetMouseNormalizedY();
     }

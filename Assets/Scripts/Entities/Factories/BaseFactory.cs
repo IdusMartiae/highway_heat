@@ -8,6 +8,7 @@ namespace Entities.Factories
         public Transform SpawnerTransform { get; }
         public float DestroyDistance { get; }
 
+        // TODO: should be *pool* - it's a field
         protected Pool<GameEntity> Pool;
 
         protected BaseFactory(Transform spawnerTransform, float destroyDistance)

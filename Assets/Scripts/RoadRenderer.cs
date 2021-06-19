@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Entities;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class RoadRenderer : MonoBehaviour
@@ -30,11 +29,14 @@ public class RoadRenderer : MonoBehaviour
 
     private void Awake()
     {
+        // TODO: move all methods invocations here so it's more visible
         InitializeAll();
     }
-
+    
+    // TODO: let's introduce interval counter and move this logic to Update()
     private void FixedUpdate()
     {
+        // TODO: move all methods invocations here so it's more visible
         UpdateAll();
     }
 
@@ -100,6 +102,7 @@ public class RoadRenderer : MonoBehaviour
         SetColliderPosition(index);
     }
 
+    // TODO: make 4 line method for 1 line logic kinda useless
     private void SetColliderPosition(int index)
     {
         _roadSegments[index].transform.position = _positionPoints[index];
@@ -113,20 +116,21 @@ public class RoadRenderer : MonoBehaviour
         }
     }
 
+    // TODO: calculation might be performed in wrapper itself
     private Vector3[] GetPositionPointsWithOffset(LineRendererWrapper wrapper)
     {
         var offsetPoints = new Vector3[pointsPerLine];
 
         for (var i = 0; i < pointsPerLine; i++)
         {
-            offsetPoints[i].Set(_positionPoints[i].x + wrapper.linePosition.x, 
-                _positionPoints[i].y + wrapper.linePosition.y, 
+            offsetPoints[i].Set(_positionPoints[i].x + wrapper.linePosition.x,
+                _positionPoints[i].y + wrapper.linePosition.y,
                 _positionPoints[i].z + wrapper.linePosition.z);
         }
 
         return offsetPoints;
     }
-    
+
     private void UpdateAll()
     {
         UpdatePositionPoints();
@@ -140,6 +144,7 @@ public class RoadRenderer : MonoBehaviour
     {
         for (var i = pointsPerLine - 1; i > 0; i--)
         {
+            // TODO: why not like this: _positionPoints[i].y = _positionPoints[i - 1].y; ?
             _positionPoints[i].Set(_positionPoints[i].x, _positionPoints[i - 1].y, _positionPoints[i].z);
         }
 

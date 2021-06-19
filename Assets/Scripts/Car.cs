@@ -1,4 +1,3 @@
-using System;
 using Entities.StateMachines;
 using Entities.StateMachines.Car;
 using Entities.StateMachines.Car.States;
@@ -37,6 +36,7 @@ public class Car : MonoBehaviour
         _airborne.Invoke();
     }
     
+    // TODO: can be perform on field, or just chek for null on Invoke(): _grounded?.Invoke();
     private void InitializeEvents()
     {
         _grounded = new UnityEvent();

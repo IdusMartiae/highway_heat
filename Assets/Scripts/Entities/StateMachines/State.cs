@@ -30,6 +30,7 @@ namespace Entities.StateMachines
 
         public State CheckTransitions()
         {
+            // TODO: don't use LINQ in such performance critical points
             foreach (var transition in _transitions.Where(transition => transition.Decision.DecisionResult()))
             {
                 return transition.State;
