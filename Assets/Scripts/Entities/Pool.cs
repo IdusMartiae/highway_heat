@@ -8,16 +8,19 @@ namespace Entities
     {
         private readonly List<T> _list = new List<T>();
         private readonly T _gameEntity;
-
-        public Pool(int poolSize, T gameEntity)
+        private readonly Transform _parent;
+        
+        public Pool(int poolSize, T gameEntity, Transform parent)
         {
             _gameEntity = gameEntity;
+            _parent = parent;
             Prepopulate(poolSize);
         }
 
-        public Pool(List<T> gameEntity)
+        public Pool(List<T> gameEntity, Transform parent)
         {
             Prepopulate(gameEntity);
+            _parent = parent;
         }
 
         public void Push(T gameEntity)
@@ -73,8 +76,7 @@ namespace Entities
 
         private void CreatEntity(T newEntity)
         {
-            // TODO: spawn new objects under parent
-            var spawnedEntity = GameObject.Instantiate(newEntity);
+            var spawnedEntity = Object.Instantiate(newEntity, _parent, true);
             Push(spawnedEntity);
         }
     }
