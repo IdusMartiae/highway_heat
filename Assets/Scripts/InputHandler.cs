@@ -4,16 +4,17 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private float verticalInputMargin = 50f;
     [SerializeField] private float sensitivity = 0.5f;
-    
+
     public float MouseNormalizedY { get; private set; }
 
     public float Sensitivity => sensitivity;
 
     private void Update()
     {
-        // TODO: you can just check for Input.GetMouseButtonDown(0)
-        if (!Input.anyKey) return;
-        MouseNormalizedY = GetMouseNormalizedY();
+        if (Input.GetMouseButton(0))
+        {
+            MouseNormalizedY = GetMouseNormalizedY();
+        }
     }
 
     private float GetMouseNormalizedY()

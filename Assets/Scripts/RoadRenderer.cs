@@ -7,19 +7,19 @@ public class RoadRenderer : MonoBehaviour
 {
     [SerializeField] private GameConfiguration gameConfiguration;
     [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private float updateInterval = 0.01f;
     [SerializeField] private Transform frontPanel;
-
     [SerializeField] private float lineLength = 30f;
     [SerializeField] public int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
-
+    [SerializeField] private Rigidbody colliderPrefab;
     [SerializeField] private int numberOfColliders;
-    [SerializeField] private Rigidbody roadSegment;
-
+    
     private Vector3[] _positionPoints;
-    private Vector3 _velocity;
+    private Vector3 _velocity = Vector3.zero;
     private Rigidbody[] _roadSegments;
-
+    private float _timer;
+    
     private void OnValidate()
     {
         lineLength = Mathf.Clamp(lineLength, 0f, Single.PositiveInfinity);
@@ -29,26 +29,27 @@ public class RoadRenderer : MonoBehaviour
 
     private void Awake()
     {
-        // TODO: move all methods invocations here so it's more visible
-        InitializeAll();
-    }
-    
-    // TODO: let's introduce interval counter and move this logic to Update()
-    private void FixedUpdate()
-    {
-        // TODO: move all methods invocations here so it's more visible
-        UpdateAll();
-    }
-
-    private void InitializeAll()
-    {
-        _velocity = Vector3.zero;
-
         InitializeLineRenderers();
         InitializePositionPoints();
         InitializeColliders();
-
+        
         SetPositionToAllRenderers();
+    }
+    
+    private void Update()
+    {
+        _timer += Time.deltaTime;
+        
+        if (_timer >= updateInterval)
+        {
+            UpdatePositionPoints();
+            UpdateCollidersPosition();
+            UpdateFrontPanelTransform();
+
+            SetPositionToAllRenderers();
+            
+            _timer = 0;
+        }
     }
 
     private void InitializeLineRenderers()
@@ -93,59 +94,28 @@ public class RoadRenderer : MonoBehaviour
 
     private void InitializeCollider(int index, float width)
     {
-        _roadSegments[index] = Instantiate(roadSegment);
+        _roadSegments[index] = Instantiate(colliderPrefab);
 
         var localScale = _roadSegments[index].transform.localScale;
         localScale = new Vector3(width, localScale.y, localScale.z);
-        _roadSegments[index].transform.localScale = localScale;
-
-        SetColliderPosition(index);
-    }
-
-    // TODO: make 4 line method for 1 line logic kinda useless
-    private void SetColliderPosition(int index)
-    {
+        
         _roadSegments[index].transform.position = _positionPoints[index];
+        _roadSegments[index].transform.localScale = localScale;
     }
-
+    
     private void SetPositionToAllRenderers()
     {
-        foreach (var lineRenderer in lineRendererWrappers)
+        foreach (var wrapper in lineRendererWrappers)
         {
-            lineRenderer.lineRenderer.SetPositions(GetPositionPointsWithOffset(lineRenderer));
+            wrapper.lineRenderer.SetPositions(wrapper.GetPositionPointsWithOffset(_positionPoints));
         }
     }
-
-    // TODO: calculation might be performed in wrapper itself
-    private Vector3[] GetPositionPointsWithOffset(LineRendererWrapper wrapper)
-    {
-        var offsetPoints = new Vector3[pointsPerLine];
-
-        for (var i = 0; i < pointsPerLine; i++)
-        {
-            offsetPoints[i].Set(_positionPoints[i].x + wrapper.linePosition.x,
-                _positionPoints[i].y + wrapper.linePosition.y,
-                _positionPoints[i].z + wrapper.linePosition.z);
-        }
-
-        return offsetPoints;
-    }
-
-    private void UpdateAll()
-    {
-        UpdatePositionPoints();
-        UpdateCollidersPosition();
-        UpdateFrontPanelTransform();
-
-        SetPositionToAllRenderers();
-    }
-
+    
     private void UpdatePositionPoints()
     {
         for (var i = pointsPerLine - 1; i > 0; i--)
         {
-            // TODO: why not like this: _positionPoints[i].y = _positionPoints[i - 1].y; ?
-            _positionPoints[i].Set(_positionPoints[i].x, _positionPoints[i - 1].y, _positionPoints[i].z);
+            _positionPoints[i].y = _positionPoints[i - 1].y;
         }
 
         var point = Input.anyKey

@@ -7,12 +7,11 @@ using UnityEngine.Events;
 public class Car : MonoBehaviour
 {
     private StateMachine _stateMachine;
-    private UnityEvent _airborne;
-    private UnityEvent _grounded;
+    private readonly UnityEvent _airborne = new UnityEvent();
+    private readonly UnityEvent _grounded = new UnityEvent();
     
     private void Start()
     {
-        InitializeEvents();
         InitializeStateMachine();
     }
 
@@ -34,13 +33,6 @@ public class Car : MonoBehaviour
     private void OnCollisionExit()
     {
         _airborne.Invoke();
-    }
-    
-    // TODO: can be perform on field, or just chek for null on Invoke(): _grounded?.Invoke();
-    private void InitializeEvents()
-    {
-        _grounded = new UnityEvent();
-        _airborne = new UnityEvent();
     }
     
     private void InitializeStateMachine()

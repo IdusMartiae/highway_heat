@@ -10,12 +10,12 @@ namespace Entities.Factories
             Transform spawnerTransform, 
             float destroyDistance) : base(spawnerTransform, destroyDistance)
         {
-            Pool = new Pool<GameEntity>(obstacles);
+            pool = new Pool<GameEntity>(obstacles);
         }
 
         public override GameEntity Create()
         {
-            var gameEntity = Pool.PullRandom();
+            var gameEntity = pool.PullRandom();
             gameEntity.Initialize(this);
             
             return gameEntity;

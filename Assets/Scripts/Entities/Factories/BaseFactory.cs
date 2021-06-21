@@ -7,9 +7,8 @@ namespace Entities.Factories
     {
         public Transform SpawnerTransform { get; }
         public float DestroyDistance { get; }
-
-        // TODO: should be *pool* - it's a field
-        protected Pool<GameEntity> Pool;
+        
+        protected Pool<GameEntity> pool;
 
         protected BaseFactory(Transform spawnerTransform, float destroyDistance)
         {
@@ -19,7 +18,7 @@ namespace Entities.Factories
 
         public virtual GameEntity Create()
         {
-            var gameEntity = Pool.Pull();
+            var gameEntity = pool.Pull();
             gameEntity.Initialize(this);
 
             return gameEntity;
@@ -27,7 +26,7 @@ namespace Entities.Factories
 
         public void Destroy(GameEntity gameEntity)
         {
-            Pool.Push(gameEntity);
+            pool.Push(gameEntity);
         }
     }
 }

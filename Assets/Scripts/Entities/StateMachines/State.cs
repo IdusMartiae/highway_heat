@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Entities.StateMachines
 {
@@ -30,10 +29,12 @@ namespace Entities.StateMachines
 
         public State CheckTransitions()
         {
-            // TODO: don't use LINQ in such performance critical points
-            foreach (var transition in _transitions.Where(transition => transition.Decision.DecisionResult()))
+            foreach (var transition in _transitions)
             {
-                return transition.State;
+                if (transition.Decision.DecisionResult())
+                {
+                    return transition.State;
+                }
             }
 
             return this;
