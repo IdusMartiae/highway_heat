@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c54eb102c5b42fe8c52346ca6e72f07, type: 3}
   m_Name: GameConfiguration
   m_EditorClassIdentifier: 
-  verticalMax: 13
-  verticalMin: -13
+  verticalMax: 20
+  verticalMin: -20
   verticalSpeed: 100
