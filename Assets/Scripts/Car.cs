@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class Car : MonoBehaviour
 {
-    [SerializeField] private Vector3 gravityForce;
+    [SerializeField] private Vector3 frontPoint;
+    [SerializeField] private Vector3 backPoint;
     
     private StateMachine _stateMachine;
     private readonly UnityEvent _airborne = new UnityEvent();
@@ -39,7 +40,7 @@ public class Car : MonoBehaviour
     
     private void InitializeStateMachine()
     {
-        var airborneState = new AirborneCarState(GetComponent<Rigidbody>(), gravityForce);
+        var airborneState = new AirborneCarState(GetComponent<Rigidbody>());
         var groundedState = new GroundedCarState();
         
         airborneState.AddTransition(groundedState, new CarDecision(_grounded));

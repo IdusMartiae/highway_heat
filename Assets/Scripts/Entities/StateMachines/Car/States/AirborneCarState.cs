@@ -5,19 +5,14 @@ namespace Entities.StateMachines.Car.States
     public class AirborneCarState : State
     {
         private float _airborneTime;
-        private readonly Rigidbody _rigidbody;
-        private readonly Vector3 _gravityForce;
 
-        public AirborneCarState(Rigidbody rigidbody, Vector3 gravityForce)
+        public AirborneCarState(Rigidbody rigidbody)
         {
-            _rigidbody = rigidbody;
-            _gravityForce = gravityForce;
         }
         
         public override void OnStateEnter()
         {
             _airborneTime = 0f;
-            _rigidbody.useGravity = false;
         }
 
         public override void Tick()
@@ -26,13 +21,11 @@ namespace Entities.StateMachines.Car.States
         }
 
         public override void FixedTick()
-        { 
-            _rigidbody.AddForce(_gravityForce * _rigidbody.mass);
+        {
         }
 
         public override void OnStateExit()
         {
-            _rigidbody.useGravity = true;
         }
     }
 }

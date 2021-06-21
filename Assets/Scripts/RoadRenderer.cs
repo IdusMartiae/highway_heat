@@ -1,7 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Entities;
 using UnityEngine;
+using static System.Single;
 
 public class RoadRenderer : MonoBehaviour
 {
@@ -12,27 +12,22 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] private float lineLength = 30f;
     [SerializeField] public int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
-    [SerializeField] private Rigidbody colliderPrefab;
-    [SerializeField] private int numberOfColliders;
-    
+
     private Vector3[] _positionPoints;
     private Vector3 _velocity = Vector3.zero;
-    private Rigidbody[] _roadSegments;
     private float _timer;
     
     private void OnValidate()
     {
-        lineLength = Mathf.Clamp(lineLength, 0f, Single.PositiveInfinity);
-        pointsPerLine = Mathf.Clamp(pointsPerLine, 0, 999);
-        numberOfColliders = Mathf.Clamp(numberOfColliders, 0, pointsPerLine);
+        lineLength = Mathf.Clamp(lineLength, 0f, PositiveInfinity);
+        pointsPerLine = Mathf.Clamp(pointsPerLine, 0, int.MaxValue);
     }
 
     private void Awake()
     {
         InitializeLineRenderers();
         InitializePositionPoints();
-        InitializeColliders();
-        
+
         SetPositionToAllRenderers();
     }
     
@@ -43,7 +38,6 @@ public class RoadRenderer : MonoBehaviour
         if (_timer >= updateInterval)
         {
             UpdatePositionPoints();
-            UpdateCollidersPosition();
             UpdateFrontPanelTransform();
 
             SetPositionToAllRenderers();
@@ -81,28 +75,6 @@ public class RoadRenderer : MonoBehaviour
         }
     }
 
-    private void InitializeColliders()
-    {
-        var colliderWidth = lineLength / (pointsPerLine - 1);
-        _roadSegments = new Rigidbody[numberOfColliders];
-
-        for (var i = 0; i < numberOfColliders; i++)
-        {
-            InitializeCollider(i, colliderWidth);
-        }
-    }
-
-    private void InitializeCollider(int index, float width)
-    {
-        _roadSegments[index] = Instantiate(colliderPrefab);
-
-        var localScale = _roadSegments[index].transform.localScale;
-        localScale = new Vector3(width, localScale.y, localScale.z);
-        
-        _roadSegments[index].transform.position = _positionPoints[index];
-        _roadSegments[index].transform.localScale = localScale;
-    }
-    
     private void SetPositionToAllRenderers()
     {
         foreach (var wrapper in lineRendererWrappers)
@@ -136,15 +108,7 @@ public class RoadRenderer : MonoBehaviour
             gameConfiguration.VerticalMin,
             anchorPoint.z);
     }
-
-    private void UpdateCollidersPosition()
-    {
-        for (var i = 0; i < numberOfColliders; i++)
-        {
-            _roadSegments[i].MovePosition(_positionPoints[i]);
-        }
-    }
-
+    
     private void UpdateFrontPanelTransform()
     {
         frontPanel.position = _positionPoints[0];
