@@ -4,7 +4,7 @@ namespace Entities.StateMachines.Car.States
 {
     public class GroundedCarState : State
     {
-        private CarPhysics _carPhysics;
+        private readonly CarPhysics _carPhysics;
 
         public GroundedCarState(CarPhysics carPhysics)
         {
@@ -13,6 +13,7 @@ namespace Entities.StateMachines.Car.States
         
         public override void OnStateEnter()
         {
+            _carPhysics.ResetVelocities();
         }
         
         public override void Tick()
@@ -22,7 +23,11 @@ namespace Entities.StateMachines.Car.States
 
         public override void FixedTick()
         {
-            
+        }
+
+        public override void OnStateExit()
+        {
+            _carPhysics.CurrentYVelocity = _carPhysics.CachedYVelocity;
         }
     }
 }

@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using Entities;
 using UnityEngine;
 using static System.Single;
-using Random = UnityEngine.Random;
 
 public class RoadRenderer : MonoBehaviour
 {
@@ -15,14 +13,9 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] public int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
 
-    [SerializeField] private int CarPointNumber;
-    
     private Vector3[] _positionPoints;
     private Vector3 _velocity = Vector3.zero;
     private float _timer;
-
-    public Vector3 Normal { get; set; }
-    public float Angle { get; set; }
     
     public Vector3[] PositionPoints => _positionPoints;
 
@@ -53,17 +46,6 @@ public class RoadRenderer : MonoBehaviour
             
             _timer = 0;
         }
-        
-        var dx = _positionPoints[CarPointNumber].x - _positionPoints[CarPointNumber + 1].x;
-        var dy = _positionPoints[CarPointNumber].y - _positionPoints[CarPointNumber + 1].y;
-        
-        var vectorNormalized = new Vector3(-dy, dx, 0).normalized * 0.25f;
-        
-        var vector1 = vectorNormalized + _positionPoints[CarPointNumber];
-        var vector2 = new Vector3(dy + _positionPoints[CarPointNumber].x, -dx + _positionPoints[CarPointNumber].y, 0);
-        
-        Angle = - Vector3.SignedAngle(Vector3.up, vectorNormalized, Vector3.forward);
-        Normal = vector1;
     }
 
     // private void OnDrawGizmos()
@@ -141,5 +123,10 @@ public class RoadRenderer : MonoBehaviour
     private void UpdateFrontPanelTransform()
     {
         frontPanel.position = _positionPoints[0];
+    }
+
+    public float GetPointVerticalVelocity(int index)
+    {
+        return index > 0 ? (_positionPoints[index - 1].y - _positionPoints[index].y) / Time.deltaTime : 0;
     }
 }

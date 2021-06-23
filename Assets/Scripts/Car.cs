@@ -1,53 +1,54 @@
 using Entities.StateMachines;
-using Entities.StateMachines.Car;
 using Entities.StateMachines.Car.Decisions;
 using Entities.StateMachines.Car.States;
 using Simulations.Car;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Car : MonoBehaviour
 {
-    [SerializeField] private RoadRenderer _roadRenderer;
-    
-    [SerializeField] private PathPointScript frontPoint;
-    [SerializeField] private PathPointScript backPoint;
-    
+    [SerializeField] private RoadRenderer roadRenderer;
+
     [SerializeField] private float mass;
     [SerializeField] private float gravity;
-    [SerializeField] private float speed;
+    [SerializeField] private float lerpSpeed;
+    [SerializeField] private int anchorPointIndex;
 
+    [SerializeField] private float velocityChangeThreshold = 10f;
+    [SerializeField] private float groundedPositionThreshold = 0.5f;
     
     private StateMachine _stateMachine;
     private CarPhysics _carPhysics;
     
     private void Start()
     {
-        // _carPhysics = new CarPhysics(transform, gravity, mass, frontPoint, backPoint);
+        _carPhysics = new CarPhysics(transform, gravity, roadRenderer, anchorPointIndex, lerpSpeed);
         InitializeStateMachine();
     }
 
     private void Update()
     {
-        var quat = Quaternion.Euler(_roadRenderer.Angle, 90, 0);
-            
-        transform.position = Vector3.Lerp(transform.position, _roadRenderer.Normal, Time.deltaTime * speed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, quat, Time.deltaTime * speed);
-        // _stateMachine.Tick();
+        _stateMachine.Tick();
     }
 
     private void FixedUpdate()
     {
-        // _stateMachine.FixedTick();
+        _stateMachine.FixedTick();
     }
     
     private void InitializeStateMachine()
     {
-        var airborneState = new AirborneCarState(GetComponent<Rigidbody>());
+        var airborneState = new AirborneCarState(_carPhysics);
         var groundedState = new GroundedCarState(_carPhysics);
         
-        airborneState.AddTransition(groundedState, new ChangeStateToGroundedDecision());
-        groundedState.AddTransition(airborneState, new ChangeStateToAirborneDecision());
+        airborneState.AddTransition(groundedState,
+            new ChangeStateToGroundedDecision(transform,
+                _carPhysics,
+                roadRenderer,
+                anchorPointIndex,
+                groundedPositionThreshold));
+        groundedState.AddTransition(airborneState,
+            new ChangeStateToAirborneDecision(_carPhysics,
+                velocityChangeThreshold));
 
         _stateMachine = new StateMachine(groundedState);
     }

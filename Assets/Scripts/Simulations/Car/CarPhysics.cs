@@ -4,54 +4,106 @@ namespace Simulations.Car
 {
     public class CarPhysics
     {
-        private Transform _carTransform;
-        private float _gravity;
-        private float _mass;
-        private float _velocityY;
+        private readonly Transform _carTransform;
+        private readonly RoadRenderer _renderer;
+        private readonly float _gravity;
+        private readonly int _anchorPointIndex;
+        private float _xAxisAngle;
+        private readonly float _lerpSpeed;
         
-        private Transform _frontPoint;
-        private Transform _backPoint;
+        private float _startingPositionY;
+        private float _cachedPositionY;
+        private float _falseXVelocity;
+        private float _cachedPositionX;
         
-        public CarPhysics(Transform carTransform,float gravity, float mass, PathPointScript frontPoint, PathPointScript backPoint)
+        public float CachedYVelocity { get; set; }
+        public float CurrentYVelocity { get; set; }
+
+        public CarPhysics(Transform carTransform, float gravity, RoadRenderer renderer, int anchorPointIndex, float lerpSpeed)
         {
             _carTransform = carTransform;
             _gravity = gravity;
-            _mass = mass;
-            
-            _frontPoint = frontPoint.transform;
-            _backPoint = backPoint.transform;
+            _renderer = renderer;
+            _anchorPointIndex = anchorPointIndex;
+            _lerpSpeed = lerpSpeed;
         }
 
         public void UpdateGroundedTransform()
         {
-            _carTransform.position = GetGroundedPosition();
-            _carTransform.eulerAngles = GetGroundedRotation();
+            var normalVector = GetNormalVectorByPointIndex(_anchorPointIndex) * 0.25f;
+            var normalVectorAtPoint = normalVector + _renderer.PositionPoints[_anchorPointIndex];
+            
+            _carTransform.position = Vector3.Lerp(_carTransform.position, normalVectorAtPoint, Time.deltaTime * _lerpSpeed); 
+            _carTransform.rotation = Quaternion.Lerp(_carTransform.rotation, GetUpdatedRotationQuaternion(normalVector), Time.deltaTime * _lerpSpeed);
+            
+            UpdateGroundedVelocity();
         }
 
-        private Vector3 GetGroundedPosition()
+        private Vector3 GetNormalVectorByPointIndex(int index)
         {
-            var frontPosition = _frontPoint.position;
-            var backPosition = _backPoint.position;
-            
-            var newX = (frontPosition.x + backPosition.x) / 2;
-            var newY = (frontPosition.y + backPosition.y) / 2;
-            var newZ = (frontPosition.z + backPosition.z) / 2;
-            
-            return new Vector3(newX, newY, newZ);
+            var dx = _renderer.PositionPoints[index].x - _renderer.PositionPoints[index + 1].x;
+            var dy = _renderer.PositionPoints[index].y - _renderer.PositionPoints[index + 1].y;
+
+            return new Vector3(-dy, dx, 0).normalized;
         }
 
-        private Vector3 GetGroundedRotation()
+        private Quaternion GetUpdatedRotationQuaternion(Vector3 normalVectorScaled)
         {
-            var frontPosition = _frontPoint.position;
-            var backPosition = _backPoint.position;
+            var eulerAngles = _carTransform.eulerAngles;
             
-            var deltaY = frontPosition.y - backPosition.y;
-            var deltaX = frontPosition.x - backPosition.x;
+            _xAxisAngle = - Vector3.SignedAngle(Vector3.up, normalVectorScaled, Vector3.forward);
+            return Quaternion.Euler(_xAxisAngle, eulerAngles.y, eulerAngles.z);
+        }
 
-            var angleX =  - Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg;
+        private void UpdateGroundedVelocity()
+        {
+            CachedYVelocity = CurrentYVelocity;
+            CurrentYVelocity = _renderer.GetPointVerticalVelocity(_anchorPointIndex);
+        }
+
+        public void UpdateAirborneTransform(float airborneTime)
+        {
+            var position = _carTransform.position;
+            _cachedPositionY = position.y;
+            _carTransform.position = new Vector3(position.x, GetNewYCoordinate(airborneTime), position.z);
+
+            var currentXPosition = _falseXVelocity * airborneTime;
+            _carTransform.rotation = GetNewAirborneRotation(_cachedPositionX, currentXPosition, _cachedPositionY, _carTransform.position.y);
+            _cachedPositionX = currentXPosition;
             
-            var currentAngles = _carTransform.eulerAngles;
-            return new Vector3(angleX, currentAngles.y, currentAngles.z);
+            UpdateCurrentVelocity(airborneTime);
+        }
+
+        private float GetNewYCoordinate(float airborneTime)
+        {
+            return _startingPositionY + CachedYVelocity * airborneTime + _gravity * airborneTime * airborneTime / 2;
+        }
+        
+        private void UpdateCurrentVelocity(float airborneTime)
+        {
+            CurrentYVelocity = CachedYVelocity + _gravity * airborneTime;
+        }
+
+        private Quaternion GetNewAirborneRotation(float x1, float x2, float y1, float y2)
+        {
+            var deltaY = y2 - y1;
+            var deltaX = Mathf.Abs(x2 - x1) + 0.01f;
+
+            var xAngle = - Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg;
+            return Quaternion.Euler(xAngle, 90, 0);
+        }
+        
+        public void InitializeAirborne()
+        {
+            _startingPositionY = _carTransform.position.y;
+            _cachedPositionX = 0f;
+            _falseXVelocity = CurrentYVelocity /  - Mathf.Tan(_carTransform.eulerAngles.x * Mathf.Deg2Rad);
+        }
+
+        public void ResetVelocities()
+        {
+            CurrentYVelocity = 0;
+            UpdateGroundedVelocity();
         }
     }
 }
