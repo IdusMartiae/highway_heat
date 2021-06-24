@@ -6,10 +6,12 @@ namespace Entities.Spawners
 {
     public class ObstacleSpawner : MonoBehaviour
     {
+        
         [SerializeField] private List<GameEntity> obstacles;
         [SerializeField] private float destroyDistance = 200;
         [SerializeField] private float spawnInterval = 100f;
-
+        [SerializeField] private float obstacleSpeed = 40;
+        
         private ObstacleFactory _obstacleFactory;
         private float _currentInterval;
 
@@ -42,7 +44,8 @@ namespace Entities.Spawners
         {
             _currentInterval = 0;
             var obstacle = _obstacleFactory.Create();
-
+            
+            obstacle.Speed = obstacleSpeed;
             obstacle.transform.position = transform.position;
         }
     }

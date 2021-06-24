@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Entities.Factories
 {
     public class BaseFactory : IGameEntityFactory
-    {
+    {   
+        // TODO: INITIALIZE GAME ENTITY W/ GLOBAL HORIZONTAL SPEED AS IT'S CREATED
         public Transform SpawnerTransform { get; }
         public float DestroyDistance { get; }
         

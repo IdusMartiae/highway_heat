@@ -5,6 +5,7 @@ namespace Entities.Factories
 {
     public class ObstacleFactory: BaseFactory
     {
+        // TODO: INITIALIZE OBSTACLES WITH GLOBAL HORIZONTAL SPEED 
         public ObstacleFactory(
             List<GameEntity> obstacles,
             Transform spawnerTransform, 
