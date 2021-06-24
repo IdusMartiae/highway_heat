@@ -1,3 +1,4 @@
+using Simulations.Car;
 using UnityEngine;
 
 namespace Entities.StateMachines.Car.States
@@ -5,34 +6,32 @@ namespace Entities.StateMachines.Car.States
     public class AirborneCarState : State
     {
         private float _airborneTime;
-        private readonly Rigidbody _rigidbody;
-        private readonly Vector3 _gravityForce;
-
-        public AirborneCarState(Rigidbody rigidbody, Vector3 gravityForce)
+        private readonly CarPhysics _carPhysics;
+        
+        public AirborneCarState(CarPhysics carPhysics)
         {
-            _rigidbody = rigidbody;
-            _gravityForce = gravityForce;
+            _carPhysics = carPhysics;
         }
         
         public override void OnStateEnter()
         {
             _airborneTime = 0f;
-            _rigidbody.useGravity = false;
+            _carPhysics.InitializeAirborne();
         }
 
         public override void Tick()
         {
-            _airborneTime += Time.deltaTime;
         }
 
         public override void FixedTick()
-        { 
-            _rigidbody.AddForce(_gravityForce * _rigidbody.mass);
+        {
+            _airborneTime += Time.fixedDeltaTime;
+            _carPhysics.UpdateAirborneTransform(_airborneTime);
         }
 
         public override void OnStateExit()
         {
-            _rigidbody.useGravity = true;
+            _carPhysics.ResetVelocities();
         }
     }
 }

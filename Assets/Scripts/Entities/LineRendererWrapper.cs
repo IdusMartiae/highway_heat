@@ -1,11 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 namespace Entities
 {
     [Serializable]
     public class LineRendererWrapper
     {
+        [HideInInspector]
         public string name;
     
         public LineRenderer lineRenderer;

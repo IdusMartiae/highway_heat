@@ -19,6 +19,7 @@ namespace Entities
 
         public Pool(List<T> gameEntity, Transform parent)
         {
+            _parent = parent;
             Prepopulate(gameEntity);
             _parent = parent;
         }

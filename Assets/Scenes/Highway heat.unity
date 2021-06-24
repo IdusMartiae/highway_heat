@@ -175,9 +175,9 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 5000
-  field of view: 30
+  field of view: 16
   orthographic: 0
-  orthographic size: 30
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213818046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20, y: 0, z: -100.24}
+  m_LocalPosition: {x: 11, y: 0, z: -100.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 381965698}
@@ -1244,7 +1244,7 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 10
+    numCornerVertices: 20
     numCapVertices: 0
     alignment: 1
     textureMode: 0
@@ -1297,9 +1297,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   inputHandler: {fileID: 1640463902}
-  updateInterval: 0.02
+  waveResponseTime: 0.001
+  roadTextureSpeed: 5
   frontPanel: {fileID: 1496485579}
-  lineLength: 40
+  lineLength: 30
   pointsPerLine: 60
   lineRendererWrappers:
   - name: Top line
@@ -1314,8 +1315,7 @@ MonoBehaviour:
     lineRenderer: {fileID: 1958495162}
     linePosition: {x: 0, y: -0.25, z: 0}
     lineThickness: 3
-  colliderPrefab: {fileID: 8553343774414920593, guid: 2d5f6caa1d17b4ac08b918036b5eb07a, type: 3}
-  numberOfColliders: 10
+  velocityClampThreshold: 0.005
 --- !u!4 &1842872560
 Transform:
   m_ObjectHideFlags: 0
@@ -1522,7 +1522,7 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 10
+    numCornerVertices: 20
     numCapVertices: 0
     alignment: 1
     textureMode: 0
@@ -1660,7 +1660,7 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 10
+    numCornerVertices: 20
     numCapVertices: 0
     alignment: 1
     textureMode: 0
@@ -1861,7 +1861,7 @@ Transform:
   m_GameObject: {fileID: 1927039617070492498}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -3, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 919739181214410479}
   - {fileID: 6059030576847195333}
@@ -1877,11 +1877,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1924487485576685978}
-  - component: {fileID: 5183601145258007847}
   - component: {fileID: 1927039617070492499}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1893,12 +1892,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927039617070492498}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c206a4e16e20f40fca74f232e6a55b00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityForce: {x: 0, y: -110, z: 0}
+  roadRenderer: {fileID: 1842872558}
+  gravity: -60
+  defaultHorizontalVelocity: 100
+  lerpSpeed: 100
+  anchorPointIndex: 5
 --- !u!23 &2988233475252617709
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2089,22 +2092,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3631557347990230269}
   m_Mesh: {fileID: 4300004, guid: 1f768f0d5a5dc9e48941608a2f58f511, type: 3}
---- !u!54 &5183601145258007847
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927039617070492498}
-  serializedVersion: 2
-  m_Mass: 30
-  m_Drag: 0
-  m_AngularDrag: 10
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 106
-  m_CollisionDetection: 2
 --- !u!4 &5188194545756105453
 Transform:
   m_ObjectHideFlags: 0

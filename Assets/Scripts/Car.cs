@@ -1,19 +1,29 @@
 using Entities.StateMachines;
-using Entities.StateMachines.Car;
+using Entities.StateMachines.Car.Decisions;
 using Entities.StateMachines.Car.States;
+using Simulations.Car;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Car : MonoBehaviour
 {
-    [SerializeField] private Vector3 gravityForce;
-    
+    [SerializeField] private RoadRenderer roadRenderer;
+    [SerializeField] private float gravity;
+    [SerializeField] private float defaultHorizontalVelocity;
+    [SerializeField] private float lerpSpeed;
+    [SerializeField] private int anchorPointIndex;
+
     private StateMachine _stateMachine;
-    private readonly UnityEvent _airborne = new UnityEvent();
-    private readonly UnityEvent _grounded = new UnityEvent();
+    private CarPhysics _carPhysics;
     
     private void Start()
     {
+        _carPhysics = new CarPhysics(transform,
+            gravity,
+            roadRenderer,
+            anchorPointIndex,
+            lerpSpeed, 
+            defaultHorizontalVelocity);
+        
         InitializeStateMachine();
     }
 
@@ -26,25 +36,27 @@ public class Car : MonoBehaviour
     {
         _stateMachine.FixedTick();
     }
-
-    private void OnCollisionEnter()
-    {
-        _grounded.Invoke();
-    }
-
-    private void OnCollisionExit()
-    {
-        _airborne.Invoke();
-    }
     
     private void InitializeStateMachine()
     {
-        var airborneState = new AirborneCarState(GetComponent<Rigidbody>(), gravityForce);
-        var groundedState = new GroundedCarState();
+        var airborneState = new AirborneCarState(_carPhysics);
+        var groundedState = new GroundedCarState(_carPhysics);
         
-        airborneState.AddTransition(groundedState, new CarDecision(_grounded));
-        groundedState.AddTransition(airborneState, new CarDecision(_airborne));
+        airborneState.AddTransition(groundedState,
+            new ChangeStateToGroundedDecision(transform,
+                _carPhysics,
+                roadRenderer,
+                anchorPointIndex,
+                GetCarHalfLength()));
+        groundedState.AddTransition(airborneState,
+            new ChangeStateToAirborneDecision(_carPhysics));
 
         _stateMachine = new StateMachine(groundedState);
+    }
+
+    private float GetCarHalfLength()
+    {
+        var carMesh = gameObject.GetComponentInChildren<MeshFilter>().mesh;
+        return carMesh.bounds.size.z / 2;
     }
 }
