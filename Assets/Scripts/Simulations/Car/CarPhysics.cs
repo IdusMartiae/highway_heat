@@ -12,7 +12,8 @@ namespace Simulations.Car
         
         private float _startingPositionY;
         private float _cachedPositionY;
-        private float _falseXVelocity;
+        private float _xFalseVelocity;
+        private readonly float _defaultXFalseVelocity;
 
         public float Gravity { get; }
         public float CachedYVelocity { get; private set; }
@@ -23,13 +24,15 @@ namespace Simulations.Car
             float gravity,
             RoadRenderer renderer,
             int anchorPointIndex,
-            float lerpSpeed)
+            float lerpSpeed,
+            float defaultXVelocity)
         {
             _carTransform = carTransform;
             Gravity = gravity;
             _renderer = renderer;
             _anchorPointIndex = anchorPointIndex;
             _lerpSpeed = lerpSpeed;
+            _defaultXFalseVelocity = defaultXVelocity;
         }
 
         public void UpdateGroundedTransform()
@@ -100,7 +103,7 @@ namespace Simulations.Car
 
         private void UpdateAirborneRotation()
         {
-            var deltaX = _falseXVelocity * Time.fixedDeltaTime;
+            var deltaX = _xFalseVelocity * Time.fixedDeltaTime;
             var deltaY = _carTransform.position.y - _cachedPositionY;
             
             var x = - Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg;
@@ -113,13 +116,13 @@ namespace Simulations.Car
         {
             CurrentYVelocity = CachedYVelocity;
             _startingPositionY = _carTransform.position.y;
-            if (CurrentYVelocity > 1)
+            if (CurrentYVelocity > 5)
             {
-                _falseXVelocity = CurrentYVelocity / - Mathf.Tan(_carTransform.eulerAngles.x * Mathf.Deg2Rad);
+                _xFalseVelocity = CurrentYVelocity / - Mathf.Tan(_carTransform.eulerAngles.x * Mathf.Deg2Rad);
             }
             else
             {
-                _falseXVelocity = 100;
+                _xFalseVelocity = _defaultXFalseVelocity;
             }
         }
 

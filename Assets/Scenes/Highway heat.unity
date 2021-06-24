@@ -806,6 +806,7 @@ MonoBehaviour:
   gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   inputHandler: {fileID: 1640463902}
   waveResponseTime: 0.001
+  roadTextureSpeed: 5
   frontPanel: {fileID: 1496485579}
   lineLength: 30
   pointsPerLine: 60
@@ -1315,7 +1316,7 @@ GameObject:
   - component: {fileID: 1927039617070492499}
   m_Layer: 0
   m_Name: Car
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1334,10 +1335,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roadRenderer: {fileID: 1842872558}
   gravity: -60
-  falseHorizontalVelocity: 100
+  defaultHorizontalVelocity: 100
   lerpSpeed: 100
   anchorPointIndex: 5
-  groundedPositionThreshold: 0.3
 --- !u!23 &2988233475252617709
 MeshRenderer:
   m_ObjectHideFlags: 0

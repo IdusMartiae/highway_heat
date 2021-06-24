@@ -8,6 +8,7 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] private GameConfiguration gameConfiguration;
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private float waveResponseTime = 0.01f;
+    [SerializeField] private float roadTextureSpeed = 5f;
     [SerializeField] private Transform frontPanel;
     [SerializeField] private float lineLength = 30f;
     [SerializeField] public int pointsPerLine = 25;
@@ -16,6 +17,8 @@ public class RoadRenderer : MonoBehaviour
 
     private Vector3[] _positionPoints;
     private Vector3[] _pointVelocities;
+
+    private Vector2 _textureOffset = Vector2.zero;
     
     public Vector3[] PositionPoints => _positionPoints;
 
@@ -36,6 +39,7 @@ public class RoadRenderer : MonoBehaviour
     {
         SetPositionToAllRenderers();
         UpdateFrontPanelTransform();
+        UpdateRoadTexture();
     }
     
     private void FixedUpdate()
@@ -122,5 +126,16 @@ public class RoadRenderer : MonoBehaviour
     {
         var velocity = _pointVelocities[index].y;
         return Mathf.Abs(velocity) < velocityClampThreshold ? 0 : velocity * 10;
+    }
+
+    private void UpdateRoadTexture()
+    {
+        _textureOffset.Set(-(Time.time * roadTextureSpeed % 5), 0);
+        lineRendererWrappers[0].lineRenderer.material.mainTextureOffset = _textureOffset;
+    }
+
+    public float GetRoadThickness()
+    {
+        return lineRendererWrappers[1].lineThickness;
     }
 }

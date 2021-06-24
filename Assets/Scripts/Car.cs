@@ -8,10 +8,9 @@ public class Car : MonoBehaviour
 {
     [SerializeField] private RoadRenderer roadRenderer;
     [SerializeField] private float gravity;
-    [SerializeField] private float falseHorizontalVelocity;
+    [SerializeField] private float defaultHorizontalVelocity;
     [SerializeField] private float lerpSpeed;
     [SerializeField] private int anchorPointIndex;
-    [SerializeField] private float groundedPositionThreshold = 0.5f;
 
     private StateMachine _stateMachine;
     private CarPhysics _carPhysics;
@@ -22,7 +21,8 @@ public class Car : MonoBehaviour
             gravity,
             roadRenderer,
             anchorPointIndex,
-            lerpSpeed);
+            lerpSpeed, 
+            defaultHorizontalVelocity);
         
         InitializeStateMachine();
     }
@@ -47,11 +47,16 @@ public class Car : MonoBehaviour
                 _carPhysics,
                 roadRenderer,
                 anchorPointIndex,
-                groundedPositionThreshold));
+                GetCarHalfLength()));
         groundedState.AddTransition(airborneState,
             new ChangeStateToAirborneDecision(_carPhysics));
 
         _stateMachine = new StateMachine(groundedState);
     }
-    
+
+    private float GetCarHalfLength()
+    {
+        var carMesh = gameObject.GetComponentInChildren<MeshFilter>().mesh;
+        return carMesh.bounds.size.z / 2;
+    }
 }
