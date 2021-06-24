@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2961955922025329361
+--- !u!114 &-6523901473402955502
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16,7 +16,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0.7
   contrast:
     m_OverrideState: 1
     m_Value: 0
@@ -35,7 +35,7 @@ MonoBehaviour:
     max: 180
   saturation:
     m_OverrideState: 1
-    m_Value: -5
+    m_Value: 0
     min: -100
     max: 100
 --- !u!114 &-2220859973735771210
@@ -91,7 +91,7 @@ MonoBehaviour:
   - {fileID: -2220859973735771210}
   - {fileID: 4029099433797538959}
   - {fileID: 3338261011195966377}
-  - {fileID: -2961955922025329361}
+  - {fileID: -6523901473402955502}
 --- !u!114 &3338261011195966377
 MonoBehaviour:
   m_ObjectHideFlags: 3
