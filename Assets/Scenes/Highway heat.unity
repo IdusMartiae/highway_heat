@@ -805,9 +805,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   inputHandler: {fileID: 1640463902}
-  updateInterval: 0.01
+  waveResponseTime: 0.001
   frontPanel: {fileID: 1496485579}
-  lineLength: 40
+  lineLength: 30
   pointsPerLine: 60
   lineRendererWrappers:
   - name: Top line
@@ -822,6 +822,7 @@ MonoBehaviour:
     lineRenderer: {fileID: 1958495162}
     linePosition: {x: 0, y: -0.25, z: 0}
     lineThickness: 3
+  velocityClampThreshold: 0.005
 --- !u!4 &1842872560
 Transform:
   m_ObjectHideFlags: 0
@@ -1332,12 +1333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadRenderer: {fileID: 1842872558}
-  mass: 0
-  gravity: -80
-  lerpSpeed: 50
+  gravity: -60
+  falseHorizontalVelocity: 100
+  lerpSpeed: 100
   anchorPointIndex: 5
-  velocityChangeThreshold: 10
-  groundedPositionThreshold: 1
+  groundedPositionThreshold: 0.3
 --- !u!23 &2988233475252617709
 MeshRenderer:
   m_ObjectHideFlags: 0

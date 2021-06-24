@@ -7,21 +7,23 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     [SerializeField] private RoadRenderer roadRenderer;
-
-    [SerializeField] private float mass;
     [SerializeField] private float gravity;
+    [SerializeField] private float falseHorizontalVelocity;
     [SerializeField] private float lerpSpeed;
     [SerializeField] private int anchorPointIndex;
-
-    [SerializeField] private float velocityChangeThreshold = 10f;
     [SerializeField] private float groundedPositionThreshold = 0.5f;
-    
+
     private StateMachine _stateMachine;
     private CarPhysics _carPhysics;
     
     private void Start()
     {
-        _carPhysics = new CarPhysics(transform, gravity, roadRenderer, anchorPointIndex, lerpSpeed);
+        _carPhysics = new CarPhysics(transform,
+            gravity,
+            roadRenderer,
+            anchorPointIndex,
+            lerpSpeed);
+        
         InitializeStateMachine();
     }
 
@@ -47,8 +49,7 @@ public class Car : MonoBehaviour
                 anchorPointIndex,
                 groundedPositionThreshold));
         groundedState.AddTransition(airborneState,
-            new ChangeStateToAirborneDecision(_carPhysics,
-                velocityChangeThreshold));
+            new ChangeStateToAirborneDecision(_carPhysics));
 
         _stateMachine = new StateMachine(groundedState);
     }

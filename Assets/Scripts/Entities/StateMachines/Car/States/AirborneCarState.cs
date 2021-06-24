@@ -21,16 +21,17 @@ namespace Entities.StateMachines.Car.States
 
         public override void Tick()
         {
-            _airborneTime += Time.deltaTime;
-            _carPhysics.UpdateAirborneTransform(_airborneTime);
         }
 
         public override void FixedTick()
         {
+            _airborneTime += Time.fixedDeltaTime;
+            _carPhysics.UpdateAirborneTransform(_airborneTime);
         }
 
         public override void OnStateExit()
         {
+            _carPhysics.ResetVelocities();
         }
     }
 }

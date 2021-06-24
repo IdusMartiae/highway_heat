@@ -5,16 +5,19 @@ namespace Entities.StateMachines.Car.Decisions
     public class ChangeStateToAirborneDecision : Decision
     {
         private readonly CarPhysics _carPhysics;
-        private readonly float _velocityChangeThreshold;
-        
-        public ChangeStateToAirborneDecision(CarPhysics carPhysics, float velocityChangeThreshold)
+
+        public ChangeStateToAirborneDecision(CarPhysics carPhysics)
         {
             _carPhysics = carPhysics;
-            _velocityChangeThreshold = velocityChangeThreshold;
         }
         public override bool DecisionResult()
         {
-            return _carPhysics.CachedYVelocity - _carPhysics.CurrentYVelocity > _velocityChangeThreshold;
+            if (_carPhysics.CachedYVelocity > 0)
+            {
+                 return _carPhysics.CachedYVelocity - _carPhysics.CurrentYVelocity > 1 ;
+            }
+            
+            return _carPhysics.Gravity - _carPhysics.Acceleration > 1;
         }
     }
 }

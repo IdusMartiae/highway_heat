@@ -6,7 +6,6 @@ namespace Simulations.Car
     {
         private readonly Transform _carTransform;
         private readonly RoadRenderer _renderer;
-        private readonly float _gravity;
         private readonly int _anchorPointIndex;
         private float _xAxisAngle;
         private readonly float _lerpSpeed;
@@ -14,15 +13,20 @@ namespace Simulations.Car
         private float _startingPositionY;
         private float _cachedPositionY;
         private float _falseXVelocity;
-        private float _cachedPositionX;
-        
-        public float CachedYVelocity { get; set; }
-        public float CurrentYVelocity { get; set; }
 
-        public CarPhysics(Transform carTransform, float gravity, RoadRenderer renderer, int anchorPointIndex, float lerpSpeed)
+        public float Gravity { get; }
+        public float CachedYVelocity { get; private set; }
+        public float CurrentYVelocity { get; set; }
+        public float Acceleration { get; private set; }
+
+        public CarPhysics(Transform carTransform,
+            float gravity,
+            RoadRenderer renderer,
+            int anchorPointIndex,
+            float lerpSpeed)
         {
             _carTransform = carTransform;
-            _gravity = gravity;
+            Gravity = gravity;
             _renderer = renderer;
             _anchorPointIndex = anchorPointIndex;
             _lerpSpeed = lerpSpeed;
@@ -33,10 +37,15 @@ namespace Simulations.Car
             var normalVector = GetNormalVectorByPointIndex(_anchorPointIndex) * 0.25f;
             var normalVectorAtPoint = normalVector + _renderer.PositionPoints[_anchorPointIndex];
             
-            _carTransform.position = Vector3.Lerp(_carTransform.position, normalVectorAtPoint, Time.deltaTime * _lerpSpeed); 
-            _carTransform.rotation = Quaternion.Lerp(_carTransform.rotation, GetUpdatedRotationQuaternion(normalVector), Time.deltaTime * _lerpSpeed);
+            _carTransform.position = Vector3.Lerp(_carTransform.position,
+                normalVectorAtPoint,
+                Time.fixedDeltaTime * _lerpSpeed); 
             
-            UpdateGroundedVelocity();
+            _carTransform.rotation = Quaternion.Lerp(_carTransform.rotation,
+                GetUpdatedRotationQuaternion(normalVector),
+                Time.fixedDeltaTime * _lerpSpeed);
+            
+            UpdateGroundedVelocityAndAcceleration();
         }
 
         private Vector3 GetNormalVectorByPointIndex(int index)
@@ -52,58 +61,72 @@ namespace Simulations.Car
             var eulerAngles = _carTransform.eulerAngles;
             
             _xAxisAngle = - Vector3.SignedAngle(Vector3.up, normalVectorScaled, Vector3.forward);
+            
             return Quaternion.Euler(_xAxisAngle, eulerAngles.y, eulerAngles.z);
         }
 
-        private void UpdateGroundedVelocity()
+        private void UpdateGroundedVelocityAndAcceleration()
         {
             CachedYVelocity = CurrentYVelocity;
             CurrentYVelocity = _renderer.GetPointVerticalVelocity(_anchorPointIndex);
+            
+            Acceleration = (CurrentYVelocity - CachedYVelocity) / Time.fixedDeltaTime;
         }
 
         public void UpdateAirborneTransform(float airborneTime)
         {
-            var position = _carTransform.position;
-            _cachedPositionY = position.y;
-            _carTransform.position = new Vector3(position.x, GetNewYCoordinate(airborneTime), position.z);
-
-            var currentXPosition = _falseXVelocity * airborneTime;
-            _carTransform.rotation = GetNewAirborneRotation(_cachedPositionX, currentXPosition, _cachedPositionY, _carTransform.position.y);
-            _cachedPositionX = currentXPosition;
-            
+            UpdateAirbornePosition(airborneTime);
+            UpdateAirborneRotation();
             UpdateCurrentVelocity(airborneTime);
         }
 
+        private void UpdateAirbornePosition(float airborneTime)
+        {
+            var position = _carTransform.position;
+            
+            _cachedPositionY = position.y;
+            _carTransform.position = new Vector3(position.x, GetNewYCoordinate(airborneTime), position.z);
+        }
+        
         private float GetNewYCoordinate(float airborneTime)
         {
-            return _startingPositionY + CachedYVelocity * airborneTime + _gravity * airborneTime * airborneTime / 2;
+            return _startingPositionY + CachedYVelocity * airborneTime + Gravity * airborneTime * airborneTime / 2;
         }
         
         private void UpdateCurrentVelocity(float airborneTime)
         {
-            CurrentYVelocity = CachedYVelocity + _gravity * airborneTime;
+            CurrentYVelocity = CachedYVelocity + Gravity * airborneTime;
         }
 
-        private Quaternion GetNewAirborneRotation(float x1, float x2, float y1, float y2)
+        private void UpdateAirborneRotation()
         {
-            var deltaY = y2 - y1;
-            var deltaX = Mathf.Abs(x2 - x1) + 0.01f;
+            var deltaX = _falseXVelocity * Time.fixedDeltaTime;
+            var deltaY = _carTransform.position.y - _cachedPositionY;
+            
+            var x = - Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg;
+            var newRotationQuaternion = Quaternion.Euler(x, 90, 0);
 
-            var xAngle = - Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg;
-            return Quaternion.Euler(xAngle, 90, 0);
+            _carTransform.rotation = newRotationQuaternion;
         }
         
         public void InitializeAirborne()
         {
+            CurrentYVelocity = CachedYVelocity;
             _startingPositionY = _carTransform.position.y;
-            _cachedPositionX = 0f;
-            _falseXVelocity = CurrentYVelocity /  - Mathf.Tan(_carTransform.eulerAngles.x * Mathf.Deg2Rad);
+            if (CurrentYVelocity > 1)
+            {
+                _falseXVelocity = CurrentYVelocity / - Mathf.Tan(_carTransform.eulerAngles.x * Mathf.Deg2Rad);
+            }
+            else
+            {
+                _falseXVelocity = 100;
+            }
         }
 
         public void ResetVelocities()
         {
             CurrentYVelocity = 0;
-            UpdateGroundedVelocity();
+            UpdateGroundedVelocityAndAcceleration();
         }
     }
 }

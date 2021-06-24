@@ -7,15 +7,15 @@ public class RoadRenderer : MonoBehaviour
 {
     [SerializeField] private GameConfiguration gameConfiguration;
     [SerializeField] private InputHandler inputHandler;
-    [SerializeField] private float updateInterval = 0.01f;
+    [SerializeField] private float waveResponseTime = 0.01f;
     [SerializeField] private Transform frontPanel;
     [SerializeField] private float lineLength = 30f;
     [SerializeField] public int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
+    [SerializeField] private float velocityClampThreshold = 0.001f;
 
     private Vector3[] _positionPoints;
-    private Vector3 _velocity = Vector3.zero;
-    private float _timer;
+    private Vector3[] _pointVelocities;
     
     public Vector3[] PositionPoints => _positionPoints;
 
@@ -29,33 +29,19 @@ public class RoadRenderer : MonoBehaviour
     {
         InitializeLineRenderers();
         InitializePositionPoints();
-
         SetPositionToAllRenderers();
     }
     
     private void Update()
     {
-        _timer += Time.deltaTime;
-        
-        if (_timer >= updateInterval)
-        {
-            UpdatePositionPoints();
-            UpdateFrontPanelTransform();
-
-            SetPositionToAllRenderers();
-            
-            _timer = 0;
-        }
+        SetPositionToAllRenderers();
+        UpdateFrontPanelTransform();
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     
-    //     
-    //     Gizmos.color = Color.blue;
-    //     Gizmos.DrawLine(vector1, _positionPoints[CarPointNumber]);
-    //     
-    // }
+    
+    private void FixedUpdate()
+    {
+        UpdatePositionPoints();
+    }
     
     private void InitializeLineRenderers()
     {
@@ -76,7 +62,8 @@ public class RoadRenderer : MonoBehaviour
     private void InitializePositionPoints()
     {
         _positionPoints = new Vector3[pointsPerLine];
-
+        _pointVelocities = new Vector3[pointsPerLine];
+        
         var startingPoint = transform.position;
         var segmentLength = lineLength / (pointsPerLine - 1);
 
@@ -96,18 +83,24 @@ public class RoadRenderer : MonoBehaviour
     
     private void UpdatePositionPoints()
     {
+        var pointNewPosition = new Vector3();
+        
         for (var i = pointsPerLine - 1; i > 0; i--)
         {
-            _positionPoints[i].y = _positionPoints[i - 1].y;
+            pointNewPosition.Set(_positionPoints[i].x, _positionPoints[i - 1].y, _positionPoints[i].z);
+            _positionPoints[i] = Vector3.SmoothDamp(_positionPoints[i],
+                pointNewPosition,
+                ref _pointVelocities[i],
+                waveResponseTime);
         }
-
-        var point = Input.anyKey
+        
+        pointNewPosition = Input.anyKey
             ? GetMouseWorldCoordinates(_positionPoints[0])
             : _positionPoints[0];
 
         _positionPoints[0] = Vector3.SmoothDamp(_positionPoints[0],
-            point,
-            ref _velocity,
+            pointNewPosition,
+            ref _pointVelocities[0],
             inputHandler.Sensitivity,
             gameConfiguration.VerticalSpeed);
     }
@@ -127,6 +120,7 @@ public class RoadRenderer : MonoBehaviour
 
     public float GetPointVerticalVelocity(int index)
     {
-        return index > 0 ? (_positionPoints[index - 1].y - _positionPoints[index].y) / Time.deltaTime : 0;
+        var velocity = _pointVelocities[index].y;
+        return Mathf.Abs(velocity) < velocityClampThreshold ? 0 : velocity * 10;
     }
 }

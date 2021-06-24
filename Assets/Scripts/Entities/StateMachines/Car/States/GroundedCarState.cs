@@ -1,4 +1,5 @@
 using Simulations.Car;
+using UnityEngine;
 
 namespace Entities.StateMachines.Car.States
 {
@@ -18,16 +19,15 @@ namespace Entities.StateMachines.Car.States
         
         public override void Tick()
         {
-            _carPhysics.UpdateGroundedTransform();
         }
 
         public override void FixedTick()
         {
+            _carPhysics.UpdateGroundedTransform();
         }
 
         public override void OnStateExit()
         {
-            _carPhysics.CurrentYVelocity = _carPhysics.CachedYVelocity;
         }
     }
 }
