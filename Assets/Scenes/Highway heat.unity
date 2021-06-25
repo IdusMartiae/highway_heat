@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4409585, g: 0.4896832, b: 0.5697812, a: 1}
+  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427147, b: 0.56452364, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 110115215}
   - component: {fileID: 110115214}
   m_Layer: 5
-  m_Name: Front Row Image
+  m_Name: FrontRowImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,11 +208,11 @@ GameObject:
   - component: {fileID: 213818047}
   - component: {fileID: 213818050}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!81 &213818047
 AudioListener:
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 288885069}
   - component: {fileID: 288885068}
   m_Layer: 5
-  m_Name: Base Background Image
+  m_Name: BaseBackgroundImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -394,11 +394,11 @@ GameObject:
   - component: {fileID: 381965698}
   - component: {fileID: 381965699}
   m_Layer: 0
-  m_Name: ObstacleSpawner
+  m_Name: GameEntitySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &381965698
 Transform:
@@ -412,7 +412,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &381965699
 MonoBehaviour:
@@ -428,7 +428,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   obstacles:
+  - {fileID: -2585095657763926794, guid: b34f0c1eac2a84897b5b3243bb896084, type: 3}
+  - {fileID: 266864355801447554, guid: 65504f9086e9b4fcda9db3c1b5be103b, type: 3}
+  - {fileID: 8803941521888251163, guid: 7d6220d8dde16470d82e43d71813eac3, type: 3}
+  - {fileID: 5438884532977345700, guid: 674e6e29a0bfc4cabb101670cf242d8e, type: 3}
+  - {fileID: 5689106350684164774, guid: fa00e2fafe7254970a4f1ae70e46244e, type: 3}
   - {fileID: -2585095657763926794, guid: cad9dae4a2be045c7a5eb24973bc5b24, type: 3}
+  - {fileID: 266864355801447554, guid: b4cdb5294d6654e8a89c58764b1b6ca5, type: 3}
+  - {fileID: 8803941521888251163, guid: 2844829a03b6a435bababf0387c5d92c, type: 3}
+  - {fileID: 8803941521888251163, guid: 9181c8cdee82845398f6d739aae2e5a4, type: 3}
+  - {fileID: 5689106350684164774, guid: 34740c38060944312a7da597e19428d1, type: 3}
+  - {fileID: 3048486977621820176, guid: 859d21ae2e24f4105bbb3dd8b8d6394f, type: 3}
+  - {fileID: 3318481693393975127, guid: e5ded7d2cbb944196b638686c7a9d42e, type: 3}
+  - {fileID: -2893683271945187525, guid: ab5e9a3ab7a8d4fd4889abdc004cfc32, type: 3}
   destroyDistance: 100
   spawnInterval: 3
 --- !u!1 &543422039
@@ -444,7 +456,7 @@ GameObject:
   - component: {fileID: 543422041}
   - component: {fileID: 543422040}
   m_Layer: 5
-  m_Name: Parallax Background
+  m_Name: ParallaxBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,7 +538,7 @@ RectTransform:
   - {fileID: 598867149}
   - {fileID: 1709069620}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -544,7 +556,7 @@ GameObject:
   - component: {fileID: 598867149}
   - component: {fileID: 598867150}
   m_Layer: 5
-  m_Name: Back Row
+  m_Name: BackRow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,11 +607,11 @@ GameObject:
   - component: {fileID: 849750912}
   - component: {fileID: 849750911}
   m_Layer: 0
-  m_Name: Directional Light
+  m_Name: DirectionalLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!108 &849750911
 Light:
@@ -670,13 +682,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849750910}
-  m_LocalRotation: {x: 0.6917068, y: -0.14677109, z: -0.1467711, w: 0.69170684}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 17.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 66.041, y: -90, z: -90}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!1 &1019523055
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,7 +701,7 @@ GameObject:
   - component: {fileID: 1019523058}
   - component: {fileID: 1019523057}
   m_Layer: 5
-  m_Name: Back Row Image
+  m_Name: BackRowImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -764,8 +776,8 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
 --- !u!114 &1299112430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,7 +807,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1469313455
 GameObject:
@@ -809,7 +821,7 @@ GameObject:
   - component: {fileID: 1469313458}
   - component: {fileID: 1469313457}
   m_Layer: 5
-  m_Name: Front Row Image (1)
+  m_Name: FrontRowImage (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -979,7 +991,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &1640463902
 MonoBehaviour:
@@ -1158,7 +1170,7 @@ GameObject:
   - component: {fileID: 1709069620}
   - component: {fileID: 1709069621}
   m_Layer: 5
-  m_Name: Front Row
+  m_Name: FrontRow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1264,7 +1276,7 @@ Transform:
   - {fileID: 1958495163}
   - {fileID: 1496485579}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1862284955
 GameObject:
@@ -1278,7 +1290,7 @@ GameObject:
   - component: {fileID: 1862284958}
   - component: {fileID: 1862284957}
   m_Layer: 5
-  m_Name: Back Row Image (1)
+  m_Name: BackRowImage (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

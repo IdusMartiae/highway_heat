@@ -16,6 +16,16 @@ namespace Entities
         public void Initialize(IGameEntityFactory factory)
         {
             _factory = factory;
+            ReactivateStars();
+        }
+
+        private void ReactivateStars()
+        {
+            var stars = GetComponentsInChildren<Star>(true);
+            foreach (var star in stars)
+            {
+                star.gameObject.SetActive(true);
+            }
         }
         
         private float CalculateDistance()

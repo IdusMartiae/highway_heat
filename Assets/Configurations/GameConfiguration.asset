@@ -15,4 +15,4 @@ MonoBehaviour:
   verticalMax: 10
   verticalMin: -10
   verticalSpeed: 50
-  horizontalSpeed: 40
+  horizontalSpeed: 20
