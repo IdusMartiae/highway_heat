@@ -426,15 +426,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baf1f78afa624c6a84926409eba59f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   obstacles:
   - {fileID: -2585095657763926794, guid: cad9dae4a2be045c7a5eb24973bc5b24, type: 3}
-  - {fileID: 266864355801447554, guid: 65504f9086e9b4fcda9db3c1b5be103b, type: 3}
-  - {fileID: 5689106350684164774, guid: fa00e2fafe7254970a4f1ae70e46244e, type: 3}
-  - {fileID: 5438884532977345700, guid: 674e6e29a0bfc4cabb101670cf242d8e, type: 3}
-  - {fileID: 8803941521888251163, guid: 7d6220d8dde16470d82e43d71813eac3, type: 3}
   destroyDistance: 100
   spawnInterval: 3
-  obstacleSpeed: 40
 --- !u!1 &543422039
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1299112430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1698,7 +1694,6 @@ GameObject:
   - component: {fileID: 919739181214410479}
   - component: {fileID: 919739181217834703}
   - component: {fileID: 919739181216703503}
-  - component: {fileID: 919739181214513872}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -1706,20 +1701,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &919739181214513872
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919739181214513871}
-  m_Material: {fileID: 13400000, guid: 321a90a1c77db4fc2834bdfc0ec68cb1, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.78790396
-  m_Height: 4.9714212
-  m_Direction: 2
-  m_Center: {x: -9.6487005e-17, y: 0.782096, z: 0.055710316}
 --- !u!23 &919739181216703503
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1814,6 +1795,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1924487485576685978}
   - component: {fileID: 1927039617070492499}
+  - component: {fileID: 1927039617070492500}
+  - component: {fileID: 1927039617070492501}
   m_Layer: 0
   m_Name: Car
   m_TagString: Player
@@ -1834,10 +1817,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadRenderer: {fileID: 1842872558}
-  gravity: -60
+  gravity: -65
   defaultHorizontalVelocity: 100
   lerpSpeed: 100
   anchorPointIndex: 5
+--- !u!54 &1927039617070492500
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927039617070492498}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1927039617070492501
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927039617070492498}
+  m_Material: {fileID: 13400000, guid: 321a90a1c77db4fc2834bdfc0ec68cb1, type: 2}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.78790396
+  m_Height: 4.9714212
+  m_Direction: 2
+  m_Center: {x: -9.6487005e-17, y: 0.782096, z: 0.055710316}
 --- !u!23 &2988233475252617709
 MeshRenderer:
   m_ObjectHideFlags: 0

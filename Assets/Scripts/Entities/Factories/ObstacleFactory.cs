@@ -5,11 +5,11 @@ namespace Entities.Factories
 {
     public class ObstacleFactory: BaseFactory
     {
-        // TODO: INITIALIZE OBSTACLES WITH GLOBAL HORIZONTAL SPEED 
         public ObstacleFactory(
             List<GameEntity> obstacles,
             Transform spawnerTransform, 
-            float destroyDistance) : base(spawnerTransform, destroyDistance)
+            GameConfiguration gameConfiguration,
+            float destroyDistance) : base(spawnerTransform, gameConfiguration, destroyDistance)
         {
             pool = new Pool<GameEntity>(obstacles, SpawnerTransform);
         }

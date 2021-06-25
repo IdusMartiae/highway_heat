@@ -5,13 +5,11 @@ namespace Entities
 {
     public class GameEntity : MonoBehaviour
     {
-        // TODO: ADD SEPARATE OBSTACLE SCRIPT THAT DETECTS TRIGGERS, SO CAR IS DESTROYED ON IMPACT
         private IGameEntityFactory _factory;
-        public float Speed { get; set; }
 
         private void Update()
         {
-            transform.Translate(Vector3.left * (Time.deltaTime * Speed));
+            transform.Translate(Vector3.left * (Time.deltaTime * _factory.GameConfiguration.HorizontalSpeed));
             DestroyOnOutOfBounds(CalculateDistance());
         }
 
