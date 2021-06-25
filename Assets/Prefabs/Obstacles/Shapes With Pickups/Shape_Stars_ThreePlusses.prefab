@@ -2558,6 +2558,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f940e6c1cfd6402e8ad5e7e7e4c9bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stars:
+  - {fileID: 9107017587797261868}
+  - {fileID: 5429399101118520614}
+  - {fileID: 8889170513700029861}
+  - {fileID: 2301921995953515404}
+  - {fileID: 6205613240409620689}
+  - {fileID: 3239463899693140736}
+  - {fileID: 8913464580115551801}
 --- !u!1 &7437494734547076573
 GameObject:
   m_ObjectHideFlags: 0

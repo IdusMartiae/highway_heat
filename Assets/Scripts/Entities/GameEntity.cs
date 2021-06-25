@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Entities.Factories.Interfaces;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace Entities
 {
     public class GameEntity : MonoBehaviour
     {
+        [SerializeField] private List<Star> stars;
+        
         private IGameEntityFactory _factory;
 
         private void Update()
@@ -21,7 +24,6 @@ namespace Entities
 
         private void ReactivateStars()
         {
-            var stars = GetComponentsInChildren<Star>(true);
             foreach (var star in stars)
             {
                 star.gameObject.SetActive(true);
