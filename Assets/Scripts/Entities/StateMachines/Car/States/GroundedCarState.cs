@@ -1,5 +1,4 @@
 using Simulations.Car;
-using UnityEngine;
 
 namespace Entities.StateMachines.Car.States
 {
@@ -17,6 +16,7 @@ namespace Entities.StateMachines.Car.States
             _carPhysics.ResetVelocities();
         }
         
+        // TODO: don't have to override if not using it
         public override void Tick()
         {
         }
@@ -25,7 +25,8 @@ namespace Entities.StateMachines.Car.States
         {
             _carPhysics.UpdateGroundedTransform();
         }
-
+        
+        // TODO: don't have to override if not using it
         public override void OnStateExit()
         {
         }

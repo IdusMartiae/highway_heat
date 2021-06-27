@@ -6,9 +6,9 @@ namespace Entities.Spawners
 {
     public class ObstacleSpawner : MonoBehaviour
     {
-        
         [SerializeField] private GameConfiguration gameConfiguration;
         [SerializeField] private List<GameEntity> obstacles;
+        //TODO: move it config too. Probably different one, specific to obstacles
         [SerializeField] private float destroyDistance = 200;
         [SerializeField] private float spawnInterval = 100f;
 
@@ -25,6 +25,7 @@ namespace Entities.Spawners
         {
             CreateOnTimeInterval();
         }
+        
         private void CreateOnTimeInterval()
         {
             UpdateCurrentTimeInterval();
@@ -35,6 +36,7 @@ namespace Entities.Spawners
             }
         }
 
+        // TODO: method for one line of code is kinda useless
         private void UpdateCurrentTimeInterval()
         {
             _currentInterval += Time.deltaTime;

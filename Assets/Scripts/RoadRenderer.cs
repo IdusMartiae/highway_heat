@@ -122,6 +122,7 @@ public class RoadRenderer : MonoBehaviour
         frontPanel.position = _positionPoints[0];
     }
 
+    // TODO: group by accessibility
     public float GetPointVerticalVelocity(int index)
     {
         var velocity = _pointVelocities[index].y;

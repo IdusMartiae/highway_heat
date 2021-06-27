@@ -1,4 +1,3 @@
-using System;
 using Entities.StateMachines;
 using Entities.StateMachines.Car.Decisions;
 using Entities.StateMachines.Car.States;

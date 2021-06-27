@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// TODO: don't you Script in script's name
+// TODO: let's try make parallax effect via material offset
 public class ParallaxScript : MonoBehaviour
 {
     [SerializeField] private float layerSpeed;
@@ -24,6 +26,4 @@ public class ParallaxScript : MonoBehaviour
             _rectTransform.anchoredPosition = new Vector2(0, yPosition);
         }
     }
-    
-    
 }
