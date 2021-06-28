@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: ObstaclesConfiguration
   m_EditorClassIdentifier: 
   destroyDistance: 120
-  spawnInterval: 3
+  spawnInterval: 4

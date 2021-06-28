@@ -1,7 +1,8 @@
+using System;
+using Systems.Car;
 using Entities.StateMachines;
 using Entities.StateMachines.Car.Decisions;
 using Entities.StateMachines.Car.States;
-using Simulations.Car;
 using UnityEngine;
 
 namespace Entities
@@ -16,7 +17,10 @@ namespace Entities
 
         private StateMachine _stateMachine;
         private CarPhysics _carPhysics;
-    
+        public event Action PickedUpStar;
+        public event Action CarCrashed;
+        public event Action<float> CarLanded; 
+        
         private void Start()
         {
             _carPhysics = new CarPhysics(transform,
@@ -41,21 +45,22 @@ namespace Entities
 
         private void OnTriggerEnter(Collider other)
         {
-            // TODO: Скорее всего здесь будет уведомление eventSystem вместо этого
             if (other.gameObject.GetComponent<Obstacle>())
             {
+                CarCrashed?.Invoke();
                 Destroy(gameObject);
             }
 
             if (other.gameObject.GetComponent<Star>())
             {
+                PickedUpStar?.Invoke();
                 other.gameObject.GetComponent<Star>().Deinitialize();
             }
         }
-        
+
         private void InitializeStateMachine()
         {
-            var airborneState = new AirborneCarState(_carPhysics);
+            var airborneState = new AirborneCarState(this, _carPhysics);
             var groundedState = new GroundedCarState(_carPhysics);
         
             airborneState.AddTransition(groundedState,
@@ -74,6 +79,11 @@ namespace Entities
         {
             var carMesh = gameObject.GetComponentInChildren<MeshFilter>().mesh;
             return carMesh.bounds.size.z / 2;
+        }
+
+        public void CarLandedBufferHandler(float airborneTime)
+        {
+            CarLanded?.Invoke(airborneTime);
         }
     }
 }

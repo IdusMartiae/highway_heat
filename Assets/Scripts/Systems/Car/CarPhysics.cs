@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Simulations.Car
+namespace Systems.Car
 {
     public class CarPhysics
     {
