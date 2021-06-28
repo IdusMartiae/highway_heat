@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RoadMaterial_top
+  m_Name: Road_Top
   m_Shader: {fileID: 4800000, guid: ee7e4c9a5f6364b688a332c67fc32cca, type: 3}
   m_ShaderKeywords: _EMISSION _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 2
