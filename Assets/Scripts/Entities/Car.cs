@@ -9,6 +9,10 @@ namespace Entities
 {
     public class Car : MonoBehaviour
     {
+        public event Action PickedUpStar;
+        public event Action CarCrashed;
+        public event Action<float> CarLanded;
+
         [SerializeField] private RoadRenderer roadRenderer;
         [SerializeField] private float gravity;
         [SerializeField] private float defaultHorizontalVelocity;
@@ -17,19 +21,16 @@ namespace Entities
 
         private StateMachine _stateMachine;
         private CarPhysics _carPhysics;
-        public event Action PickedUpStar;
-        public event Action CarCrashed;
-        public event Action<float> CarLanded; 
-        
+
         private void Start()
         {
             _carPhysics = new CarPhysics(transform,
                 gravity,
                 roadRenderer,
                 anchorPointIndex,
-                lerpSpeed, 
+                lerpSpeed,
                 defaultHorizontalVelocity);
-        
+
             InitializeStateMachine();
         }
 
@@ -43,6 +44,8 @@ namespace Entities
             _stateMachine.FixedTick();
         }
 
+        // TODO: would be better to move this to separate components
+        // TODO: ideally this script only holds state machine
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<Obstacle>())
@@ -62,7 +65,7 @@ namespace Entities
         {
             var airborneState = new AirborneCarState(this, _carPhysics);
             var groundedState = new GroundedCarState(_carPhysics);
-        
+
             airborneState.AddTransition(groundedState,
                 new ChangeStateToGroundedDecision(transform,
                     _carPhysics,

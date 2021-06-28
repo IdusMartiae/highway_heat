@@ -9,34 +9,39 @@ namespace Systems
         [SerializeField] private float airborneMultiplier = 1.5f;
         [SerializeField] private int starValue = 10;
         [SerializeField] private Entities.Car car;
-    
+
         private int _totalScore;
         private int _starBonus;
         private int _airborneBonus;
         private float _timer;
-        
+
         public int TotalScore => _totalScore;
         public int StarBonus => _starBonus;
         public int AirborneBonus => _airborneBonus;
 
         private void Awake()
         {
+            // TODO: usually pick up object passes it's values with event
             car.PickedUpStar += PickedUpStarHandler;
             car.CarLanded += CarLandedHandler;
-            
+
             InitializeFields();
         }
-        
+
         private void Update()
         {
             _timer += Time.deltaTime;
-            
+
             if (_timer >= scoreUpdateInterval)
             {
                 _totalScore += Mathf.RoundToInt(scorePointsPerSecond * scoreUpdateInterval);
                 _timer = 0f;
             }
+        }
 
+        public void ResetScore()
+        {
+            InitializeFields();
         }
 
         private void InitializeFields()
@@ -46,7 +51,7 @@ namespace Systems
             _airborneBonus = 0;
             _timer = 0f;
         }
-        
+
         private void PickedUpStarHandler()
         {
             _totalScore += starValue;
@@ -58,11 +63,6 @@ namespace Systems
             var airborneBonus = Mathf.RoundToInt(airborneTime * scorePointsPerSecond * airborneMultiplier);
             _totalScore += airborneBonus;
             _airborneBonus += airborneBonus;
-        }
-
-        public void ResetScore()
-        {
-            InitializeFields();
         }
     }
 }

@@ -8,10 +8,12 @@ namespace Systems.UI.Screens
     {
         // TODO: ADD ICON AND TEXT FOR AIRBORNE AND STARS BONUSES
         [SerializeField] private ScoreSystem scoreSystem;
+        // TODO: use TextMeshPro
         [SerializeField] private Text totalScoreText;
 
         private void Update()
         {
+            // TODO: update ui on events
             totalScoreText.text = scoreSystem.TotalScore.ToString();
         }
 

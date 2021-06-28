@@ -11,7 +11,7 @@ namespace Systems.UI
         [SerializeField] private MainMenuScreen mainMenuScreen;
         [SerializeField] private InGameScreen inGameScreen;
         [SerializeField] private ResultsScreen resultsScreen;
-        
+
         private IScreen _currentScreen;
 
         private void Awake()
@@ -22,7 +22,6 @@ namespace Systems.UI
 
         private void Update()
         {
-        
         }
 
         // TODO: ADD SWITCH HERE
@@ -38,7 +37,7 @@ namespace Systems.UI
             // inGameScreen.gameObject.SetActive(false);
             // resultsScreen.gameObject.SetActive(false);
             // mainMenuScreen.gameObject.SetActive(true);
-            
+
             _currentScreen = inGameScreen;
             _currentScreen.OnScreenEnter();
         }
