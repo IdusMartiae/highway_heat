@@ -59,5 +59,10 @@ namespace Systems
             _totalScore += airborneBonus;
             _airborneBonus += airborneBonus;
         }
+
+        public void ResetScore()
+        {
+            InitializeFields();
+        }
     }
 }
