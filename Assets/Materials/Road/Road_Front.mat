@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RoadMaterial_Front
+  m_Name: Road_Front
   m_Shader: {fileID: 4800000, guid: 8d2bb70cbf9db8d4da26e15b26e74248, type: 3}
   m_ShaderKeywords: _EMISSION _SPECULAR_COLOR
   m_LightmapFlags: 2
@@ -121,6 +121,6 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 5.992157, g: 5.992157, b: 5.992157, a: 1}
+    - _EmissionColor: {r: 8.47419, g: 8.47419, b: 8.47419, a: 1}
     - _SpecColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 0.5}
   m_BuildTextureStacks: []
