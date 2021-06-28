@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ae01692a3945b893837b8db875c950, type: 3}
   m_Name: ObstaclesConfiguration
   m_EditorClassIdentifier: 
-  destroyDistance: 200
-  spawnInterval: 100
+  destroyDistance: 120
+  spawnInterval: 3

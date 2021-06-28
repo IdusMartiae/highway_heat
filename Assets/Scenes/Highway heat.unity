@@ -1123,7 +1123,7 @@ MonoBehaviour:
   gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   inputHandler: {fileID: 1640463902}
   waveResponseTime: 0.001
-  roadTextureSpeed: 5
+  roadTextureSpeed: 6
   frontPanel: {fileID: 1496485579}
   lineLength: 30
   pointsPerLine: 60
