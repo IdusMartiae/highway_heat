@@ -42,9 +42,14 @@ namespace Entities
         private void OnTriggerEnter(Collider other)
         {
             // TODO: Скорее всего здесь будет уведомление eventSystem вместо этого
-            if (other.gameObject.CompareTag("Obstacle"))
+            if (other.gameObject.GetComponent<Obstacle>())
             {
                 Destroy(gameObject);
+            }
+
+            if (other.gameObject.GetComponent<Star>())
+            {
+                other.gameObject.GetComponent<Star>().Deinitialize();
             }
         }
         

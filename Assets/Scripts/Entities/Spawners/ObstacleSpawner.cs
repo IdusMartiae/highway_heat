@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Configurations;
 using Entities.Factories;
 using UnityEngine;
 
@@ -7,18 +8,19 @@ namespace Entities.Spawners
     public class ObstacleSpawner : MonoBehaviour
     {
         [SerializeField] private GameConfiguration gameConfiguration;
+        [SerializeField] private ObstaclesConfiguration obstaclesConfiguration;
         [SerializeField] private List<GameEntity> obstacles;
-        //TODO: move it config too. Probably different one, specific to obstacles
-        [SerializeField] private float destroyDistance = 200;
-        [SerializeField] private float spawnInterval = 100f;
-
+        
         private ObstacleFactory _obstacleFactory;
         private float _currentInterval;
 
         private void Awake()
         {
             _currentInterval = 0f;
-            _obstacleFactory = new ObstacleFactory(obstacles, transform, gameConfiguration, destroyDistance);
+            _obstacleFactory = new ObstacleFactory(obstacles,
+                transform,
+                gameConfiguration,
+                obstaclesConfiguration.DestroyDistance);
         }
 
         private void Update()
@@ -28,20 +30,14 @@ namespace Entities.Spawners
         
         private void CreateOnTimeInterval()
         {
-            UpdateCurrentTimeInterval();
+            _currentInterval += Time.deltaTime;
             
-            if (_currentInterval > spawnInterval)
+            if (_currentInterval > obstaclesConfiguration.SpawnInterval)
             {
                 CreateObstacle();
             }
         }
-
-        // TODO: method for one line of code is kinda useless
-        private void UpdateCurrentTimeInterval()
-        {
-            _currentInterval += Time.deltaTime;
-        }
-
+        
         private void CreateObstacle()
         {
             _currentInterval = 0;

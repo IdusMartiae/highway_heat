@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Configurations;
 using UnityEngine;
 
 namespace Entities.Factories

@@ -18,12 +18,7 @@ namespace Entities.StateMachines.Car.States
             _airborneTime = 0f;
             _carPhysics.InitializeAirborne();
         }
-
-        // TODO: don't have to override if not using it
-        public override void Tick()
-        {
-        }
-
+        
         public override void FixedTick()
         {
             _airborneTime += Time.fixedDeltaTime;

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Configurations;
 using Entities;
 using UnityEngine;
 using static System.Single;
@@ -122,19 +123,18 @@ public class RoadRenderer : MonoBehaviour
         frontPanel.position = _positionPoints[0];
     }
 
-    // TODO: group by accessibility
-    public float GetPointVerticalVelocity(int index)
-    {
-        var velocity = _pointVelocities[index].y;
-        return Mathf.Abs(velocity) < velocityClampThreshold ? 0 : velocity * 10;
-    }
-
     private void UpdateRoadTexture()
     {
         _textureOffset.Set(-(Time.time * roadTextureSpeed % 5), 0);
         lineRendererWrappers[0].lineRenderer.material.mainTextureOffset = _textureOffset;
     }
-
+    
+    public float GetPointVerticalVelocity(int index)
+    {
+        var velocity = _pointVelocities[index].y;
+        return Mathf.Abs(velocity) < velocityClampThreshold ? 0 : velocity * 10;
+    }
+    
     public float GetRoadThickness()
     {
         return lineRendererWrappers[1].lineThickness;

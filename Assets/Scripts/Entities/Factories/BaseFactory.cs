@@ -1,3 +1,4 @@
+using Configurations;
 using Entities.Factories.Interfaces;
 using UnityEngine;
 

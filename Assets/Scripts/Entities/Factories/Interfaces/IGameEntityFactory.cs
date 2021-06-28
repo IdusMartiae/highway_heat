@@ -1,3 +1,4 @@
+using Configurations;
 using UnityEngine;
 
 namespace Entities.Factories.Interfaces

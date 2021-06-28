@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 320062687915100320}
   - component: {fileID: 4836216213412809703}
   - component: {fileID: 1254430653106337417}
+  - component: {fileID: 1616863870311415402}
   m_Layer: 0
   m_Name: TopCube
   m_TagString: Obstacle
@@ -95,6 +96,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1616863870311415402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3071785427257128254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89b1110a1f834e4890b6bbcc6517885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3735438701450154724
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f940e6c1cfd6402e8ad5e7e7e4c9bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stars: []
 --- !u!1 &7981588441726991331
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +166,7 @@ GameObject:
   - component: {fileID: 4526109475317973451}
   - component: {fileID: 3526916693783601710}
   - component: {fileID: 6975191077916100891}
+  - component: {fileID: 287340922891519886}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Obstacle
@@ -235,3 +250,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &287340922891519886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981588441726991331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d89b1110a1f834e4890b6bbcc6517885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

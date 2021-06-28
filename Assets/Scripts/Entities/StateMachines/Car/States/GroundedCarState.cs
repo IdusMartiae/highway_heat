@@ -16,19 +16,10 @@ namespace Entities.StateMachines.Car.States
             _carPhysics.ResetVelocities();
         }
         
-        // TODO: don't have to override if not using it
-        public override void Tick()
-        {
-        }
-
         public override void FixedTick()
         {
             _carPhysics.UpdateGroundedTransform();
         }
         
-        // TODO: don't have to override if not using it
-        public override void OnStateExit()
-        {
-        }
     }
 }
