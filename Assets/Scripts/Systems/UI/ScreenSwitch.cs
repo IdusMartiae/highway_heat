@@ -10,7 +10,7 @@ namespace Systems.UI
         [SerializeField] private MainMenuScreen mainMenuScreen;
         [SerializeField] private InGameScreen inGameScreen;
         [SerializeField] private ResultsScreen resultsScreen;
-        
+
         private void Awake()
         {
             // InitializeUI();

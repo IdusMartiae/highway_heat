@@ -8,11 +8,11 @@ namespace Entities.Wrappers
     {
         [HideInInspector]
         public string name;
-    
+
         public LineRenderer lineRenderer;
         public Vector3 linePosition;
         public float lineThickness;
-        
+
         public Vector3[] GetPositionPointsWithOffset(Vector3[] initialPoints)
         {
             var length = initialPoints.Length;

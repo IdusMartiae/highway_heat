@@ -1,4 +1,3 @@
-using System;
 using Systems.Car;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Entities.StateMachines.Car.States
 
         private readonly CarPhysics _carPhysics;
         private Entities.Car _car;
-        
+
         public AirborneCarState(Entities.Car car, CarPhysics carPhysics)
         {
             _carPhysics = carPhysics;

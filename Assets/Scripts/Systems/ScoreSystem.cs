@@ -19,13 +19,12 @@ namespace Systems
         public int StarBonus => _starBonus;
         public int AirborneBonus => _airborneBonus;
 
-        public event Action<int> TotalScoreChange; 
+        public event Action<int> TotalScoreChange;
         public event Action<int> StarScoreChange;
         public event Action<int> AirborneScoreChange;
-        
+
         private void Awake()
         {
-            // TODO: usually pick up object passes it's values with event
             car.PickedUpStar += PickedUpStarHandler;
             car.CarLanded += CarLandedHandler;
 
@@ -40,7 +39,7 @@ namespace Systems
             {
                 _totalScore += Mathf.RoundToInt(scorePointsPerSecond * scoreUpdateInterval);
                 _timer = 0f;
-                
+
                 TotalScoreChange?.Invoke(_totalScore);
             }
         }
@@ -62,7 +61,7 @@ namespace Systems
         {
             _totalScore += scoreValue;
             _starBonus += scoreValue;
-            
+
             TotalScoreChange?.Invoke(_totalScore);
             StarScoreChange?.Invoke(scoreValue);
         }
@@ -70,12 +69,12 @@ namespace Systems
         private void CarLandedHandler(float airborneTime)
         {
             var airborneBonus = Mathf.RoundToInt(airborneTime * scorePointsPerSecond * airborneMultiplier);
-            
-            if (airborneBonus == 0) return;  
-            
+
+            if (airborneBonus == 0) return;
+
             _totalScore += airborneBonus;
             _airborneBonus += airborneBonus;
-            
+
             TotalScoreChange?.Invoke(_totalScore);
             AirborneScoreChange?.Invoke(airborneBonus);
         }

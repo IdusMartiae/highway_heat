@@ -8,12 +8,12 @@ namespace Systems.UI.Screens
     {
         // TODO: ADD ICON AND TEXT FOR AIRBORNE AND STARS BONUSES
         [SerializeField] private ScoreSystem scoreSystem;
-        [SerializeField] private TextMeshProUGUI totalScore;
-        [SerializeField] private TextMeshProUGUI airborneScore;
-        [SerializeField] private TextMeshProUGUI starScore;
+        [SerializeField] private TMP_Text totalScore;
+        [SerializeField] private TMP_Text airborneScore;
+        [SerializeField] private TMP_Text starScore;
         [SerializeField] private float fadeOutDelay;
         [SerializeField] private float fadeOutSpeed;
-        
+
         private void Awake()
         {
             scoreSystem.TotalScoreChange += HandleTotalScoreChange;
@@ -35,23 +35,23 @@ namespace Systems.UI.Screens
         {
             totalScore.text = $"{newScore}";
         }
-        
+
         private void HandleAirborneBonusChange(int scoreBonus)
         {
             airborneScore.text = $"+{scoreBonus}";
             TextFadeAway(airborneScore);
         }
-        
+
         private void HandleStarBonusChange(int scoreBonus)
         {
             starScore.text = $"+{scoreBonus}";
             TextFadeAway(starScore);
         }
 
-        private void TextFadeAway(TMP_Text textMeshProUGUI)
+        private void TextFadeAway(TMP_Text text)
         {
-            textMeshProUGUI.alpha = 1f;
-            textMeshProUGUI.DOFade(0, 10 / fadeOutSpeed).SetDelay(fadeOutDelay);
+            text.alpha = 1f;
+            text.DOFade(0, 10 / fadeOutSpeed).SetDelay(fadeOutDelay);
         }
     }
 }

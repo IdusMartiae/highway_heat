@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Configurations;
-using Entities;
 using Entities.Wrappers;
 using UnityEngine;
 using static System.Single;
@@ -21,7 +20,7 @@ public class RoadRenderer : MonoBehaviour
     private Vector3[] _pointVelocities;
 
     private Vector2 _textureOffset = Vector2.zero;
-    
+
     public Vector3[] PositionPoints => _positionPoints;
 
     private void OnValidate()
@@ -36,19 +35,19 @@ public class RoadRenderer : MonoBehaviour
         InitializePositionPoints();
         SetPositionToAllRenderers();
     }
-    
+
     private void Update()
     {
         SetPositionToAllRenderers();
         UpdateFrontPanelTransform();
         UpdateRoadTexture();
     }
-    
+
     private void FixedUpdate()
     {
         UpdatePositionPoints();
     }
-    
+
     private void InitializeLineRenderers()
     {
         foreach (var wrapper in lineRendererWrappers)
@@ -69,7 +68,7 @@ public class RoadRenderer : MonoBehaviour
     {
         _positionPoints = new Vector3[pointsPerLine];
         _pointVelocities = new Vector3[pointsPerLine];
-        
+
         var startingPoint = transform.position;
         var segmentLength = lineLength / (pointsPerLine - 1);
 
@@ -86,11 +85,11 @@ public class RoadRenderer : MonoBehaviour
             wrapper.lineRenderer.SetPositions(wrapper.GetPositionPointsWithOffset(_positionPoints));
         }
     }
-    
+
     private void UpdatePositionPoints()
     {
         var pointNewPosition = new Vector3();
-        
+
         for (var i = pointsPerLine - 1; i > 0; i--)
         {
             pointNewPosition.Set(_positionPoints[i].x, _positionPoints[i - 1].y, _positionPoints[i].z);
@@ -99,7 +98,7 @@ public class RoadRenderer : MonoBehaviour
                 ref _pointVelocities[i],
                 waveResponseTime);
         }
-        
+
         pointNewPosition = Input.anyKey
             ? GetMouseWorldCoordinates(_positionPoints[0])
             : _positionPoints[0];
@@ -118,7 +117,7 @@ public class RoadRenderer : MonoBehaviour
             gameConfiguration.VerticalMin,
             anchorPoint.z);
     }
-    
+
     private void UpdateFrontPanelTransform()
     {
         frontPanel.position = _positionPoints[0];
@@ -129,13 +128,13 @@ public class RoadRenderer : MonoBehaviour
         _textureOffset.Set(-(Time.time * roadTextureSpeed % 5), 0);
         lineRendererWrappers[0].lineRenderer.material.mainTextureOffset = _textureOffset;
     }
-    
+
     public float GetPointVerticalVelocity(int index)
     {
         var velocity = _pointVelocities[index].y;
         return Mathf.Abs(velocity) < velocityClampThreshold ? 0 : velocity * 10;
     }
-    
+
     public float GetRoadThickness()
     {
         return lineRendererWrappers[1].lineThickness;

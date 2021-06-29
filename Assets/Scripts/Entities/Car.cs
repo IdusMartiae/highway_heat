@@ -54,10 +54,9 @@ namespace Entities
                 Destroy(gameObject);
             }
 
-            if (other.gameObject.GetComponent<Star>())
+            var star = other.gameObject.GetComponent<Star>();
+            if (star != null)
             {
-                var star = other.gameObject.GetComponent<Star>();
-                
                 PickedUpStar?.Invoke(star.ScoreValue);
                 star.Deinitialize();
             }

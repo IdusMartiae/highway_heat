@@ -1,4 +1,3 @@
-using System;
 using Configurations;
 using Entities.Factories.Interfaces;
 using UnityEngine;
@@ -11,7 +10,7 @@ namespace Entities.Factories
         public Transform SpawnerTransform { get; }
         public GameConfiguration GameConfiguration { get; }
         public float DestroyDistance { get; }
-        
+
         protected BaseFactory(Transform spawnerTransform, GameConfiguration gameConfiguration, float destroyDistance)
         {
             SpawnerTransform = spawnerTransform;
