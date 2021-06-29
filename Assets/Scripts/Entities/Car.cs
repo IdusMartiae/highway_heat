@@ -9,7 +9,7 @@ namespace Entities
 {
     public class Car : MonoBehaviour
     {
-        public event Action PickedUpStar;
+        public event Action<int> PickedUpStar;
         public event Action CarCrashed;
         public event Action<float> CarLanded;
 
@@ -56,8 +56,10 @@ namespace Entities
 
             if (other.gameObject.GetComponent<Star>())
             {
-                PickedUpStar?.Invoke();
-                other.gameObject.GetComponent<Star>().Deinitialize();
+                var star = other.gameObject.GetComponent<Star>();
+                
+                PickedUpStar?.Invoke(star.ScoreValue);
+                star.Deinitialize();
             }
         }
 

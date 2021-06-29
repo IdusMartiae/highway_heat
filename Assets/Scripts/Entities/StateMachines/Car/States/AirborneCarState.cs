@@ -9,16 +9,12 @@ namespace Entities.StateMachines.Car.States
         private float _airborneTime;
 
         private readonly CarPhysics _carPhysics;
-        // private Entities.Car _car;
-
-        // TODO: remove event and invoke method directly
-        private event Action<float> CarLanded;
-
+        private Entities.Car _car;
+        
         public AirborneCarState(Entities.Car car, CarPhysics carPhysics)
         {
-            // _car = car;
-            CarLanded += car.CarLandedBufferHandler;
             _carPhysics = carPhysics;
+            _car = car;
         }
 
         public override void OnStateEnter()
@@ -35,8 +31,7 @@ namespace Entities.StateMachines.Car.States
 
         public override void OnStateExit()
         {
-            // _car.CarLandedBufferHandler(_airborneTime);
-            CarLanded?.Invoke(_airborneTime);
+            _car.CarLandedBufferHandler(_airborneTime);
             _carPhysics.ResetVelocities();
         }
     }

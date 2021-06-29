@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Entities
+namespace Entities.Wrappers
 {
     [Serializable]
     public class LineRendererWrapper

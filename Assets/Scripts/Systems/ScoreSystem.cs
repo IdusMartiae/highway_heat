@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Systems
@@ -7,7 +8,6 @@ namespace Systems
         [SerializeField] private int scorePointsPerSecond = 10;
         [SerializeField] private float scoreUpdateInterval = 0.1f;
         [SerializeField] private float airborneMultiplier = 1.5f;
-        [SerializeField] private int starValue = 10;
         [SerializeField] private Entities.Car car;
 
         private int _totalScore;
@@ -19,6 +19,10 @@ namespace Systems
         public int StarBonus => _starBonus;
         public int AirborneBonus => _airborneBonus;
 
+        public event Action<int> TotalScoreChange; 
+        public event Action<int> StarScoreChange;
+        public event Action<int> AirborneScoreChange;
+        
         private void Awake()
         {
             // TODO: usually pick up object passes it's values with event
@@ -36,6 +40,8 @@ namespace Systems
             {
                 _totalScore += Mathf.RoundToInt(scorePointsPerSecond * scoreUpdateInterval);
                 _timer = 0f;
+                
+                TotalScoreChange?.Invoke(_totalScore);
             }
         }
 
@@ -52,17 +58,26 @@ namespace Systems
             _timer = 0f;
         }
 
-        private void PickedUpStarHandler()
+        private void PickedUpStarHandler(int scoreValue)
         {
-            _totalScore += starValue;
-            _starBonus += starValue;
+            _totalScore += scoreValue;
+            _starBonus += scoreValue;
+            
+            TotalScoreChange?.Invoke(_totalScore);
+            StarScoreChange?.Invoke(scoreValue);
         }
 
         private void CarLandedHandler(float airborneTime)
         {
             var airborneBonus = Mathf.RoundToInt(airborneTime * scorePointsPerSecond * airborneMultiplier);
+            
+            if (airborneBonus == 0) return;  
+            
             _totalScore += airborneBonus;
             _airborneBonus += airborneBonus;
+            
+            TotalScoreChange?.Invoke(_totalScore);
+            AirborneScoreChange?.Invoke(airborneBonus);
         }
     }
 }

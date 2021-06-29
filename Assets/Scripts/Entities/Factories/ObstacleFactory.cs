@@ -14,7 +14,7 @@ namespace Entities.Factories
         {
             pool = new Pool<GameEntity>(obstacles, SpawnerTransform);
         }
-
+        
         public override GameEntity Create()
         {
             var gameEntity = pool.PullRandom();

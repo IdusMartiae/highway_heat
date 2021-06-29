@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Configurations;
 using Entities;
+using Entities.Wrappers;
 using UnityEngine;
 using static System.Single;
 

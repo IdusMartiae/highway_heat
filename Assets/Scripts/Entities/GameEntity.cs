@@ -8,10 +8,14 @@ namespace Entities
     {
         [SerializeField] private List<Star> stars;
         
+        // TODO: SET _PAUSED TO TRUE ON EVENT PARAMETER <TRUE>
         private IGameEntityFactory _factory;
+        private bool _paused = false;
 
         private void Update()
         {
+            if (_paused) return;
+            
             transform.Translate(Vector3.left * (Time.deltaTime * _factory.GameConfiguration.HorizontalSpeed));
             DestroyOnOutOfBounds(CalculateDistance());
         }

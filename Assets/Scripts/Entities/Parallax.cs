@@ -11,8 +11,7 @@ namespace Entities
 
         private void Awake()
         {
-            // TODO: use sharedMaterial, material creates new instance
-            _material = GetComponent<MeshRenderer>().material;
+            _material = GetComponent<MeshRenderer>().sharedMaterial;
             _textureOffset = _material.mainTextureOffset;
         }
 

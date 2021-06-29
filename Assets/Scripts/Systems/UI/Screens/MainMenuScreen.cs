@@ -1,10 +1,9 @@
 using System;
-using Systems.UI.Screens.Interfaces;
 using UnityEngine;
 
 namespace Systems.UI.Screens
 {
-    public class MainMenuScreen : MonoBehaviour, IScreen
+    public class MainMenuScreen : MonoBehaviour
     {
         public void OnScreenEnter()
         {

@@ -1,5 +1,4 @@
 using Systems.UI.Screens;
-using Systems.UI.Screens.Interfaces;
 using UnityEngine;
 
 namespace Systems.UI
@@ -11,35 +10,32 @@ namespace Systems.UI
         [SerializeField] private MainMenuScreen mainMenuScreen;
         [SerializeField] private InGameScreen inGameScreen;
         [SerializeField] private ResultsScreen resultsScreen;
-
-        private IScreen _currentScreen;
-
+        
         private void Awake()
         {
-            car.CarCrashed += SetNextScreenToResults;
-            InitializeUI();
+            // InitializeUI();
+            // car.CarCrashed += ;
         }
 
         private void Update()
         {
         }
 
-        // TODO: ADD SWITCH HERE
-        private void SetNextScreenToResults()
-        {
-            _currentScreen.OnScreenExit();
-            _currentScreen = resultsScreen;
-            _currentScreen.OnScreenEnter();
-        }
-
-        private void InitializeUI()
-        {
-            // inGameScreen.gameObject.SetActive(false);
-            // resultsScreen.gameObject.SetActive(false);
-            // mainMenuScreen.gameObject.SetActive(true);
-
-            _currentScreen = inGameScreen;
-            _currentScreen.OnScreenEnter();
-        }
+        // private void SetNextScreenToResults()
+        // {
+        //     _currentScreen.OnScreenExit();
+        //     _currentScreen = resultsScreen;
+        //     _currentScreen.OnScreenEnter();
+        // }
+        //
+        // private void InitializeUI()
+        // {
+        //     // inGameScreen.gameObject.SetActive(false);
+        //     // resultsScreen.gameObject.SetActive(false);
+        //     // mainMenuScreen.gameObject.SetActive(true);
+        //
+        //     _currentScreen = inGameScreen;
+        //     _currentScreen.OnScreenEnter();
+        // }
     }
 }
