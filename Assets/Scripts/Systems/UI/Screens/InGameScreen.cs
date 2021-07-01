@@ -18,6 +18,10 @@ namespace Systems.UI.Screens
         private int _starBonus;
         private Tween _airborneBonusTween;
         private Tween _starBonusTween;
+
+        public ScoreSystem ScoreSystem => scoreSystem;
+
+        public TMP_Text TotalScore => totalScore;
         
         private void Awake()
         {
@@ -26,21 +30,12 @@ namespace Systems.UI.Screens
             scoreSystem.StarScoreChange += HandleStarBonusChange;
         }
 
-        public void OnScreenEnter()
-        {
-            totalScore.text = "";
-            scoreSystem.ResetScore();
-        }
-
-        public void OnScreenExit()
-        {
-        }
-
         private void HandleTotalScoreChange(int newScore)
         {
             totalScore.text = $"{newScore}";
         }
-
+        
+        // TODO: REPLACE MULTIPLE HANDLERS WITH ONE, PASS SCORE, TWEEN AS PARAMETERS
         private void HandleAirborneBonusChange(int scoreBonus)
         {
             _airborneBonus += scoreBonus;

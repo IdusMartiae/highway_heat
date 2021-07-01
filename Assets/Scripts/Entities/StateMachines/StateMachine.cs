@@ -30,7 +30,7 @@ namespace Entities.StateMachines
             }
         }
 
-        private void TransitionToState(State state)
+        public void TransitionToState(State state)
         {
             _currentState.OnStateExit();
             _currentState = state;

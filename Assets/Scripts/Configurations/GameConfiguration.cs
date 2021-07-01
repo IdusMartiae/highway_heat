@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Configurations
@@ -8,9 +9,11 @@ namespace Configurations
         [SerializeField] private bool paused;
 
         public bool Paused
+        { get; set; }
+
+        private void OnEnable()
         {
-            get => paused;
-            set => paused = value;
+            Paused = paused;
         }
     }
 }

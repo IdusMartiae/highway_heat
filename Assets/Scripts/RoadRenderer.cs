@@ -6,6 +6,7 @@ using static System.Single;
 
 public class RoadRenderer : MonoBehaviour
 {
+    [SerializeField] private GameConfiguration gameConfiguration;
     [SerializeField] private InputConfiguration inputConfiguration;
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private float waveResponseTime = 0.01f;
@@ -98,8 +99,8 @@ public class RoadRenderer : MonoBehaviour
                 ref _pointVelocities[i],
                 waveResponseTime);
         }
-
-        pointNewPosition = Input.anyKey
+        
+        pointNewPosition = Input.GetMouseButton(0) && !gameConfiguration.Paused
             ? GetMouseWorldCoordinates(_positionPoints[0])
             : _positionPoints[0];
 

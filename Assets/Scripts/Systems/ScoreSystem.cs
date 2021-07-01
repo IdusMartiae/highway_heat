@@ -13,11 +13,13 @@ namespace Systems
         [SerializeField] private Entities.Car car;
 
         private int _totalScore;
+        private int _distanceBonus;
         private int _starBonus;
         private int _airborneBonus;
         private float _timer;
 
         public int TotalScore => _totalScore;
+        public int DistanceBonus => _distanceBonus;
         public int StarBonus => _starBonus;
         public int AirborneBonus => _airborneBonus;
 
@@ -41,7 +43,10 @@ namespace Systems
 
             if (_timer >= scoreUpdateInterval)
             {
-                _totalScore += Mathf.RoundToInt(scorePointsPerSecond * scoreUpdateInterval);
+                var distanceScoreDelta = Mathf.RoundToInt(scorePointsPerSecond * scoreUpdateInterval);
+                
+                _distanceBonus += distanceScoreDelta;
+                _totalScore += distanceScoreDelta;
                 _timer = 0f;
 
                 TotalScoreChange?.Invoke(_totalScore);
