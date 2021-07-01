@@ -1,10 +1,12 @@
 using System;
+using Configurations;
 using UnityEngine;
 
 namespace Systems
 {
     public class ScoreSystem : MonoBehaviour
     {
+        [SerializeField] private GameConfiguration gameConfiguration;
         [SerializeField] private int scorePointsPerSecond = 10;
         [SerializeField] private float scoreUpdateInterval = 0.1f;
         [SerializeField] private float airborneMultiplier = 1.5f;
@@ -33,6 +35,8 @@ namespace Systems
 
         private void Update()
         {
+            if (gameConfiguration.Paused) return;
+                
             _timer += Time.deltaTime;
 
             if (_timer >= scoreUpdateInterval)

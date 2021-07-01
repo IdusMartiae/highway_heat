@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fa78df8eddb4f64b4f8a5c0d8432ee9, type: 3}
-  m_Name: GameConfiguration
+  m_Script: {fileID: 11500000, guid: 2c54eb102c5b42fe8c52346ca6e72f07, type: 3}
+  m_Name: InputConfiguration
   m_EditorClassIdentifier: 
-  paused: 0
+  verticalMax: 10
+  verticalMin: -10
+  verticalSpeed: 50
+  horizontalSpeed: 20

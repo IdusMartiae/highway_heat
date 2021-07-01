@@ -8,13 +8,14 @@ namespace Entities.Factories
     {
         protected Pool<GameEntity> pool;
         public Transform SpawnerTransform { get; }
-        public GameConfiguration GameConfiguration { get; }
+        
+        public GameEntityConfiguration GameEntityConfiguration { get; }
         public float DestroyDistance { get; }
 
-        protected BaseFactory(Transform spawnerTransform, GameConfiguration gameConfiguration, float destroyDistance)
+        protected BaseFactory(Transform spawnerTransform, GameEntityConfiguration gameEntityConfiguration, float destroyDistance)
         {
             SpawnerTransform = spawnerTransform;
-            GameConfiguration = gameConfiguration;
+            GameEntityConfiguration = gameEntityConfiguration;
             DestroyDistance = destroyDistance;
         }
 

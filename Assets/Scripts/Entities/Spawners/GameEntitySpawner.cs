@@ -1,30 +1,33 @@
 using System.Collections.Generic;
+using Systems.UI;
 using Configurations;
 using Entities.Factories;
 using UnityEngine;
 
 namespace Entities.Spawners
 {
-    public class ObstacleSpawner : MonoBehaviour
+    public class GameEntitySpawner : MonoBehaviour
     {
         [SerializeField] private GameConfiguration gameConfiguration;
-        [SerializeField] private ObstaclesConfiguration obstaclesConfiguration;
+        [SerializeField] private GameEntityConfiguration gameEntityConfiguration;
         [SerializeField] private List<GameEntity> obstacles;
-        
-        private ObstacleFactory _obstacleFactory;
-        private float _currentInterval;
 
+        private GameEntityFactory _gameEntityFactory;
+        private float _currentInterval;
+        
         private void Awake()
         {
             _currentInterval = 0f;
-            _obstacleFactory = new ObstacleFactory(obstacles,
+            _gameEntityFactory = new GameEntityFactory(obstacles,
                 transform,
-                gameConfiguration,
-                obstaclesConfiguration.DestroyDistance);
+                gameEntityConfiguration,
+                gameEntityConfiguration.DestroyDistance);
         }
 
         private void Update()
         {
+            if (gameConfiguration.Paused) return;
+            
             CreateOnTimeInterval();
         }
         
@@ -32,7 +35,7 @@ namespace Entities.Spawners
         {
             _currentInterval += Time.deltaTime;
             
-            if (_currentInterval > obstaclesConfiguration.SpawnInterval)
+            if (_currentInterval > gameEntityConfiguration.SpawnInterval)
             {
                 CreateObstacle();
             }
@@ -41,8 +44,9 @@ namespace Entities.Spawners
         private void CreateObstacle()
         {
             _currentInterval = 0;
-            var obstacle = _obstacleFactory.Create();
+            var obstacle = _gameEntityFactory.Create();
             
+            obstacle.GameConfiguration = gameConfiguration;
             obstacle.transform.position = transform.position;
         }
     }

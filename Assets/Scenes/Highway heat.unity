@@ -721,8 +721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baf1f78afa624c6a84926409eba59f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
-  obstaclesConfiguration: {fileID: 11400000, guid: 2fcb97224bb06475e93384018879161c, type: 2}
+  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
+  gameEntityConfiguration: {fileID: 11400000, guid: 2fcb97224bb06475e93384018879161c, type: 2}
   obstacles:
   - {fileID: -2585095657763926794, guid: b34f0c1eac2a84897b5b3243bb896084, type: 3}
   - {fileID: 266864355801447554, guid: 65504f9086e9b4fcda9db3c1b5be103b, type: 3}
@@ -1010,8 +1010,8 @@ MonoBehaviour:
   totalScore: {fileID: 13819214}
   airborneScore: {fileID: 612916535}
   starScore: {fileID: 1662522800}
-  fadeOutDelay: 1
-  fadeOutSpeed: 20
+  fadeOutDelay: 2
+  fadeOutSpeed: 10
 --- !u!224 &848311310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1931,6 +1931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581e84fda30164c1f82252f2f8f76894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
   verticalInputMargin: 50
   sensitivity: 0.3
 --- !u!4 &1640463903
@@ -2323,7 +2324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea63836890d774ff196006a7099a384c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
+  inputConfiguration: {fileID: 11400000, guid: 96db96555f334f2438cc64aa3e91dfcf, type: 2}
   inputHandler: {fileID: 1640463902}
   waveResponseTime: 0.001
   roadTextureSpeed: 6
@@ -2391,6 +2392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6960bee8956db43b6ad5e2a1754bf794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
   scorePointsPerSecond: 5
   scoreUpdateInterval: 0.2
   airborneMultiplier: 1.5
@@ -2779,7 +2781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d525bb797ff45bab6fbf666a1de246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerSpeed: 35
+  layerSpeed: 30
 --- !u!4 &184910634557671564
 Transform:
   m_ObjectHideFlags: 0

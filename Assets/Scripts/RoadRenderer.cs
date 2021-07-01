@@ -6,7 +6,7 @@ using static System.Single;
 
 public class RoadRenderer : MonoBehaviour
 {
-    [SerializeField] private GameConfiguration gameConfiguration;
+    [SerializeField] private InputConfiguration inputConfiguration;
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private float waveResponseTime = 0.01f;
     [SerializeField] private float roadTextureSpeed = 5f;
@@ -15,13 +15,12 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] public int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
     [SerializeField] private float velocityClampThreshold = 0.001f;
+    
+    public Vector3[] PositionPoints => _positionPoints;
 
     private Vector3[] _positionPoints;
     private Vector3[] _pointVelocities;
-
     private Vector2 _textureOffset = Vector2.zero;
-
-    public Vector3[] PositionPoints => _positionPoints;
 
     private void OnValidate()
     {
@@ -56,6 +55,7 @@ public class RoadRenderer : MonoBehaviour
         }
     }
 
+    // TODO: WRAPPER CAN INITIALIZE ITSELF BY INVOKING WRAPPER'S METHOD AND PASSING REQUIRED PARAMETERS TO IT
     private void InitializeLineRenderer(LineRendererWrapper wrapper)
     {
         wrapper.lineRenderer.positionCount = pointsPerLine;
@@ -107,14 +107,14 @@ public class RoadRenderer : MonoBehaviour
             pointNewPosition,
             ref _pointVelocities[0],
             inputHandler.Sensitivity,
-            gameConfiguration.VerticalSpeed);
+            inputConfiguration.VerticalSpeed);
     }
 
     private Vector3 GetMouseWorldCoordinates(Vector3 anchorPoint)
     {
         return new Vector3(anchorPoint.x,
-            (gameConfiguration.VerticalMax - gameConfiguration.VerticalMin) * inputHandler.MouseNormalizedY +
-            gameConfiguration.VerticalMin,
+            (inputConfiguration.VerticalMax - inputConfiguration.VerticalMin) * inputHandler.MouseNormalizedY +
+            inputConfiguration.VerticalMin,
             anchorPoint.z);
     }
 

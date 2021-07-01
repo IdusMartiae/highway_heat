@@ -14,6 +14,11 @@ namespace Systems.UI.Screens
         [SerializeField] private float fadeOutDelay;
         [SerializeField] private float fadeOutSpeed;
 
+        private int _airborneBonus;
+        private int _starBonus;
+        private Tween _airborneBonusTween;
+        private Tween _starBonusTween;
+        
         private void Awake()
         {
             scoreSystem.TotalScoreChange += HandleTotalScoreChange;
@@ -38,20 +43,26 @@ namespace Systems.UI.Screens
 
         private void HandleAirborneBonusChange(int scoreBonus)
         {
-            airborneScore.text = $"+{scoreBonus}";
-            TextFadeAway(airborneScore);
+            _airborneBonus += scoreBonus;
+            airborneScore.text = $"+{_airborneBonus}";
+            
+            _airborneBonusTween?.Kill();
+            _airborneBonusTween = TextFadeAway(airborneScore).OnComplete(() => _airborneBonus = 0);
         }
 
         private void HandleStarBonusChange(int scoreBonus)
         {
-            starScore.text = $"+{scoreBonus}";
-            TextFadeAway(starScore);
+            _starBonus += scoreBonus;
+            starScore.text = $"+{_starBonus}";
+
+            _starBonusTween?.Kill();
+            _starBonusTween = TextFadeAway(starScore).OnComplete(() => _starBonus = 0);
         }
 
-        private void TextFadeAway(TMP_Text text)
+        private Tween TextFadeAway(TMP_Text text)
         {
             text.alpha = 1f;
-            text.DOFade(0, 10 / fadeOutSpeed).SetDelay(fadeOutDelay);
+            return text.DOFade(0, 10 / fadeOutSpeed).SetDelay(fadeOutDelay);
         }
     }
 }

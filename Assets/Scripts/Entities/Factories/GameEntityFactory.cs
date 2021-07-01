@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Entities.Factories
 {
-    public class ObstacleFactory : BaseFactory
+    public class GameEntityFactory : BaseFactory
     {
-        public ObstacleFactory(
+        public GameEntityFactory(
             List<GameEntity> obstacles,
             Transform spawnerTransform,
-            GameConfiguration gameConfiguration,
-            float destroyDistance) : base(spawnerTransform, gameConfiguration, destroyDistance)
+            GameEntityConfiguration gameEntityConfiguration,
+            float destroyDistance) : base(spawnerTransform, gameEntityConfiguration, destroyDistance)
         {
             pool = new Pool<GameEntity>(obstacles, SpawnerTransform);
         }
@@ -22,5 +22,6 @@ namespace Entities.Factories
 
             return gameEntity;
         }
+        
     }
 }
