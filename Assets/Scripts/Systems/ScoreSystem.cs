@@ -14,18 +14,30 @@ namespace Systems
 
         private int _totalScore;
         private int _distanceBonus;
+        
         private int _starBonus;
         private int _airborneBonus;
+        
         private float _timer;
 
-        public int TotalScore => _totalScore;
+        public int TotalScore
+        {
+            get => _totalScore;
+            set
+            {
+                _totalScore += value;
+                TotalScoreChange?.Invoke(_totalScore);
+            }
+        }
+
         public int DistanceBonus => _distanceBonus;
         public int StarBonus => _starBonus;
         public int AirborneBonus => _airborneBonus;
 
-        public event Action<int> TotalScoreChange;
-        public event Action<int> StarScoreChange;
-        public event Action<int> AirborneScoreChange;
+        // TODO REPLACE WITH SIGNALS
+        public event Action<int> TotalScoreChange = delegate {};
+        public event Action<int> StarScoreChange = delegate {};
+        public event Action<int> AirborneScoreChange = delegate {};
 
         private void Awake()
         {
@@ -49,7 +61,7 @@ namespace Systems
                 _totalScore += distanceScoreDelta;
                 _timer = 0f;
 
-                TotalScoreChange?.Invoke(_totalScore);
+                TotalScoreChange(_totalScore);
             }
         }
 
@@ -71,8 +83,8 @@ namespace Systems
             _totalScore += scoreValue;
             _starBonus += scoreValue;
 
-            TotalScoreChange?.Invoke(_totalScore);
-            StarScoreChange?.Invoke(scoreValue);
+            TotalScoreChange(_totalScore);
+            StarScoreChange(scoreValue);
         }
 
         private void CarLandedHandler(float airborneTime)
@@ -84,8 +96,8 @@ namespace Systems
             _totalScore += airborneBonus;
             _airborneBonus += airborneBonus;
 
-            TotalScoreChange?.Invoke(_totalScore);
-            AirborneScoreChange?.Invoke(airborneBonus);
+            TotalScoreChange(_totalScore);
+            AirborneScoreChange(airborneBonus);
         }
     }
 }

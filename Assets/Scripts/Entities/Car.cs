@@ -50,7 +50,7 @@ namespace Entities
         {
             if (other.gameObject.GetComponent<Obstacle>())
             {
-                CarCrashed?.Invoke();
+                
                 Destroy(gameObject);
             }
 

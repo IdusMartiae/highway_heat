@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace Systems.UI.Screens
 {
-    public class MainMenuScreen : MonoBehaviour
+    public class MainMenuScreen : BaseScreen
     {
     }
 }

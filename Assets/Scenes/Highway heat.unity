@@ -398,13 +398,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e09643a4be94478a9bc74563a09284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
-  car: {fileID: 1927039617070492499}
-  mainMenuScreen: {fileID: 2117398692}
-  inGameScreen: {fileID: 848311309}
-  resultsScreen: {fileID: 887440267}
-  retryButton: {fileID: 184967250}
-  playButton: {fileID: 1681999627}
 --- !u!4 &62354025
 Transform:
   m_ObjectHideFlags: 0
@@ -415,7 +408,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 848311310}
+  - {fileID: 887440271}
+  - {fileID: 2117398688}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2069,7 +2065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3072db87bf0124e9e90a114b50b2dd50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreSystem: {fileID: 1945725542}
   totalScore: {fileID: 13819214}
   airborneScore: {fileID: 612916535}
   starScore: {fileID: 1662522800}
@@ -2089,8 +2084,8 @@ RectTransform:
   - {fileID: 4566705}
   - {fileID: 287592978}
   - {fileID: 1548600615}
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_Father: {fileID: 62354025}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2283,11 +2278,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07f94e05f57e444f85f1dd8769f0fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreSystem: {fileID: 1945725542}
   totalScore: {fileID: 983916171}
   distanceScore: {fileID: 162123305}
   starsScore: {fileID: 128324862}
   airTimeScore: {fileID: 722988280}
+  retryButton: {fileID: 0}
 --- !u!114 &887440268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2365,8 +2360,8 @@ RectTransform:
   - {fileID: 1650859793}
   - {fileID: 804980550}
   - {fileID: 184967249}
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_Father: {fileID: 62354025}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3120,6 +3115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1396339670}
   - component: {fileID: 1396339669}
+  - component: {fileID: 1396339671}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -3140,7 +3136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 1396339671}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -3170,8 +3167,22 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396339671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396339668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d4ad6b1a5f3e4495aa9c51a31b71aee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenSwitch: {fileID: 62354024}
+  scoreSystem: {fileID: 1945725542}
 --- !u!1 &1474378775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4462,7 +4473,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2049463662
 GameObject:
@@ -4636,56 +4647,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &2089627017
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2089627019}
-  - component: {fileID: 2089627018}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2089627018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089627017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41e09643a4be94478a9bc74563a09284, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
-  car: {fileID: 1927039617070492499}
-  mainMenuScreen: {fileID: 2117398692}
-  inGameScreen: {fileID: 848311309}
-  resultsScreen: {fileID: 887440267}
-  retryButton: {fileID: 184967250}
-  playButton: {fileID: 1681999627}
---- !u!4 &2089627019
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089627017}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2101247779
 GameObject:
   m_ObjectHideFlags: 0
@@ -4990,8 +4951,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1681999626}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 62354025}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
