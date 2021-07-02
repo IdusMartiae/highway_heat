@@ -7,8 +7,8 @@ namespace Entities.Factories
     public class BaseFactory : IGameEntityFactory
     {
         protected Pool<GameEntity> pool;
-        public Transform SpawnerTransform { get; }
         
+        public Transform SpawnerTransform { get; }
         public GameEntityConfiguration GameEntityConfiguration { get; }
         public float DestroyDistance { get; }
 
