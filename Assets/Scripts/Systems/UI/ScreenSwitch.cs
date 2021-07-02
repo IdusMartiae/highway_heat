@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Systems.UI.Screens;
 using Configurations;
 using Entities.StateMachines;
@@ -20,7 +21,7 @@ namespace Systems.UI
         [SerializeField] private Button playButton;
 
         private StateMachine _screenStateMachine;
-        
+
         public GameConfiguration GameConfiguration => gameConfiguration;
         public MainMenuScreen MainMenuScreen => mainMenuScreen;
         public InGameScreen InGameScreen => inGameScreen;
@@ -36,11 +37,8 @@ namespace Systems.UI
             var mainMenuScreenState = new MainMenuScreenState(this);
             var inGameScreenState = new InGameScreenState(this);
             var resultsScreenState = new ResultsScreenState(this);
-            
-            playButton.onClick.AddListener(() =>
-            {
-                _screenStateMachine.TransitionToState(inGameScreenState);
-            });
+
+            playButton.onClick.AddListener(() => { _screenStateMachine.TransitionToState(inGameScreenState); });
             car.CarCrashed += () => _screenStateMachine.TransitionToState(resultsScreenState);
             retryButton.onClick.AddListener(ReloadScene);
 
@@ -55,3 +53,29 @@ namespace Systems.UI
         }
     }
 }
+
+// TODO: option for ScreenSwitcher
+// [SerializeField] List<Screen> screens;
+//
+// private Dictionary<ScreenType, Screen> _screens;
+//
+// public void PickScreen(ScreenType screenType)
+// {
+//     foreach (var screen in _screens.Values)
+//     {
+//         // Can be a simple screen.gameObject.SetActive(false)
+//         screen.Deactivate();
+//     }
+//
+//     // Can be a simple screen.gameObject.SetActive(true)
+//     _screens[screenType].Activate();
+// }
+//
+// private void InitializeScreenDictionary()
+// {
+//     _screens = new Dictionary<ScreenType, Screen>();
+//     foreach (var screen in screens)
+//     {
+//         _screens.Add(screen.Type, screen);
+//     }
+// }
