@@ -1,45 +1,82 @@
 using System;
+using Entities.Wrappers;
 
 namespace Systems.UI.Screens.Helpers
 {
     public class InGameScreenHelper
     {
-        private ScoreSystem _scoreSystem;
-        private float _scoreLifetime;
-        
-        private int _airborneTempBonus;
-        private int _starTempBonus;
-        
-        public event Action<int> AiborneTempScoreChange;
-        
+        private readonly ScoreSystem _scoreSystem;
+        private TempScoreWrapper _airborneScoreWrapper;
+        private TempScoreWrapper _starScoreWrapper;
+
+        public event Action<int> TotalScoreChange = delegate { };
+        public event Action<int> TempAirborneScoreChange = delegate { };
+        public event Action<int> TempStarScoreChange = delegate { };
+
         public InGameScreenHelper(float fadeDelay, float fadeDuration, ScoreSystem scoreSystem)
         {
-            _scoreLifetime = fadeDelay + fadeDuration;
+            var scoreLifetime = fadeDelay + fadeDuration;
+
+            InitializeScoreWrappers(scoreLifetime);
+
             _scoreSystem = scoreSystem;
-            
+
             _scoreSystem.TotalScoreChange += HandleTotalScoreChange;
-            _scoreSystem.AirborneScoreChange += HandleAirborneBonusChange;
-            _scoreSystem.StarScoreChange += HandleStarBonusChange;
+            _scoreSystem.AirborneScoreChange += ChangeAirborneTempScore;
+            _scoreSystem.StarScoreChange += ChangeStarTempScore;
         }
 
         public void Tick()
         {
-            
+            UpdateScoreWrappers();
         }
-        
+
+        private void InitializeScoreWrappers(float scoreLifetime)
+        {
+            _airborneScoreWrapper = new TempScoreWrapper(scoreLifetime);
+            _starScoreWrapper = new TempScoreWrapper(scoreLifetime);
+        }
+
         private void HandleTotalScoreChange(int score)
         {
-            
+            TotalScoreChange(score);
         }
 
-        private void HandleAirborneBonusChange(int score)
+        // loses refs list of subscribed delegates for some reason 
+        /*private Action<int> GetUINotifier(TempScoreWrapper tempScoreWrapper,
+            Action<int> tempScoreChangeNotifier)
         {
-            
+            return bonusScore =>
+            {
+                tempScoreWrapper.Score += bonusScore;
+                tempScoreChangeNotifier.Invoke(tempScoreWrapper.Score);
+            };
+        }*/
+
+        private void ChangeAirborneTempScore(int bonusScore)
+        {
+            _airborneScoreWrapper.Score += bonusScore;
+            TempAirborneScoreChange(_airborneScoreWrapper.Score);
         }
 
-        private void HandleStarBonusChange(int score)
+        private void ChangeStarTempScore(int bonusScore)
         {
-            
+            _starScoreWrapper.Score += bonusScore;
+            TempStarScoreChange(_starScoreWrapper.Score);
+        }
+
+        private void UpdateScoreWrappers()
+        {
+            UpdateScoreWrapper(_airborneScoreWrapper);
+            UpdateScoreWrapper(_starScoreWrapper);
+        }
+
+        private void UpdateScoreWrapper(TempScoreWrapper tempScoreWrapper)
+        {
+            if (!tempScoreWrapper.IsScoreAlive())
+            {
+                _scoreSystem.TotalScore += tempScoreWrapper.FlushDeadScore();
+            }
         }
     }
 }

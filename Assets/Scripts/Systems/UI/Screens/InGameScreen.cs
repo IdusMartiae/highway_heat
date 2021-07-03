@@ -10,17 +10,16 @@ namespace Systems.UI.Screens
 {
     public class InGameScreen : BaseScreen
     {
-        // TODO: ADD ICON AND TEXT FOR AIRBORNE AND STARS BONUSES
-        [SerializeField] private TMP_Text totalScore;
-        [SerializeField] private TMP_Text airborneScore;
-        [SerializeField] private TMP_Text starScore;
+        [SerializeField] private TMP_Text totalScoreText;
+        [SerializeField] private TMP_Text airborneTempScoreText;
+        [SerializeField] private TMP_Text starTempScoreText;
         [SerializeField] private float fadeDelay;
         [SerializeField] private float fadeDuration;
         
         private InGameScreenHelper _inGameScreenHelper;
         
-        private Tween _airborneBonusTween;
-        private Tween _starBonusTween;
+        private Tween _airborneTempScoreTween;
+        private Tween _starTempScoreTween;
 
         [Inject]
         private void Initialize(ScoreSystem scoreSystem)
@@ -28,12 +27,16 @@ namespace Systems.UI.Screens
             _inGameScreenHelper = new InGameScreenHelper(fadeDelay, fadeDuration, scoreSystem);
         }
         
-        private void Awake()
+        private void Start()
         {
             ScreenType = ScreenEnum.InGame;
-            
-            _inGameScreenHelper.AiborneTempScoreChange +=
-                GetBonusScoreChangeHandler(airborneScore, _airborneBonusTween);
+
+            _inGameScreenHelper.TotalScoreChange += 
+                score => totalScoreText.text = $"{score}";
+            _inGameScreenHelper.TempAirborneScoreChange +=
+                GetBonusScoreChangeHandler(airborneTempScoreText, _airborneTempScoreTween);
+            _inGameScreenHelper.TempStarScoreChange +=
+                GetBonusScoreChangeHandler(starTempScoreText, _starTempScoreTween);
         }
 
         private void Update()
@@ -48,11 +51,11 @@ namespace Systems.UI.Screens
                 bonusScoreText.text = $"+{scoreBonus}";
 
                 bonusScoreTween?.Kill();
-                bonusScoreTween = TextFadeAway(bonusScoreText);
+                bonusScoreTween = ScoreFade(bonusScoreText);
             };
         }
         
-        private Tween TextFadeAway(TMP_Text text)
+        private Tween ScoreFade(TMP_Text text)
         {
             text.alpha = 1f;
             return text.DOFade(0, fadeDuration).SetDelay(fadeDelay);

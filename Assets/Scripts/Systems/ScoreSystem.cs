@@ -14,10 +14,10 @@ namespace Systems
 
         private int _totalScore;
         private int _distanceBonus;
-        
+
         private int _starBonus;
         private int _airborneBonus;
-        
+
         private float _timer;
 
         public int TotalScore
@@ -25,8 +25,8 @@ namespace Systems
             get => _totalScore;
             set
             {
-                _totalScore += value;
-                TotalScoreChange?.Invoke(_totalScore);
+                _totalScore = value;
+                TotalScoreChange(_totalScore);
             }
         }
 
@@ -35,9 +35,9 @@ namespace Systems
         public int AirborneBonus => _airborneBonus;
 
         // TODO REPLACE WITH SIGNALS
-        public event Action<int> TotalScoreChange = delegate {};
-        public event Action<int> StarScoreChange = delegate {};
-        public event Action<int> AirborneScoreChange = delegate {};
+        public event Action<int> TotalScoreChange = delegate { };
+        public event Action<int> StarScoreChange = delegate { };
+        public event Action<int> AirborneScoreChange = delegate { };
 
         private void Awake()
         {
@@ -50,13 +50,13 @@ namespace Systems
         private void Update()
         {
             if (gameConfiguration.Paused) return;
-                
+
             _timer += Time.deltaTime;
 
             if (_timer >= scoreUpdateInterval)
             {
                 var distanceScoreDelta = Mathf.RoundToInt(scorePointsPerSecond * scoreUpdateInterval);
-                
+
                 _distanceBonus += distanceScoreDelta;
                 _totalScore += distanceScoreDelta;
                 _timer = 0f;
@@ -80,10 +80,7 @@ namespace Systems
 
         private void PickedUpStarHandler(int scoreValue)
         {
-            _totalScore += scoreValue;
             _starBonus += scoreValue;
-
-            TotalScoreChange(_totalScore);
             StarScoreChange(scoreValue);
         }
 
@@ -93,10 +90,7 @@ namespace Systems
 
             if (airborneBonus == 0) return;
 
-            _totalScore += airborneBonus;
             _airborneBonus += airborneBonus;
-
-            TotalScoreChange(_totalScore);
             AirborneScoreChange(airborneBonus);
         }
     }

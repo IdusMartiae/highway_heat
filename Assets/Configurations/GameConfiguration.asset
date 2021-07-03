@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fa78df8eddb4f64b4f8a5c0d8432ee9, type: 3}
   m_Name: GameConfiguration
   m_EditorClassIdentifier: 
-  paused: 1
+  paused: 0
