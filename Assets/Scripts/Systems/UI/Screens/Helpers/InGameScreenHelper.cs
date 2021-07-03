@@ -5,14 +5,14 @@ namespace Systems.UI.Screens.Helpers
 {
     public class InGameScreenHelper
     {
-        private readonly ScoreSystem _scoreSystem;
-        private TempScoreWrapper _airborneScoreWrapper;
-        private TempScoreWrapper _starScoreWrapper;
-
         public event Action<int> TotalScoreChange = delegate { };
         public event Action<int> TempAirborneScoreChange = delegate { };
         public event Action<int> TempStarScoreChange = delegate { };
-
+        
+        private readonly ScoreSystem _scoreSystem;
+        private TempScoreWrapper _airborneScoreWrapper;
+        private TempScoreWrapper _starScoreWrapper;
+        
         public InGameScreenHelper(float fadeDelay, float fadeDuration, ScoreSystem scoreSystem)
         {
             var scoreLifetime = fadeDelay + fadeDuration;
@@ -26,6 +26,11 @@ namespace Systems.UI.Screens.Helpers
             _scoreSystem.StarScoreChange += ChangeStarTempScore;
         }
 
+        public void OnEnable()
+        {
+            _scoreSystem.ResetScore();
+        }
+        
         public void Tick()
         {
             UpdateScoreWrappers();

@@ -2,65 +2,45 @@ using System.Collections.Generic;
 using Systems.UI.Screens;
 using Entities.Enums;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Systems.UI
 {
     public class ScreenSwitch : MonoBehaviour
     {
-        [SerializeField] private Dictionary<ScreenEnum, BaseScreen> screens;
-    }
-}
-
-        /*[SerializeField] private GameConfiguration gameConfiguration;
-        [SerializeField] private Entities.Car car;
-        [SerializeField] private MainMenuScreen mainMenuScreen;
-        [SerializeField] private InGameScreen inGameScreen;
-        [SerializeField] private ResultsScreen resultsScreen;
-        [SerializeField] private Button retryButton;
-        [SerializeField] private Button playButton;
+        [SerializeField] private List<BaseScreen> screens;
+        private Dictionary<ScreenEnum, BaseScreen> _screens;
 
         private void Awake()
         {
-            InitializeStateMachine();
+            InitializeScreenDictionary();
         }
-
-        private void InitializeStateMachine()
+        
+        public void PickScreen(ScreenEnum screenType)
         {
-
-            // playButton.onClick.AddListener(() => { _screenStateMachine.TransitionToState(inGameScreenState); });
-            // car.CarCrashed += () => _screenStateMachine.TransitionToState(resultsScreenState);
-            // retryButton.onClick.AddListener(ReloadScene);
+            foreach (var screen in _screens.Values)
+            {
+                screen.gameObject.SetActive(false);
+            }
             
+            _screens[screenType].gameObject.SetActive(true);
+            
+            if (screenType == ScreenEnum.MainMenu) ReloadScene();
+        }
+        
+        private void InitializeScreenDictionary()
+        {
+            _screens = new Dictionary<ScreenEnum, BaseScreen>();
+            foreach (var screen in screens)
+            {
+                _screens.Add(screen.Type, screen);
+            }
         }
 
         private void ReloadScene()
         {
-            var activeScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(activeScene.name);
-        }*/
-
-// TODO: option for ScreenSwitcher
-// [SerializeField] List<Screen> screens;
-//
-// private Dictionary<ScreenType, Screen> _screens;
-//
-// public void PickScreen(ScreenType screenType)
-// {
-//     foreach (var screen in _screens.Values)
-//     {
-//         // Can be a simple screen.gameObject.SetActive(false)
-//         screen.Deactivate();
-//     }
-//
-//     // Can be a simple screen.gameObject.SetActive(true)
-//     _screens[screenType].Activate();
-// }
-//
-// private void InitializeScreenDictionary()
-// {
-//     _screens = new Dictionary<ScreenType, Screen>();
-//     foreach (var screen in screens)
-//     {
-//         _screens.Add(screen.Type, screen);
-//     }
-// }
+            var currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
+    }
+}

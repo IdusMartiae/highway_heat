@@ -1,3 +1,5 @@
+using System;
+using Entities.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,11 +18,13 @@ namespace Systems.UI.Screens
         private ScreenSwitch _screenSwitch;
         private ScoreSystem _scoreSystem;
 
+        public override ScreenEnum Type => ScreenEnum.Results;
+
         [Inject]
         private void Initialize(ScreenSwitch screenSwitch, ScoreSystem scoreSystem)
         {
-            _screenSwitch = screenSwitch;
             _scoreSystem = scoreSystem;
+            retryButton.onClick.AddListener(() => screenSwitch.PickScreen(ScreenEnum.MainMenu));
         }
         
         private void OnEnable()

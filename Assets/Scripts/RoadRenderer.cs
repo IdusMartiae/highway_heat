@@ -13,7 +13,7 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] private float roadTextureSpeed = 5f;
     [SerializeField] private Transform frontPanel;
     [SerializeField] private float lineLength = 30f;
-    [SerializeField] public int pointsPerLine = 25;
+    [SerializeField] private int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
     [SerializeField] private float velocityClampThreshold = 0.001f;
     

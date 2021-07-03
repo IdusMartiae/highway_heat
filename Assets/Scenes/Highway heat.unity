@@ -217,7 +217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
   m_sharedMaterial: {fileID: -6759776726497461337, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
@@ -398,6 +398,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41e09643a4be94478a9bc74563a09284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screens:
+  - {fileID: 2117398692}
+  - {fileID: 848311309}
+  - {fileID: 887440267}
 --- !u!4 &62354025
 Transform:
   m_ObjectHideFlags: 0
@@ -409,9 +413,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2117398688}
   - {fileID: 848311310}
   - {fileID: 887440271}
-  - {fileID: 2117398688}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -511,7 +515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
   m_sharedMaterial: {fileID: -6759776726497461337, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
@@ -645,7 +649,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
   m_sharedMaterial: {fileID: -6759776726497461337, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
@@ -1842,7 +1846,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 99999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
   m_sharedMaterial: {fileID: -6759776726497461337, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
@@ -2052,7 +2056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &848311309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,7 +2089,7 @@ RectTransform:
   - {fileID: 287592978}
   - {fileID: 1548600615}
   m_Father: {fileID: 62354025}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2282,7 +2286,7 @@ MonoBehaviour:
   distanceScore: {fileID: 162123305}
   starsScore: {fileID: 128324862}
   airTimeScore: {fileID: 722988280}
-  retryButton: {fileID: 0}
+  retryButton: {fileID: 184967250}
 --- !u!114 &887440268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2361,7 +2365,7 @@ RectTransform:
   - {fileID: 804980550}
   - {fileID: 184967249}
   m_Father: {fileID: 62354025}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2810,7 +2814,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999999
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
   m_sharedMaterial: {fileID: -6759776726497461337, guid: 4b99a834e19f04b12850fcb351c46846, type: 2}
@@ -3182,7 +3186,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenSwitch: {fileID: 62354024}
+  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
   scoreSystem: {fileID: 1945725542}
+  car: {fileID: 1927039617070492499}
 --- !u!1 &1474378775
 GameObject:
   m_ObjectHideFlags: 0
@@ -4938,7 +4944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2117398688
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4952,7 +4958,7 @@ RectTransform:
   m_Children:
   - {fileID: 1681999626}
   m_Father: {fileID: 62354025}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5032,6 +5038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea051a2619fb4d52b48cc9f44c08d6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playButton: {fileID: 1681999627}
 --- !u!1 &2129529827
 GameObject:
   m_ObjectHideFlags: 0

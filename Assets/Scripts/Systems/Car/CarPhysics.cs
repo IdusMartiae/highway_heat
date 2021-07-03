@@ -4,16 +4,17 @@ namespace Systems.Car
 {
     public class CarPhysics
     {
-        private readonly Transform _carTransform;
+        // TODO: MOVE MARKED WITH * INTO SEPARATE PHYSICS CONFIGURATION OR REPLACE WITH PASSING TO CONSTRUCTOR CAR CLASS
+        private readonly Transform _carTransform; // *
         private readonly RoadRenderer _renderer;
-        private readonly int _anchorPointIndex;
+        private readonly int _anchorPointIndex; // *
         private float _xAxisAngle;
-        private readonly float _lerpSpeed;
+        private readonly float _lerpSpeed; // *
         
         private float _startingPositionY;
         private float _cachedPositionY;
         private float _xFalseVelocity;
-        private readonly float _defaultXFalseVelocity;
+        private readonly float _defaultXFalseVelocity; // *
 
         public float Gravity { get; }
         public float CachedYVelocity { get; private set; }

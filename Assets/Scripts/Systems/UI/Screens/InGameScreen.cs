@@ -1,5 +1,6 @@
 using System;
 using Systems.UI.Screens.Helpers;
+using Configurations;
 using DG.Tweening;
 using Entities.Enums;
 using TMPro;
@@ -15,22 +16,26 @@ namespace Systems.UI.Screens
         [SerializeField] private TMP_Text starTempScoreText;
         [SerializeField] private float fadeDelay;
         [SerializeField] private float fadeDuration;
-        
+
+        private GameConfiguration _gameConfiguration;
         private InGameScreenHelper _inGameScreenHelper;
-        
         private Tween _airborneTempScoreTween;
         private Tween _starTempScoreTween;
 
+        public override ScreenEnum Type => ScreenEnum.InGame;
+
         [Inject]
-        private void Initialize(ScoreSystem scoreSystem)
+        private void Initialize(ScreenSwitch screenSwitch, GameConfiguration gameConfiguration, ScoreSystem scoreSystem,
+            Entities.Car car)
         {
             _inGameScreenHelper = new InGameScreenHelper(fadeDelay, fadeDuration, scoreSystem);
+            _gameConfiguration = gameConfiguration;
+            
+            car.CarCrashed += () => screenSwitch.PickScreen(ScreenEnum.Results);
         }
         
-        private void Start()
+        private void Awake()
         {
-            ScreenType = ScreenEnum.InGame;
-
             _inGameScreenHelper.TotalScoreChange += 
                 score => totalScoreText.text = $"{score}";
             _inGameScreenHelper.TempAirborneScoreChange +=
@@ -43,7 +48,18 @@ namespace Systems.UI.Screens
         {
             _inGameScreenHelper.Tick();
         }
-        
+
+        private void OnEnable()
+        {   
+            _inGameScreenHelper.OnEnable();
+            _gameConfiguration.Paused = false;
+        }
+
+        private void OnDisable()
+        {
+            _gameConfiguration.Paused = true;
+        }
+
         private Action<int> GetBonusScoreChangeHandler(TMP_Text bonusScoreText, Tween bonusScoreTween)
         {
             return scoreBonus =>
@@ -60,5 +76,6 @@ namespace Systems.UI.Screens
             text.alpha = 1f;
             return text.DOFade(0, fadeDuration).SetDelay(fadeDelay);
         }
+        
     }
 }
