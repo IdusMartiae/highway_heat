@@ -47,7 +47,7 @@ namespace Systems.UI.Screens.Helpers
             TotalScoreChange(score);
         }
 
-        // loses refs list of subscribed delegates for some reason 
+        // TODO loses refs list of subscribed delegates for some reason || DELETE THIS LATER
         /*private Action<int> GetUINotifier(TempScoreWrapper tempScoreWrapper,
             Action<int> tempScoreChangeNotifier)
         {
