@@ -8,7 +8,6 @@ namespace Configurations
         [SerializeField] private bool paused;
         
         public bool Paused { get; set; }
-
         public string PlayerMoneyKey { get; } = "PlayerMoney";
         public string PlayerHighScoreKey { get; } = "PlayerHighScore";
 

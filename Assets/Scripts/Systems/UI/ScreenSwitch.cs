@@ -12,6 +12,8 @@ namespace Systems.UI
         
         private Dictionary<ScreenEnum, BaseScreen> _screens;
 
+        public ScreenEnum ActiveScreen { get; private set; } = ScreenEnum.MainMenu;
+        
         private void Awake()
         {
             InitializeScreenDictionary();
@@ -25,6 +27,7 @@ namespace Systems.UI
             }
             
             _screens[screenType].gameObject.SetActive(true);
+            ActiveScreen = screenType;
             
             if (screenType == ScreenEnum.MainMenu) ReloadScene();
         }

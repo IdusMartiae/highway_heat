@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using Systems.UI;
 using Configurations;
+using Entities.Enums;
 using Entities.Wrappers;
 using UnityEngine;
+using Zenject;
 using static System.Single;
 
 public class RoadRenderer : MonoBehaviour
 {
-    [SerializeField] private GameConfiguration gameConfiguration;
-    [SerializeField] private InputConfiguration inputConfiguration;
-    [SerializeField] private InputHandler inputHandler;
+    
     [SerializeField] private float waveResponseTime = 0.01f;
     [SerializeField] private float roadTextureSpeed = 5f;
     [SerializeField] private Transform frontPanel;
@@ -16,13 +17,31 @@ public class RoadRenderer : MonoBehaviour
     [SerializeField] private int pointsPerLine = 25;
     [SerializeField] private List<LineRendererWrapper> lineRendererWrappers;
     [SerializeField] private float velocityClampThreshold = 0.001f;
+    [SerializeField] private float idleAmplitudeMultiplier = 5f;
     
     public Vector3[] PositionPoints => _positionPoints;
-
+    
+    private GameConfiguration _gameConfiguration;
+    private InputConfiguration _inputConfiguration;
+    private InputHandler _inputHandler;
+    private ScreenSwitch _screenSwitch;
     private Vector3[] _positionPoints;
     private Vector3[] _pointVelocities;
     private Vector2 _textureOffset = Vector2.zero;
 
+    [Inject]
+    private void Initialize(GameConfiguration gameConfiguration,
+        InputConfiguration inputConfiguration,
+        InputHandler inputHandler,
+        ScreenSwitch screenSwitch)
+    {
+        _gameConfiguration = gameConfiguration;
+        _inputConfiguration = inputConfiguration;
+        _inputHandler = inputHandler;
+        _screenSwitch = screenSwitch;
+
+    }
+    
     private void OnValidate()
     {
         lineLength = Mathf.Clamp(lineLength, 0f, PositiveInfinity);
@@ -99,23 +118,40 @@ public class RoadRenderer : MonoBehaviour
                 ref _pointVelocities[i],
                 waveResponseTime);
         }
-        
-        pointNewPosition = Input.GetMouseButton(0) && !gameConfiguration.Paused
-            ? GetMouseWorldCoordinates(_positionPoints[0])
-            : _positionPoints[0];
+
+        if (_gameConfiguration.Paused)
+        {
+            if (_screenSwitch.ActiveScreen == ScreenEnum.MainMenu)
+            {
+                pointNewPosition = GetNewIdlePosition(_positionPoints[0]);
+            }
+        }
+        else
+        {
+            pointNewPosition = Input.GetMouseButton(0)
+                ? GetMouseWorldCoordinates(_positionPoints[0])
+                : _positionPoints[0];
+        }
 
         _positionPoints[0] = Vector3.SmoothDamp(_positionPoints[0],
             pointNewPosition,
             ref _pointVelocities[0],
-            inputHandler.Sensitivity,
-            inputConfiguration.VerticalSpeed);
+            _inputHandler.Sensitivity,
+            _inputConfiguration.VerticalSpeed);
     }
 
+    private Vector3 GetNewIdlePosition(Vector3 anchorPoint)
+    {
+        return new Vector3(anchorPoint.x,
+             Mathf.Sin(Time.time) * idleAmplitudeMultiplier,
+            anchorPoint.z);
+    }
+    
     private Vector3 GetMouseWorldCoordinates(Vector3 anchorPoint)
     {
         return new Vector3(anchorPoint.x,
-            (inputConfiguration.VerticalMax - inputConfiguration.VerticalMin) * inputHandler.MouseNormalizedY +
-            inputConfiguration.VerticalMin,
+            (_inputConfiguration.VerticalMax - _inputConfiguration.VerticalMin) * _inputHandler.MouseNormalizedY +
+            _inputConfiguration.VerticalMin,
             anchorPoint.z);
     }
 
