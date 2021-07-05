@@ -16,7 +16,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 1.04
+    m_Value: 0.5
   contrast:
     m_OverrideState: 1
     m_Value: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 0.93
+    m_Value: 1.2
     min: 0
   intensity:
     m_OverrideState: 1
