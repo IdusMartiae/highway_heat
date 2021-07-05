@@ -1258,8 +1258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3baf1f78afa624c6a84926409eba59f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
-  gameEntityConfiguration: {fileID: 11400000, guid: 2fcb97224bb06475e93384018879161c, type: 2}
   obstacles:
   - {fileID: -2585095657763926794, guid: b34f0c1eac2a84897b5b3243bb896084, type: 3}
   - {fileID: 266864355801447554, guid: 65504f9086e9b4fcda9db3c1b5be103b, type: 3}
@@ -3203,6 +3201,7 @@ GameObject:
   - component: {fileID: 1396339670}
   - component: {fileID: 1396339669}
   - component: {fileID: 1396339671}
+  - component: {fileID: 1396339672}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -3225,6 +3224,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1396339671}
+  - {fileID: 1396339672}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -3272,6 +3272,20 @@ MonoBehaviour:
   gameConfiguration: {fileID: 11400000, guid: 1faf2623308ef425d9b812b60dcc587a, type: 2}
   scoreSystem: {fileID: 1945725542}
   car: {fileID: 1927039617070492499}
+--- !u!114 &1396339672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396339668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00151b91a74f4099b5103ff72756acc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEntityConfiguration: {fileID: 11400000, guid: 2fcb97224bb06475e93384018879161c, type: 2}
+  gameEntitySpawner: {fileID: 381965699}
 --- !u!1 &1474378775
 GameObject:
   m_ObjectHideFlags: 0

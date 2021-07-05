@@ -1002,6 +1002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3103560507560742471}
   - component: {fileID: -2585095657763926794}
+  - component: {fileID: -1214724053709631178}
   m_Layer: 0
   m_Name: Shape_WideWall
   m_TagString: Obstacle
@@ -1043,6 +1044,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stars: []
+--- !u!114 &-1214724053709631178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5711145697173190800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a02054ef2699498e6bd4234fd7995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _containerSource: 0
 --- !u!1 &5825248160519239228
 GameObject:
   m_ObjectHideFlags: 0

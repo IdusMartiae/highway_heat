@@ -7,8 +7,10 @@ namespace Entities
     public class Pool<T> where T : MonoBehaviour
     {
         private readonly List<T> _list = new List<T>();
+        private readonly List<T> _entities = new List<T>();
         private readonly T _gameEntity;
         private readonly Transform _parent;
+        private int _spawnIndex;
         
         public Pool(int poolSize, T gameEntity, Transform parent)
         {
@@ -20,8 +22,7 @@ namespace Entities
         public Pool(List<T> gameEntity, Transform parent)
         {
             _parent = parent;
-            Prepopulate(gameEntity);
-            _parent = parent;
+            _entities = gameEntity;
         }
 
         public void Push(T gameEntity)
@@ -46,9 +47,10 @@ namespace Entities
 
         public T PullRandom()
         {
-            if (_list.Count <= 0)
+            if (_spawnIndex < _entities.Count)
             {
-                CreatEntity(_gameEntity);
+                CreatEntity(_entities[_spawnIndex]);
+                _spawnIndex = ++_spawnIndex;
             }
             
             var index = Random.Range(0, _list.Count);
@@ -80,5 +82,6 @@ namespace Entities
             var spawnedEntity = Object.Instantiate(newEntity, _parent, true);
             Push(spawnedEntity);
         }
+
     }
 }

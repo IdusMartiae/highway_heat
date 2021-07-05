@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &1868652607658631303
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &1895429703669610371
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,6 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &3071785427257128254
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,6 +445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5717600763709685907}
   - component: {fileID: 8803941521888251163}
+  - component: {fileID: -2298622046725406572}
   m_Layer: 0
   m_Name: Shape_Stars_Flat
   m_TagString: Obstacle
@@ -488,6 +492,19 @@ MonoBehaviour:
   - {fileID: 2335837330773392447}
   - {fileID: 8236935484643572248}
   - {fileID: 7626771574876751946}
+--- !u!114 &-2298622046725406572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3735438701450154724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a02054ef2699498e6bd4234fd7995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _containerSource: 0
 --- !u!1 &7981588441726991331
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &9030512499107859066
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,3 +830,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10

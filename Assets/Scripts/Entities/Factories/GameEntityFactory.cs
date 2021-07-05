@@ -1,16 +1,11 @@
 using System.Collections.Generic;
-using Configurations;
 using UnityEngine;
 
 namespace Entities.Factories
 {
     public class GameEntityFactory : BaseFactory
     {
-        public GameEntityFactory(
-            List<GameEntity> obstacles,
-            Transform spawnerTransform,
-            GameEntityConfiguration gameEntityConfiguration,
-            float destroyDistance) : base(spawnerTransform, gameEntityConfiguration, destroyDistance)
+        public GameEntityFactory(List<GameEntity> obstacles, Transform spawnerTransform) : base(spawnerTransform)
         {
             pool = new Pool<GameEntity>(obstacles, SpawnerTransform);
         }
@@ -18,8 +13,8 @@ namespace Entities.Factories
         public override GameEntity Create()
         {
             var gameEntity = pool.PullRandom();
-            gameEntity.Initialize(this);
-
+            gameEntity.ReactivateStars();
+            
             return gameEntity;
         }
         

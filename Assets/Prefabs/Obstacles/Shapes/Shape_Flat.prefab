@@ -118,6 +118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5717600763709685907}
   - component: {fileID: 8803941521888251163}
+  - component: {fileID: -9160710967944818800}
   m_Layer: 0
   m_Name: Shape_Flat
   m_TagString: Obstacle
@@ -154,6 +155,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stars: []
+--- !u!114 &-9160710967944818800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3735438701450154724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a02054ef2699498e6bd4234fd7995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _containerSource: 0
 --- !u!1 &7981588441726991331
 GameObject:
   m_ObjectHideFlags: 0

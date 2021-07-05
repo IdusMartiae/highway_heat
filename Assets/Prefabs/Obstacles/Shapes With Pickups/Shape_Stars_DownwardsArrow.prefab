@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &167658528366910054
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,6 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1487593803062947858}
   - component: {fileID: 266864355801447554}
+  - component: {fileID: 2385364432910435472}
   m_Layer: 0
   m_Name: Shape_Stars_DownwardsArrow
   m_TagString: Obstacle
@@ -201,6 +203,19 @@ MonoBehaviour:
   - {fileID: 3027822545329572798}
   - {fileID: 5063475918048880942}
   - {fileID: 7299600159860349566}
+--- !u!114 &2385364432910435472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394854938210751016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a02054ef2699498e6bd4234fd7995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _containerSource: 0
 --- !u!1 &1114204492203830328
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &2739646577398600430
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,6 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &3062127447108900742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &5775423103177061490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1632,6 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &6096609396546958657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,6 +1867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &6604095400469675926
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,6 +2116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &8113389030964080653
 GameObject:
   m_ObjectHideFlags: 0
@@ -2420,6 +2441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10
 --- !u!1 &8894694799053938956
 GameObject:
   m_ObjectHideFlags: 0
@@ -2528,3 +2550,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b762900c43649410385ea95d3fdc537d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreValue: 10

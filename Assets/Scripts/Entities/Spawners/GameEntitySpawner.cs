@@ -1,32 +1,32 @@
 using System.Collections.Generic;
-using Systems.UI;
 using Configurations;
 using Entities.Factories;
 using UnityEngine;
+using Zenject;
 
 namespace Entities.Spawners
 {
     public class GameEntitySpawner : MonoBehaviour
     {
-        [SerializeField] private GameConfiguration gameConfiguration;
-        [SerializeField] private GameEntityConfiguration gameEntityConfiguration;
         [SerializeField] private List<GameEntity> obstacles;
-
+        
+        private GameConfiguration _gameConfiguration;
+        private GameEntityConfiguration _gameEntityConfiguration;
         private GameEntityFactory _gameEntityFactory;
         private float _currentInterval;
-        
-        private void Awake()
-        {
-            _currentInterval = 0f;
-            _gameEntityFactory = new GameEntityFactory(obstacles,
-                transform,
-                gameEntityConfiguration,
-                gameEntityConfiguration.DestroyDistance);
-        }
 
+        public GameEntityFactory GameEntityFactory => _gameEntityFactory ??= new GameEntityFactory(obstacles, transform);
+        
+        [Inject]
+        private void Initialize(GameConfiguration gameConfiguration, GameEntityConfiguration gameEntityConfiguration)
+        {
+            _gameConfiguration = gameConfiguration;
+            _gameEntityConfiguration = gameEntityConfiguration;
+        }
+        
         private void Update()
         {
-            if (gameConfiguration.Paused) return;
+            if (_gameConfiguration.Paused) return;
             
             CreateOnTimeInterval();
         }
@@ -35,7 +35,7 @@ namespace Entities.Spawners
         {
             _currentInterval += Time.deltaTime;
             
-            if (_currentInterval > gameEntityConfiguration.SpawnInterval)
+            if (_currentInterval > _gameEntityConfiguration.SpawnInterval)
             {
                 CreateObstacle();
             }
@@ -44,9 +44,8 @@ namespace Entities.Spawners
         private void CreateObstacle()
         {
             _currentInterval = 0;
-            var obstacle = _gameEntityFactory.Create();
+            var obstacle = GameEntityFactory.Create();
             
-            obstacle.GameConfiguration = gameConfiguration;
             obstacle.transform.position = transform.position;
         }
     }
