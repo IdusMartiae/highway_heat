@@ -9,6 +9,7 @@ namespace Systems.UI
     public class ScreenSwitch : MonoBehaviour
     {
         [SerializeField] private List<BaseScreen> screens;
+        
         private Dictionary<ScreenEnum, BaseScreen> _screens;
 
         private void Awake()

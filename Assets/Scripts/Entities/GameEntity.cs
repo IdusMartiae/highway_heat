@@ -16,10 +16,12 @@ namespace Entities
         {
             if (GameConfiguration.Paused) return;
             
+            // TODO: cache GameEntityConfiguration ()
             transform.Translate(Vector3.left * (Time.deltaTime * _factory.GameEntityConfiguration.HorizontalSpeed));
             DestroyOnOutOfBounds(CalculateDistance());
         }
 
+        // TODO: Zenject can be used to inject dependencies like that
         public void Initialize(IGameEntityFactory factory)
         {
             _factory = factory;
