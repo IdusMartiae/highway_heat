@@ -10,25 +10,35 @@ namespace Systems.UI.Screens.Helpers
         public event Action<int> TempStarScoreChange = delegate { };
         
         private readonly ScoreSystem _scoreSystem;
+        private readonly PlayerDataService _playerDataService;
         private TempScoreWrapper _airborneScoreWrapper;
         private TempScoreWrapper _starScoreWrapper;
-        
-        public InGameScreenHelper(float fadeDelay, float fadeDuration, ScoreSystem scoreSystem)
+
+        public InGameScreenHelper(float fadeDelay,
+            float fadeDuration,
+            ScoreSystem scoreSystem,
+            PlayerDataService playerDataService)
         {
             var scoreLifetime = fadeDelay + fadeDuration;
 
-            InitializeScoreWrappers(scoreLifetime);
-
             _scoreSystem = scoreSystem;
-
+            _playerDataService = playerDataService;
+            
             _scoreSystem.TotalScoreChange += HandleTotalScoreChange;
             _scoreSystem.AirborneScoreChange += ChangeAirborneTempScore;
             _scoreSystem.StarScoreChange += ChangeStarTempScore;
+            
+            InitializeScoreWrappers(scoreLifetime);
         }
 
         public void OnEnable()
         {
             _scoreSystem.ResetScore();
+        }
+
+        public void OnDisable()
+        {
+            _playerDataService.UpdatePlayerData();
         }
         
         public void Tick()

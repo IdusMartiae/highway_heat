@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Configurations
@@ -7,9 +6,11 @@ namespace Configurations
     public class GameConfiguration : ScriptableObject
     {
         [SerializeField] private bool paused;
+        
+        public bool Paused { get; set; }
 
-        public bool Paused
-        { get; set; }
+        public string PlayerMoneyKey { get; } = "PlayerMoney";
+        public string PlayerHighScoreKey { get; } = "PlayerHighScore";
 
         private void OnEnable()
         {

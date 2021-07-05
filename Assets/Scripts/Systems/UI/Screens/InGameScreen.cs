@@ -5,6 +5,7 @@ using DG.Tweening;
 using Entities.Enums;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using Zenject;
 
 namespace Systems.UI.Screens
@@ -25,10 +26,13 @@ namespace Systems.UI.Screens
         public override ScreenEnum Type => ScreenEnum.InGame;
 
         [Inject]
-        private void Initialize(ScreenSwitch screenSwitch, GameConfiguration gameConfiguration, ScoreSystem scoreSystem,
+        private void Initialize(ScreenSwitch screenSwitch,
+            GameConfiguration gameConfiguration,
+            ScoreSystem scoreSystem,
+            PlayerDataService playerDataService,
             Entities.Car car)
         {
-            _inGameScreenHelper = new InGameScreenHelper(fadeDelay, fadeDuration, scoreSystem);
+            _inGameScreenHelper = new InGameScreenHelper(fadeDelay, fadeDuration, scoreSystem, playerDataService);
             _gameConfiguration = gameConfiguration;
             
             car.CarCrashed += () => screenSwitch.PickScreen(ScreenEnum.Results);
@@ -57,9 +61,10 @@ namespace Systems.UI.Screens
 
         private void OnDisable()
         {
+            _inGameScreenHelper.OnDisable();
             _gameConfiguration.Paused = true;
         }
-
+        
         private Action<int> GetBonusScoreChangeHandler(TMP_Text bonusScoreText, Tween bonusScoreTween)
         {
             return scoreBonus =>

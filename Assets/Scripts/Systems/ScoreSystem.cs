@@ -1,25 +1,31 @@
 using System;
 using Configurations;
 using UnityEngine;
+using Zenject;
 
 namespace Systems
 {
     public class ScoreSystem : MonoBehaviour
     {
-        [SerializeField] private GameConfiguration gameConfiguration;
-        [SerializeField] private int scorePointsPerSecond = 10;
-        [SerializeField] private float scoreUpdateInterval = 0.1f;
+        [SerializeField] private int scorePointsPerSecond = 5;
+        [SerializeField] private float scoreUpdateInterval = 0.2f;
         [SerializeField] private float airborneMultiplier = 1.5f;
-        [SerializeField] private Entities.Car car;
-
+        
+        private GameConfiguration _gameConfiguration;
+        private Entities.Car _car;
         private int _totalScore;
         private int _distanceBonus;
-
         private int _starBonus;
         private int _airborneBonus;
-
         private float _timer;
 
+        [Inject]
+        private void Initialize(GameConfiguration gameConfiguration, Entities.Car car)
+        {
+            _gameConfiguration = gameConfiguration;
+            _car = car;
+        }
+        
         public int TotalScore
         {
             get => _totalScore;
@@ -41,15 +47,14 @@ namespace Systems
 
         private void Awake()
         {
-            car.PickedUpStar += PickedUpStarHandler;
-            car.CarLanded += CarLandedHandler;
-
+            _car.PickedUpStar += PickedUpStarHandler;
+            _car.CarLanded += CarLandedHandler;
             InitializeFields();
         }
 
         private void Update()
         {
-            if (gameConfiguration.Paused) return;
+            if (_gameConfiguration.Paused) return;
 
             _timer += Time.deltaTime;
 
@@ -64,7 +69,7 @@ namespace Systems
                 TotalScoreChange(_totalScore);
             }
         }
-
+        
         public void ResetScore()
         {
             InitializeFields();
